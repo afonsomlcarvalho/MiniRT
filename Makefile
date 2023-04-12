@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+         #
+#    By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 18:53:37 by gda_cruz          #+#    #+#              #
-#    Updated: 2023/03/28 20:33:18 by gda_cruz         ###   ########.fr        #
+#    Updated: 2023/04/12 14:49:14 by amorais-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ MLX_DIR =	$(LIB_DIR)/mlx_linux
 
 ####### COMPILER #######
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror -g
+CFLAGS	=	-Wall -Wextra -Werror -g -fsanitize=address
 LFT_FLAGS = -L$(LIBFT_DIR) -lft
 MLX_FLAGS =	-L$(MLX_DIR) -lmlx_Linux -L/usr/lib -I$(MLX_DIR) -lXext -lX11 -lm -lz
 OFLAGS =	-I/usr/include -I$(MLX_DIR) -O3
@@ -59,6 +59,7 @@ clean:
 fclean: clean
 	@rm -rf $(OBJ_DIR) $(NAME)
 	@echo "$(RED)[All $(NAME) files removed]$(RESET)"
+	@make fclean -s -C $(LIBFT_DIR)
 
 re: fclean all
 

@@ -57,6 +57,7 @@ clean:
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
+	@make fclean -s -C $(LIBFT_DIR)
 	@rm -rf $(OBJ_DIR) $(NAME)
 	@echo "$(RED)[All $(NAME) files removed]$(RESET)"
 

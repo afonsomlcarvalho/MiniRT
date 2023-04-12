@@ -20,8 +20,8 @@ typedef struct s_object
 {
 	int			color;
 	float		point[3];
-	int			radius;
-	int			height;
+	float		radius;
+	float		height;
 	float		vector[3];
 	int			(*is_object)(struct s_object *self, float x, float y, float z);
 	struct s_object	*next;
@@ -66,4 +66,5 @@ typedef struct	s_all
 t_all	*all(void);
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 void	add_sphere(float x, float y, float z, float radius, int color);
+void	add_plane(float x, float y, float z, float vector_x, float vector_y, float vector_z, int color);
 #endif

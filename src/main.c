@@ -29,7 +29,7 @@ float	canva_to_vp(int x, int y, int flag)
 	float	coords[3];
 
 	coords[X] = x * ((all())->viewport.width / WIDTH);
-	coords[Y] = -y * ((all())->viewport.height / HEIGHT);
+	coords[Y] = y * ((all())->viewport.height / HEIGHT);
 	coords[Z] = 1; 
 
 	return (coords[flag]);
@@ -74,7 +74,7 @@ void	draw_canva()
 		x = -(WIDTH / 2);
 		while (x < WIDTH / 2)
 		{
-			my_mlx_pixel_put(&(all())->canva, x + WIDTH / 2, y + HEIGHT / 2, get_ray_color(x, y));
+			my_mlx_pixel_put(&(all())->canva, x + WIDTH / 2, y + HEIGHT / 2, get_ray_color(x, -y));
 			x++;
 		}
 		y++;
@@ -89,9 +89,10 @@ int	main()
 	(all())->canva.addr = mlx_get_data_addr((all())->canva.img, &(all())->canva.bpp, &(all())->canva.ll, &(all())->canva.endian);
 	cam_setup();
 	viewport_setup();
-	add_sphere(0, -1, 3, 2, 0x00ff0000);
-	add_sphere(2, 0, 4, 1, 0x000000ff);
-	add_sphere(-2, 0, 4, 1, 0x00ff00);
+	add_sphere(-2, 0, 3, 1, 0x0000ff00);
+	add_sphere(0, 0, 10, 1, 0x00ff0000);
+	add_sphere(2, 0, 3, 1, 0x000000ff);
+	// add_plane(0, 0, 1, 1, 0, 1, 0x00ffff00);
 	draw_canva();
 	mlx_put_image_to_window((all())->mlx, (all())->wind, (all())->canva.img, 0, 0);
 	mlx_loop((all())->mlx);

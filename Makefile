@@ -16,28 +16,38 @@ GREEN_B	=	\033[1;32m
 BLUE	=	\033[0;34m
 RESET	=	\033[0m
 
-####### COMPILER #######
-CC		=	c++
-FLAGS	=	-Wall -Wextra -Werror -std=c++98
-
 ####### DIRECTORIES #######
 OBJ_DIR	=	./obj
 INC_DIR	=	inc
+LIB_DIR =	lib
+LIBFT_DIR =	$(LIB_DIR)/libft
+MLX_DIR =	$(LIB_DIR)/mlx_linux
+
+####### COMPILER #######
+CC		=	gcc
+CFLAGS	=	-Wall -Wextra -Werror -g
+LFT_FLAGS = -L$(LIBFT_DIR) -lft
+MLX_FLAGS =	-L$(MLX_DIR) -lmlx_Linux -L/usr/lib -I$(MLX_DIR) -lXext -lX11 -lm -lz
+OFLAGS =	-I/usr/include -I$(MLX_DIR) -O3
 
 ####### FILES #######
-SRC		=	$(shell find src/ -name '*.cpp')
-OBJ		=	$(patsubst src/%.cpp,$(OBJ_DIR)/%.o,$(SRC))
-NAME 	=	phonebook
+SRC		=	$(shell find src/ -name '*.c')
+OBJ		=	$(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
+NAME 	=	miniRT
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
+	@make -s -C $(LIBFT_DIR)
+	@printf "$(BLUE)[libft successfully compiled]\n$(RESET)"
+	@make -S -C $(MLX_DIR)
+	@printf "$(BLUE)[mlx successfully compiled]\n$(RESET)"
 	@printf "$(BLUE)[Compiling]     "$(NAME)"$(RESET)\n"
-	@$(CC) $(OBJ) $(FLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(MLX_FLAGS) $(LFT_FLAGS) -o $(NAME)
 	@printf "$(GREEN_B)[$(NAME) ready to use]\n$(RESET)"
 
-$(OBJ_DIR)/%.o: src/%.cpp | $(OBJ_DIR)
-	@$(CC) $(FLAGS) -I$(INC_DIR) -c $< -o $@
+$(OBJ_DIR)/%.o: src/%.c | $(OBJ_DIR)
+	@$(CC) $(CFLAGS) $(OFLAGS) -c $< -o $@
 	@printf "$(BLUE)[Compiling]     "$@"$(RESET)\n"
 
 $(OBJ_DIR):

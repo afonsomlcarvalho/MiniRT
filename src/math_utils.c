@@ -14,3 +14,38 @@ void	vec(float *p1, float *p2, float *buff)
 	buff[Y] = p2[Y] - p1[Y];
 	buff[Z] = p2[Z] - p1[Z];
 }
+
+/* Returns the smaller of the two numbers */
+float	min(float n1, float n2)
+{
+	if (n1 > n2)
+		return (n2);
+	return (n1);
+}
+
+/* Solves the quadratic equation defined by
+ * the parameters, returning the smallest solution
+ * if greater than 1, and 0 otherwise */
+float	solve_quadratic(float a, float b, float c)
+{
+	float	result1;
+	float	result2;
+
+	if ((pow(b, 2) - 4 * a * c) < 0)
+		return (0.0);
+	result1 = ((-b + sqrt(pow(b, 2) - 4 * a * c)) / 2 * a);
+	result2 = ((-b - sqrt(pow(b, 2) - 4 * a * c)) / 2 * a);
+	if (result1 < 1 || result2 < 1)
+	{
+		if (result1 < 1 && result2 < 1)
+			return (0.0);
+		if (result1 < 1)
+			return (result2);
+		if (result2 < 1)
+			return (result1);
+	}
+	if (result1 == result2)
+		return (result1);
+	return (min(result1, result2));
+}
+

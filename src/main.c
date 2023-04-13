@@ -41,9 +41,9 @@ int	main()
 	setup_camera();
 	setup_viewport();
 
-	add_shape(SPHERE, 0x00ff0000, to_point(0, -1, -3), 1);
-	add_shape(SPHERE, 0x000000ff, to_point(2, 0, 4), 1);
-	add_shape(SPHERE, 0x0000ff00, to_point(-2, 0, 4), 1);
+	add_shape(SPHERE, 0x000000ff, to_point(1, 0, 4), 1);
+	add_shape(SPHERE, 0x0000ff00, to_point(-1, 0, 4), 1);
+	add_shape(SPHERE, 0x00ff0000, to_point(0, 0, 5), 2);
 
 	draw_canvas();
 

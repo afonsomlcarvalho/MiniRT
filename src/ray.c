@@ -11,24 +11,40 @@ void	get_point(int t, float *vec, float *p)
 
 int	trace_ray(float *p)
 {
+	float	t;
+	t_aux	**lst;
 	float	a;
 	float	b;
 	float	c;
-	float	co[3];
 	float	D[3];
+	float	co[3];
 	t_shape	*tmp;
+	int		color;
 
 	vec(scene.camera.origin, p, D);
 	a = dot(D, D);
+
+	lst = (t_aux **)ft_calloc(1, sizeof(t_aux));
+	if (!lst)
+		return (-1);	//TODO: Error Handling
 	tmp = scene.shapes;
 	while (tmp)
 	{
 		vec(tmp->center, scene.camera.origin, co);
 		b = 2 * dot(co, D);
 		c = dot(co, co) - pow(tmp->radius, 2);
-		if ((pow(b, 2) - 4 * a * c) >= 0)
-			return (tmp->color);
+		t = solve_quadratic(a, b, c);
+		if (t)
+		{
+			color = tmp->color;
+			add_to_list(t, color, lst);
+		}
 		tmp = tmp->next;
 	}
-	return (0xffffffff);
+	if (!*lst)
+		color = 0xffffffff;
+	else
+		color = get_list_min(lst);
+	delete_list(lst);
+	return (color);
 }

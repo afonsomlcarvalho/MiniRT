@@ -69,6 +69,13 @@ typedef struct s_scene
 	t_shape	*shapes;
 }	t_scene;
 
+typedef struct s_aux
+{
+	float			t;
+	int				color;
+	struct s_aux	*next;
+}	t_aux;
+
 extern t_scene scene;
 
 void	setup_scene(void);
@@ -80,5 +87,9 @@ void	add_shape(int type, int color, float *center, int radius);
 
 float	dot(float *v1, float *v2);
 void	vec(float *p1, float *p2, float *buff);
+int		get_list_min(t_aux **lst);
+void	add_to_list(float t, int color, t_aux **lst);
+void	delete_list(t_aux **lst);
+float	solve_quadratic(float a, float b, float c);
 
 #endif

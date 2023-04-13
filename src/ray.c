@@ -13,27 +13,16 @@ int	trace_ray(float *p)
 {
 	float	t;
 	t_aux	**lst;
-	float	a;
-	float	b;
-	float	c;
-	float	D[3];
-	float	co[3];
 	t_shape	*tmp;
 	int		color;
-
-	vec(scene.camera.origin, p, D);
-	a = dot(D, D);
-
+	
 	lst = (t_aux **)ft_calloc(1, sizeof(t_aux));
 	if (!lst)
 		return (-1);	//TODO: Error Handling
 	tmp = scene.shapes;
 	while (tmp)
 	{
-		vec(tmp->center, scene.camera.origin, co);
-		b = 2 * dot(co, D);
-		c = dot(co, co) - pow(tmp->radius, 2);
-		t = solve_quadratic(a, b, c);
+		t = tmp->check_hit(tmp->shape, p);
 		if (t)
 		{
 			color = tmp->color;

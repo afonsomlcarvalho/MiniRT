@@ -19,7 +19,7 @@ void	setup_camera(void)
 	scene.camera.direcion[Y] = 0;
 	scene.camera.direcion[Z] = 1;
 
-	scene.camera.fov = 53;
+	scene.camera.fov = 70;
 }
 
 /* Converts degrees to radians */

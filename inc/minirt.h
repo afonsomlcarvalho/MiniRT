@@ -23,12 +23,23 @@ enum e_type
 	PLANE
 };
 
+typedef struct s_sphere
+{
+	float	center[3];
+	int		radius;
+}	t_sphere;
+
+typedef struct s_plane
+{
+	float	point[3];
+	float	normal[3];
+}	t_plane;
+
 typedef struct s_shape
 {
 	int				type;
-	float			center[3];
-	int				radius;
-	int				(*check_hit)(struct s_shape *self, float point[3]);
+	void			*shape;
+	float			(*check_hit)(void *self, float point[3]);
 	int				color;
 	struct s_shape	*next;
 }	t_shape;
@@ -91,5 +102,11 @@ int		get_list_min(t_aux **lst);
 void	add_to_list(float t, int color, t_aux **lst);
 void	delete_list(t_aux **lst);
 float	solve_quadratic(float a, float b, float c);
+
+void	add_back_shape(t_shape *new_shape);
+
+void	add_sphere(int color, float *center, int radius);
+
+void	add_plane(int color, float *point, float *normal);
 
 #endif

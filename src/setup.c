@@ -1,11 +1,12 @@
 #include "../inc/minirt.h"
 
-void	setup_mlx(void)
+void	setup_scene(void)
 {
 	scene.mlx = mlx_init();
 	scene.win = mlx_new_window(scene.mlx, WIDTH, HEIGHT, "test");
 	scene.img.img_ptr = mlx_new_image(scene.mlx, WIDTH, HEIGHT);
 	scene.img.address = mlx_get_data_addr(scene.img.img_ptr, &scene.img.bpp, &scene.img.line_length, &scene.img.endian);
+	scene.shapes = NULL;
 }
 
 void	setup_camera(void)
@@ -18,7 +19,7 @@ void	setup_camera(void)
 	scene.camera.direcion[Y] = 0;
 	scene.camera.direcion[Z] = 1;
 
-	scene.camera.fov = 70;
+	scene.camera.fov = 53;
 }
 
 /* Converts degrees to radians */
@@ -38,10 +39,10 @@ void	setup_viewport(void)
 }
 
 /* Maps point (X, Y) to the correponding point in viewport */
-void	canvas_to_viewport(int x, int y, float *vec)
+void	canvas_to_viewport(int x, int y, float *p)
 {
-	vec[X] = x * (scene.viewport.width / WIDTH);
-	vec[Y] = -y * (scene.viewport.height / HEIGHT);
-	vec[Z] = scene.viewport.distance;
+	p[X] = x * (scene.viewport.width / WIDTH);
+	p[Y] = y * (scene.viewport.height / HEIGHT);
+	p[Z] = scene.viewport.distance;
 }
 

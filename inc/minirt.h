@@ -13,7 +13,7 @@
 # define Y	1
 # define Z	2
 
-# define WIDTH	1920
+# define WIDTH	1080
 # define HEIGHT	1080
 
 enum e_type
@@ -71,11 +71,14 @@ typedef struct s_scene
 
 extern t_scene scene;
 
-void	setup_mlx(void);
+void	setup_scene(void);
 void	setup_camera(void);
 void	setup_viewport(void);
-void	canvas_to_viewport(int x, int y, float *vec);
-int		trace_ray(float *vec);
+void	canvas_to_viewport(int x, int y, float *p);
+int		trace_ray(float *p);
 void	add_shape(int type, int color, float *center, int radius);
+
+float	dot(float *v1, float *v2);
+void	vec(float *p1, float *p2, float *buff);
 
 #endif

@@ -1,4 +1,6 @@
 #include "../inc/minirt.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 void	get_point(int t, float *vec, float *p)
 {
@@ -7,20 +9,26 @@ void	get_point(int t, float *vec, float *p)
 	p[Z] = scene.camera.origin[Z] + t * (vec[Z] - scene.camera.origin[Z]);
 }
 
-int	trace_ray(float *vec)
+int	trace_ray(float *p)
 {
-	float	p[3];
+	float	a;
+	float	b;
+	float	c;
+	float	co[3];
+	float	D[3];
 	t_shape	*tmp;
 
-	for (int t = 1; t < 100; t++)
+	vec(scene.camera.origin, p, D);
+	a = dot(D, D);
+	tmp = scene.shapes;
+	while (tmp)
 	{
-		get_point(t, vec, p);	
-		tmp = scene.shapes;
-		for (; tmp; tmp = tmp->next)
-		{
-			if (tmp->check_hit(tmp, p))
-				return (tmp->color);
-		}
+		vec(tmp->center, scene.camera.origin, co);
+		b = 2 * dot(co, D);
+		c = dot(co, co) - pow(tmp->radius, 2);
+		if ((pow(b, 2) - 4 * a * c) >= 0)
+			return (tmp->color);
+		tmp = tmp->next;
 	}
 	return (0xffffffff);
 }

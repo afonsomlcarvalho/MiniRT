@@ -18,29 +18,28 @@ float	check_hit_sphere(void *self, float p[3])
 	return (solve_quadratic(a, b, c));
 }
 
-void	add_sphere(int color, float *center, int radius)
+void	add_sphere(char **info)
 {
 	t_shape		*new_shape;
 	t_sphere	*new_sphere;
 
-	new_shape = malloc(sizeof(t_shape));
+	new_shape = ft_calloc(1, sizeof(t_shape));
 	if (!new_shape)
 		return ;	//TODO: Error Handling
 
 	new_shape->type = SPHERE;
-	new_shape->color = color;
+	coords_interpreter(info[3], new_shape->color);
 	new_shape->check_hit = check_hit_sphere;
 	new_shape->next = NULL;
 
-	new_sphere = (t_sphere *)malloc(sizeof(t_sphere));
-	new_shape->shape = new_sphere;
+	new_sphere = (t_sphere *)ft_calloc(1, sizeof(t_sphere));
 	if (!new_sphere)
 		return ;	//TODO: Error Handling
 
-	new_sphere->center[X] = center[X];
-	new_sphere->center[Y] = center[Y];
-	new_sphere->center[Z] = center[Z];
-	new_sphere->radius = radius;
+	coords_interpreter(info[1], new_sphere->center);
+	coords_interpreter(info[2], &new_sphere->radius);
+	new_sphere->radius /= 2;
+	new_shape->shape = new_sphere;
 	add_back_shape(new_shape);
 }
 

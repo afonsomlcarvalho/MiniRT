@@ -35,17 +35,10 @@ void	draw_canvas()
 	}
 }
 
-int	main()
+int	main(int argc, char **argv)
 {
+	parser(argc, argv);
 	setup_scene();
-	setup_camera();
-	setup_viewport();
-
-	add_shape(SPHERE, 0x00ff0000, to_point(-2, 0, 5), 1);
-	add_shape(SPHERE, 0x000000ff, to_point(2, 0, 5), 1);
-	//add_shape(SPHERE, 0x0000ff00, to_point(1, 1, 5), 2);
-	add_plane(0x0023ab00, to_point(0, 1, 0), to_point(0, 1, 0));
-	//add_plane(0x00ffff00, to_point(0, 0, 10), to_point(-10, 0, -1));
 
 	draw_canvas();
 

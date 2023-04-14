@@ -25,7 +25,7 @@ int	trace_ray(float *p)
 		t = tmp->check_hit(tmp->shape, p);
 		if (t)
 		{
-			color = tmp->color;
+			color = rgb_to_color(tmp->color);
 			add_to_list(t, color, lst);
 		}
 		tmp = tmp->next;

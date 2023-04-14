@@ -23,10 +23,19 @@ enum e_type
 	PLANE
 };
 
+typedef	struct s_light
+{
+	float			brightness;
+	float			position[3];
+	int				type;
+	int				color;
+	struct s_light	*next;
+}	t_light;
+
 typedef struct s_sphere
 {
 	float	center[3];
-	int		radius;
+	float	radius;
 }	t_sphere;
 
 typedef struct s_plane
@@ -40,7 +49,7 @@ typedef struct s_shape
 	int				type;
 	void			*shape;
 	float			(*check_hit)(void *self, float point[3]);
-	int				color;
+	float			color[3];
 	struct s_shape	*next;
 }	t_shape;
 
@@ -58,7 +67,7 @@ typedef struct s_img
 typedef struct s_cam
 {
 	float	origin[3];
-	float	direcion[3];
+	float	direction[3];
 	int		fov;
 }	t_cam;
 
@@ -78,6 +87,7 @@ typedef struct s_scene
 	t_cam	camera;
 	t_vpt	viewport;
 	t_shape	*shapes;
+	t_light	*lights;
 }	t_scene;
 
 typedef struct s_aux
@@ -89,23 +99,31 @@ typedef struct s_aux
 
 extern t_scene scene;
 
+void	parser(int argc, char **argv);
+int		coords_interpreter(char *coords, float *point);
+void	free_array(char **array);
+void	parsing_error(char *str);
+int		rgb_to_color(float *rgb);
+void	light_setup(char **info, int flag);
 void	setup_scene(void);
-void	setup_camera(void);
+void	setup_camera(char **info);
 void	setup_viewport(void);
 void	canvas_to_viewport(int x, int y, float *p);
 int		trace_ray(float *p);
-void	add_shape(int type, int color, float *center, int radius);
 
 float	dot(float *v1, float *v2);
 void	vec(float *p1, float *p2, float *buff);
+float	solve_quadratic(float a, float b, float c);
+
 int		get_list_min(t_aux **lst);
 void	add_to_list(float t, int color, t_aux **lst);
 void	delete_list(t_aux **lst);
-float	solve_quadratic(float a, float b, float c);
+
+
 
 void	add_back_shape(t_shape *new_shape);
 
-void	add_sphere(int color, float *center, int radius);
+void	add_sphere(char **info);
 
 void	add_plane(int color, float *point, float *normal);
 

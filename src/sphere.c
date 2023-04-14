@@ -1,6 +1,6 @@
 #include "../inc/minirt.h"
 
-float	check_hit_sphere(void *self, float p[3])
+float	check_hit_sphere(void *self, float p[3], float origin[3], int flag)
 {
 	float		a;
 	float		b;
@@ -10,12 +10,13 @@ float	check_hit_sphere(void *self, float p[3])
 	t_sphere	*sphere;
 
 	sphere = (t_sphere *) self;
-	vec(scene.camera.origin, p, D);
+	vec(origin, p, D);
 	a = dot(D, D);
-	vec(sphere->center, scene.camera.origin, co);
+	vec(sphere->center, origin, co);
 	b = 2 * dot(co, D);
 	c = dot(co, co) - pow(sphere->radius, 2);
-	return (solve_quadratic(a, b, c));
+
+	return (solve_quadratic(a, b, c, flag));
 }
 
 void	add_sphere(char **info)

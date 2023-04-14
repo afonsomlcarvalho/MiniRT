@@ -1,19 +1,20 @@
 #include "../inc/minirt.h"
 
-float	check_hit_plane(void *self, float p[3])
+float	check_hit_plane(void *self, float p[3], float origin[3], int flag)
 {
 	t_plane	*plane;
 	float	t;
 	float	oq[3];
 	float	D[3];
 
+	(void)flag;
 	plane = (t_plane *) self;
-	vec(scene.camera.origin, p, D);
-	vec(scene.camera.origin, plane->point, oq);
+	vec(origin, p, D);
+	vec(origin, plane->point, oq);
 	if (dot(plane->normal, D) == 0)
 		return (0.0);
 	t = dot(plane->normal, oq) / dot(plane->normal, D);
-	if (t < 1)
+	if (!flag && t < 1)
 		return (0.0);
 	return (t);
 }

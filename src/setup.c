@@ -42,7 +42,7 @@ float	to_rad(int deg)
 void	setup_viewport(void)
 {
 	scene.viewport.distance = 1;
-	scene.viewport.width = 2 * scene.viewport.distance * tan(to_rad(scene.camera.fov) / 2);
+	scene.viewport.width = 2 * scene.viewport.distance * tan(to_rad(scene.camera.fov / 2));
 	scene.viewport.height = scene.viewport.width * HEIGHT / WIDTH;
 	//scene.viewport.width = 1;
 	//scene.viewport.height = 1;
@@ -51,8 +51,7 @@ void	setup_viewport(void)
 /* Maps point (X, Y) to the correponding point in viewport */
 void	canvas_to_viewport(int x, int y, float *p)
 {
-	p[X] = x * (scene.viewport.width / WIDTH);
-	p[Y] = -y * (scene.viewport.height / HEIGHT);
-	p[Z] = scene.viewport.distance;
+	p[X] = x * (scene.viewport.width / WIDTH) + scene.camera.origin[X];
+	p[Y] = -y * (scene.viewport.height / HEIGHT) + scene.camera.origin[Y];
+	p[Z] = scene.viewport.distance + scene.camera.origin[Z];
 }
-

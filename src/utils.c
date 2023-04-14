@@ -50,7 +50,7 @@ void	free_array(char **array)
 	array = NULL;
 }
 
-int	rgb_to_color(float *rgb)
+int	rgb_to_color(float *rgb, float *light)
 {
 	int		i;
 	int		color;
@@ -61,7 +61,7 @@ int	rgb_to_color(float *rgb)
 	{
 		if (rgb[i] < 0 || rgb[i] > 255)
 			return (0);
-		color += rgb[i] * pow(16, 4 - 2 * i);
+		color += rgb[i] * light[i] * pow(16, 4 - 2 * i);
 		i++;
 	}
 	return (color);

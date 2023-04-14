@@ -26,6 +26,8 @@ void	parser(int argc, char **argv)
 			add_sphere(info);
 		else if (!ft_strncmp("A", info[0], ft_strlen(info[0])) || !ft_strncmp("L", info[0], ft_strlen(info[0])))
 			light_setup(info, info[0][0] == 'L');
+		else if (!ft_strncmp("pl", info[0], ft_strlen(info[0])))
+			add_plane(info);
 		free_array(info);
 		free(line);
 		line = get_next_line(fd);

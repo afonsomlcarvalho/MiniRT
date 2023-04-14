@@ -25,7 +25,7 @@ void	light_setup(char **info, int flag)
 	coords_interpreter(info[1 + flag], &light->brightness);
 	if (light->brightness < 0 || light->brightness > 1)
 		parsing_error("Invalid brightness\n");
-	rgb_to_color(info[2 + flag], &light->color);
+	coords_interpreter(info[2 + flag], light->color);
 	light->type = flag;
 	light->next = NULL;
 	if (flag)

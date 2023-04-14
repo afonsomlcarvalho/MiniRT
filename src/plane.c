@@ -18,7 +18,7 @@ float	check_hit_plane(void *self, float p[3])
 	return (t);
 }
 
-void	add_plane(int color, float *point, float *normal)
+void	add_plane(char **info)
 {
 	t_shape		*new_shape;
 	t_plane		*new_plane;
@@ -28,7 +28,7 @@ void	add_plane(int color, float *point, float *normal)
 		return ;	//TODO: Error Handling
 
 	new_shape->type = PLANE;
-	new_shape->color = color;
+	coords_interpreter(info[3], new_shape->color);
 	new_shape->check_hit = check_hit_plane;
 	new_shape->next = NULL;
 
@@ -37,12 +37,8 @@ void	add_plane(int color, float *point, float *normal)
 	if (!new_plane)
 		return ;	//TODO: Error Handling
 
-	new_plane->point[X] = point[X];
-	new_plane->point[Y] = point[Y];
-	new_plane->point[Z] = point[Z];
-	new_plane->normal[X] = normal[X];
-	new_plane->normal[Y] = normal[Y];
-	new_plane->normal[Z] = normal[Z];
+	coords_interpreter(info[1], new_plane->point);
+	coords_interpreter(info[2], new_plane->normal);
 	add_back_shape(new_shape);
 }
 

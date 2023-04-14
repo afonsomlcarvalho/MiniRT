@@ -28,7 +28,7 @@ typedef	struct s_light
 	float			brightness;
 	float			position[3];
 	int				type;
-	int				color;
+	float			color[3];
 	struct s_light	*next;
 }	t_light;
 
@@ -125,6 +125,6 @@ void	add_back_shape(t_shape *new_shape);
 
 void	add_sphere(char **info);
 
-void	add_plane(int color, float *point, float *normal);
+void	add_plane(char **info);
 
 #endif

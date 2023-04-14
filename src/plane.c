@@ -23,7 +23,7 @@ void	add_plane(char **info)
 	t_shape		*new_shape;
 	t_plane		*new_plane;
 
-	new_shape = malloc(sizeof(t_shape));
+	new_shape = ft_calloc(1, sizeof(t_shape));
 	if (!new_shape)
 		return ;	//TODO: Error Handling
 
@@ -32,7 +32,7 @@ void	add_plane(char **info)
 	new_shape->check_hit = check_hit_plane;
 	new_shape->next = NULL;
 
-	new_plane = (t_plane *)malloc(sizeof(t_plane));
+	new_plane = (t_plane *)ft_calloc(1, sizeof(t_plane));
 	new_shape->shape = new_plane;
 	if (!new_plane)
 		return ;	//TODO: Error Handling

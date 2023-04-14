@@ -1,99 +1,55 @@
 #include "../inc/minirt.h"
 
-t_all	*all(void)
-{
-	static t_all all;
+t_scene	scene;
 
-	return (&all);
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = img->address + (y * img->line_length + x * (img->bpp / 8));
+	*(unsigned int*)dst = color;
 }
 
-void	cam_setup()
+float	*to_point(int x, int y, int z)
 {
-	(all())->cam.position[X] = 0;
-	(all())->cam.position[Y] = 0;
-	(all())->cam.position[Z] = 0;
-	(all())->cam.direction[X] = 0;
-	(all())->cam.direction[Y] = 0;
-	(all())->cam.direction[Z] = 1;
-	(all())->cam.FOV = 53;
+	static float point[3];
+	point[X] = x;
+	point[Y] = y;
+	point[Z] = z;
+	return (point);
 }
 
-void	viewport_setup()
+void	draw_canvas()
 {
-	(all())->viewport.width = 2 * tan(((all())->cam.FOV * M_PI / 180) / 2);
-	(all())->viewport.height = (all())->viewport.width * HEIGHT / WIDTH;
-}
+	float	p[3];
+	int		color;
 
-float	canva_to_vp(int x, int y, int flag)
-{
-	float	coords[3];
-
-	coords[X] = x * ((all())->viewport.width / WIDTH);
-	coords[Y] = y * ((all())->viewport.height / HEIGHT);
-	coords[Z] = 1; 
-
-	return (coords[flag]);
-}
-
-int	get_ray_color(int x, int y)
-{
-	float	vector[3];
-	float	point[3];
-	int	t;
-	t_object	*cur;
-
-	vector[X] = canva_to_vp(x, y, X) - (all())->cam.position[X];
-	vector[Y] = canva_to_vp(x, y, Y) - (all())->cam.position[Y];
-	vector[Z] = canva_to_vp(x, y, Z) - (all())->cam.position[Z];
-	t = 1;
-	while (t < 1000)
+	for (int x = -WIDTH/2; x < WIDTH/2; x++)
 	{
-		point[X] = (all())->cam.position[X] + t * (vector[X] - (all())->cam.position[X]);
-		point[Y] = (all())->cam.position[Y] + t * (vector[Y] - (all())->cam.position[Y]);
-		point[Z] = (all())->cam.position[Z] + t * (vector[Z] - (all())->cam.position[Z]);
-		cur = (all())->objects;
-		while (cur)
+		for (int y = -HEIGHT/2; y < HEIGHT/2; y++)
 		{
-			if (cur->is_object(cur, point[X], point[Y], point[Z]))
-				return (cur->color);
-			cur = cur->next;
+			canvas_to_viewport(x, y, p);
+			color = trace_ray(p);
+			my_mlx_pixel_put(&scene.img, x + WIDTH/2, y + HEIGHT/2, color);
 		}
-		t++;
-	}
-	return (0xffffffff);
-}
-
-void	draw_canva()
-{
-	int	x;
-	int	y;
-
-	y = -(HEIGHT / 2);
-	while (y < HEIGHT / 2)
-	{
-		x = -(WIDTH / 2);
-		while (x < WIDTH / 2)
-		{
-			my_mlx_pixel_put(&(all())->canva, x + WIDTH / 2, y + HEIGHT / 2, get_ray_color(x, -y));
-			x++;
-		}
-		y++;
 	}
 }
 
 int	main()
 {
-	(all())->mlx = mlx_init();
-	(all())->wind = mlx_new_window((all())->mlx, WIDTH, HEIGHT, "MiniRT");
-	(all())->canva.img = mlx_new_image((all())->mlx, WIDTH, HEIGHT);
-	(all())->canva.addr = mlx_get_data_addr((all())->canva.img, &(all())->canva.bpp, &(all())->canva.ll, &(all())->canva.endian);
-	cam_setup();
-	viewport_setup();
-	add_sphere(-2, 0, 3, 1, 0x0000ff00);
-	add_sphere(0, 0, 10, 1, 0x00ff0000);
-	add_sphere(2, 0, 3, 1, 0x000000ff);
-	// add_plane(0, 0, 1, 1, 0, 1, 0x00ffff00);
-	draw_canva();
-	mlx_put_image_to_window((all())->mlx, (all())->wind, (all())->canva.img, 0, 0);
-	mlx_loop((all())->mlx);
+	setup_scene();
+	setup_camera();
+	setup_viewport();
+
+	add_shape(SPHERE, 0x00ff0000, to_point(-2, 0, 5), 1);
+	add_shape(SPHERE, 0x000000ff, to_point(2, 0, 5), 1);
+	//add_shape(SPHERE, 0x0000ff00, to_point(1, 1, 5), 2);
+	add_plane(0x0023ab00, to_point(0, 1, 0), to_point(0, 1, 0));
+	//add_plane(0x00ffff00, to_point(0, 0, 10), to_point(-10, 0, -1));
+
+	draw_canvas();
+
+	mlx_put_image_to_window(scene.mlx, scene.win, scene.img.img_ptr, 0, 0);
+	mlx_loop(scene.mlx);
+	return (0);
 }

@@ -1,70 +1,112 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "../lib/libft/inc/libft.h"
-# include "../lib/mlx_linux/mlx.h"
-# include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <unistd.h>
 
-# define X 0
-# define Y 1
-# define Z 2
+#include "../lib/libft/inc/libft.h"
+#include "../lib/mlx_linux/mlx.h"
 
-# define WIDTH 400
-# define HEIGHT 400
+# define X	0
+# define Y	1
+# define Z	2
 
-typedef struct s_object
+# define WIDTH	1080
+# define HEIGHT	1080
+
+enum e_type
 {
-	int			color;
-	float		point[3];
-	float		radius;
-	float		height;
-	float		vector[3];
-	int			(*is_object)(struct s_object *self, float x, float y, float z);
-	struct s_object	*next;
-}				t_object;
+	SPHERE,
+	CILINDER,
+	PLANE
+};
+
+typedef struct s_sphere
+{
+	float	center[3];
+	int		radius;
+}	t_sphere;
+
+typedef struct s_plane
+{
+	float	point[3];
+	float	normal[3];
+}	t_plane;
+
+typedef struct s_shape
+{
+	int				type;
+	void			*shape;
+	float			(*check_hit)(void *self, float point[3]);
+	int				color;
+	struct s_shape	*next;
+}	t_shape;
 
 typedef struct s_img
 {
-	void	*img;
+	void	*img_ptr;
+	char	*address;
+	int		bpp;
+	int		line_length;
+	int		endian;
 	int		width;
 	int		height;
-	char	*path;
-	char	*addr;
-	int		bpp;
-	int		ll;
-	int		endian;
-}				t_img;
+}	t_img;
 
-typedef	struct	s_cam
+typedef struct s_cam
 {
-	float	position[3];
-	float	direction[3];
-	int		FOV;
-}				t_cam;
+	float	origin[3];
+	float	direcion[3];
+	int		fov;
+}	t_cam;
 
-typedef	struct	s_viewport
+typedef struct s_vpt
 {
-	float	width;
-	float	height;
-}				t_viewport;
+	float		height;
+	float		width;
+	float		distance;
+}	t_vpt;
 
-typedef struct	s_all
+typedef struct s_scene
 {
-	void		*mlx;
-	void		*wind;
-	t_img		canva;
-	t_cam		cam;
-	t_viewport	viewport;
-	t_object	*objects;
-}				t_all;
+	void	*mlx;
+	void	*win;
+	t_img	img;
 
+	t_cam	camera;
+	t_vpt	viewport;
+	t_shape	*shapes;
+}	t_scene;
 
-t_all	*all(void);
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-void	add_sphere(float x, float y, float z, float radius, int color);
-void	add_plane(float x, float y, float z, float vector_x, float vector_y, float vector_z, int color);
+typedef struct s_aux
+{
+	float			t;
+	int				color;
+	struct s_aux	*next;
+}	t_aux;
+
+extern t_scene scene;
+
+void	setup_scene(void);
+void	setup_camera(void);
+void	setup_viewport(void);
+void	canvas_to_viewport(int x, int y, float *p);
+int		trace_ray(float *p);
+void	add_shape(int type, int color, float *center, int radius);
+
+float	dot(float *v1, float *v2);
+void	vec(float *p1, float *p2, float *buff);
+int		get_list_min(t_aux **lst);
+void	add_to_list(float t, int color, t_aux **lst);
+void	delete_list(t_aux **lst);
+float	solve_quadratic(float a, float b, float c);
+
+void	add_back_shape(t_shape *new_shape);
+
+void	add_sphere(int color, float *center, int radius);
+
+void	add_plane(int color, float *point, float *normal);
+
 #endif

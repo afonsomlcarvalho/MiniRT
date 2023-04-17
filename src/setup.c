@@ -33,7 +33,7 @@ void	setup_camera(char **info)
 }
 
 /* Converts degrees to radians */
-float	to_rad(int deg)
+double	to_rad(int deg)
 {
 	return (deg * M_PI / 180);
 }
@@ -49,7 +49,7 @@ void	setup_viewport(void)
 }
 
 /* Maps point (X, Y) to the correponding point in viewport */
-void	canvas_to_viewport(int x, int y, float *p)
+void	canvas_to_viewport(int x, int y, double *p)
 {
 	p[X] = x * (scene.viewport.width / WIDTH) + scene.camera.origin[X];
 	p[Y] = -y * (scene.viewport.height / HEIGHT) + scene.camera.origin[Y];

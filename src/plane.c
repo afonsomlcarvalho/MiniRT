@@ -1,11 +1,11 @@
 #include "../inc/minirt.h"
 
-float	check_hit_plane(void *self, float p[3], float origin[3], int flag)
+double	check_hit_plane(void *self, double p[3], double origin[3], int flag)
 {
 	t_plane	*plane;
-	float	t;
-	float	oq[3];
-	float	D[3];
+	double	t;
+	double	oq[3];
+	double	D[3];
 
 	(void)flag;
 	plane = (t_plane *) self;

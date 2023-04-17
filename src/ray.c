@@ -2,20 +2,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	get_point(int t, float *vec, float *p)
+void	get_point(int t, double *vec, double *p)
 {
 	p[X] = scene.camera.origin[X] + t * (vec[X] - scene.camera.origin[X]);
 	p[Y] = scene.camera.origin[Y] + t * (vec[Y] - scene.camera.origin[Y]);
 	p[Z] = scene.camera.origin[Z] + t * (vec[Z] - scene.camera.origin[Z]);
 }
 
-int	trace_ray(float *p)
+int	trace_ray(double *p)
 {
-	float	t;
+	double	t;
 	t_aux	**lst;
 	t_shape	*tmp;
 	int		color;
-	float	light[3];
+	double	light[3];
 	
 	lst = (t_aux **)ft_calloc(1, sizeof(t_aux));
 	if (!lst)

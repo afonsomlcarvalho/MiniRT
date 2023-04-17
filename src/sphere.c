@@ -1,12 +1,12 @@
 #include "../inc/minirt.h"
 
-float	check_hit_sphere(void *self, float p[3], float origin[3], int flag)
+double	check_hit_sphere(void *self, double p[3], double origin[3], int flag)
 {
-	float		a;
-	float		b;
-	float		c;
-	float		D[3];
-	float		co[3];
+	double		a;
+	double		b;
+	double		c;
+	double		D[3];
+	double		co[3];
 	t_sphere	*sphere;
 
 	sphere = (t_sphere *) self;
@@ -15,8 +15,6 @@ float	check_hit_sphere(void *self, float p[3], float origin[3], int flag)
 	vec(sphere->center, origin, co);
 	b = 2 * dot(co, D);
 	c = dot(co, co) - pow(sphere->radius, 2);
-	if (flag == 2)
-		printf("a: %f, b: %f, c: %f\n", a, b, c);
 
 	return (solve_quadratic(a, b, c, flag));
 }
@@ -45,4 +43,3 @@ void	add_sphere(char **info)
 	new_shape->shape = new_sphere;
 	add_back_shape(new_shape);
 }
-

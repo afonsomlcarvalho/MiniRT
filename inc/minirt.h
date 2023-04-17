@@ -19,37 +19,45 @@
 enum e_type
 {
 	SPHERE,
-	CILINDER,
+	CYLLINDER,
 	PLANE
 };
 
 typedef	struct s_light
 {
-	float			brightness;
-	float			position[3];
+	double			brightness;
+	double			position[3];
 	int				type;
-	float			color[3];
+	double			color[3];
 	struct s_light	*next;
 }	t_light;
 
 typedef struct s_sphere
 {
-	float	center[3];
-	float	radius;
+	double	center[3];
+	double	radius;
 }	t_sphere;
 
 typedef struct s_plane
 {
-	float	point[3];
-	float	normal[3];
+	double	point[3];
+	double	normal[3];
 }	t_plane;
+
+typedef struct s_cyllinder
+{
+	double	center[3];
+	double	radius;
+	double	axis[3];
+	double height;
+}	t_cyllinder;
 
 typedef struct s_shape
 {
 	int				type;
 	void			*shape;
-	float			(*check_hit)(void *self, float point[3], float origin[3], int flag);
-	float			color[3];
+	double			(*check_hit)(void *self, double point[3], double origin[3], int flag);
+	double			color[3];
 	struct s_shape	*next;
 }	t_shape;
 
@@ -66,16 +74,16 @@ typedef struct s_img
 
 typedef struct s_cam
 {
-	float	origin[3];
-	float	direction[3];
+	double	origin[3];
+	double	direction[3];
 	int		fov;
 }	t_cam;
 
 typedef struct s_vpt
 {
-	float		height;
-	float		width;
-	float		distance;
+	double		height;
+	double		width;
+	double		distance;
 }	t_vpt;
 
 typedef struct s_scene
@@ -92,7 +100,7 @@ typedef struct s_scene
 
 typedef struct s_aux
 {
-	float			t;
+	double			t;
 	int				color;
 	struct s_aux	*next;
 }	t_aux;
@@ -100,24 +108,24 @@ typedef struct s_aux
 extern t_scene scene;
 
 void	parser(int argc, char **argv);
-int		coords_interpreter(char *coords, float *point);
+int		coords_interpreter(char *coords, double *point);
 void	free_array(char **array);
 void	parsing_error(char *str);
-int		rgb_to_color(float *rgb, float *light);
+int		rgb_to_color(double *rgb, double *light);
 void	light_setup(char **info, int flag);
-void	determine_light(float *light, float t, float *p);
+void	determine_light(double *light, double t, double *p);
 void	setup_scene(void);
 void	setup_camera(char **info);
 void	setup_viewport(void);
-void	canvas_to_viewport(int x, int y, float *p);
-int		trace_ray(float *p);
+void	canvas_to_viewport(int x, int y, double *p);
+int		trace_ray(double *p);
 
-float	dot(float *v1, float *v2);
-void	vec(float *p1, float *p2, float *buff);
-float	solve_quadratic(float a, float b, float c, int flag);
+double	dot(double *v1, double *v2);
+void	vec(double *p1, double *p2, double *buff);
+double	solve_quadratic(double a, double b, double c, int flag);
 
 int		get_list_min(t_aux **lst);
-void	add_to_list(float t, int color, t_aux **lst);
+void	add_to_list(double t, int color, t_aux **lst);
 void	delete_list(t_aux **lst);
 
 
@@ -127,5 +135,7 @@ void	add_back_shape(t_shape *new_shape);
 void	add_sphere(char **info);
 
 void	add_plane(char **info);
+
+void	add_cyllinder(char **info);
 
 #endif

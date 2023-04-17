@@ -1,9 +1,9 @@
 #include "../inc/minirt.h"
 
-/* Returns the color of the smalles float of LST */
+/* Returns the color of the smalles double of LST */
 int	get_list_min(t_aux **lst)
 {
-	float	min;
+	double	min;
 	int		color;
 	t_aux	*tmp;
 
@@ -25,7 +25,7 @@ int	get_list_min(t_aux **lst)
 }
 
 /* Adds a node with the value T to t_aux LST */
-void	add_to_list(float t, int color, t_aux **lst)
+void	add_to_list(double t, int color, t_aux **lst)
 {
 	t_aux	*new;
 	t_aux	*tmp;

@@ -33,32 +33,32 @@ void	light_setup(char **info, int flag)
 	add_back_light(light);
 }
 
-void	find_point(float t, float *p, float *buf)
+void	find_point(double t, double *p, double *buf)
 {
 	buf[X] = scene.camera.origin[X] + t * (p[X] - scene.camera.origin[X]);
 	buf[Y] = scene.camera.origin[Y] + t * (p[Y] - scene.camera.origin[Y]);
 	buf[Z] = scene.camera.origin[Z] + t * (p[Z] - scene.camera.origin[Z]);
 }
 
-/* void new_point(t_light *light, float *colision)
+/* void new_point(t_light *light, double *colision)
 {
 	colision[X] = colision[X] + 0.1 * (light->position[X] - colision[X]);
 	colision[Y] = colision[Y] + 0.1 * (light->position[Y] - colision[Y]);
 	colision[Z] = colision[Z] + 0.1 * (light->position[Z] - colision[Z]);
 } */
 
-int	check_all(t_light *light, float *colision)
+int	check_all(t_light *light, double *colision)
 {
 	t_shape	*cur;
 
 	cur = scene.shapes;
 	while (cur)
 	{
-		if (colision[0] == -2 && colision[1] == 0 && colision[2] == 3)
-			printf("%f\n", cur->check_hit(cur->shape, colision, light->position, 2));
-		if (cur->check_hit(cur->shape, colision, light->position, 1) < 1.0 && cur->check_hit(cur->shape, colision,light->position, 1) > 0.0)
+		if (colision[0] == -1.042889 && colision[1] == -0.067166 && colision[2] == 3.718171)
+			printf("t: %lf\n", cur->check_hit(cur->shape, colision, light->position, 2));
+		if (cur->check_hit(cur->shape, colision, light->position, 1) < 0.999999999 && cur->check_hit(cur->shape, colision,light->position, 1) > 0)
 		{
-			printf("x: %f y: %f z: %f\n", colision[0], colision[1], colision[2]);
+			// printf("t: %lf\n", cur->check_hit(cur->shape, colision, light->position, 2));
 			return (0);
 		}
 		cur = cur->next;
@@ -66,10 +66,10 @@ int	check_all(t_light *light, float *colision)
 	return (1);
 }
 
-void	determine_light(float *light, float t, float *p)
+void	determine_light(double *light, double t, double *p)
 {
 	t_light	*cur;
-	float	colision[3];
+	double	colision[3];
 	int	i;
 
 	light[0] = 0;

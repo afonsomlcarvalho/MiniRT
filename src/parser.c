@@ -28,6 +28,8 @@ void	parser(int argc, char **argv)
 			light_setup(info, info[0][0] == 'L');
 		else if (!ft_strncmp("pl", info[0], ft_strlen(info[0])))
 			add_plane(info);
+		else if (!ft_strncmp("cy", info[0], ft_strlen(info[0])))
+			add_cyllinder(info);
 		free_array(info);
 		free(line);
 		line = get_next_line(fd);

@@ -1,6 +1,6 @@
 #include "../inc/minirt.h"
 
-int	coords_interpreter(char *coords, float *point)
+int	coords_interpreter(char *coords, double *point)
 {
 	int	i;
 	int	axis;
@@ -50,7 +50,7 @@ void	free_array(char **array)
 	array = NULL;
 }
 
-int	rgb_to_color(float *rgb, float *light)
+int	rgb_to_color(double *rgb, double *light)
 {
 	int		i;
 	int		color;

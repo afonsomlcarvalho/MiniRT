@@ -10,9 +10,9 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-float	*to_point(int x, int y, int z)
+double	*to_point(int x, int y, int z)
 {
-	static float point[3];
+	static double point[3];
 	point[X] = x;
 	point[Y] = y;
 	point[Z] = z;
@@ -21,7 +21,7 @@ float	*to_point(int x, int y, int z)
 
 void	draw_canvas()
 {
-	float	p[3];
+	double	p[3];
 	int		color;
 
 	for (int x = -WIDTH/2; x < WIDTH/2; x++)

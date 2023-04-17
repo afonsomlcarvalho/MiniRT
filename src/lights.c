@@ -54,9 +54,13 @@ int	check_all(t_light *light, float *colision)
 	cur = scene.shapes;
 	while (cur)
 	{
-		// printf("%f\n", cur->check_hit(cur, light->position, colision, 1));
-		if (cur->check_hit(cur, light->position, colision, 1) < 1.0 && cur->check_hit(cur, light->position, colision, 1) > 0.0)
+		if (colision[0] == -2 && colision[1] == 0 && colision[2] == 3)
+			printf("%f\n", cur->check_hit(cur->shape, colision, light->position, 2));
+		if (cur->check_hit(cur->shape, colision, light->position, 1) < 1.0 && cur->check_hit(cur->shape, colision,light->position, 1) > 0.0)
+		{
+			printf("x: %f y: %f z: %f\n", colision[0], colision[1], colision[2]);
 			return (0);
+		}
 		cur = cur->next;
 	}
 	return (1);
@@ -87,6 +91,6 @@ void	determine_light(float *light, float t, float *p)
 	while (++i < 3)
 	{
 		if (light[i] > 1)
-			light[i] += cur->brightness * cur->color[i] / 255;
+			light[i] = 1;
 	}
 }

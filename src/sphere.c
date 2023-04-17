@@ -15,6 +15,8 @@ float	check_hit_sphere(void *self, float p[3], float origin[3], int flag)
 	vec(sphere->center, origin, co);
 	b = 2 * dot(co, D);
 	c = dot(co, co) - pow(sphere->radius, 2);
+	if (flag == 2)
+		printf("a: %f, b: %f, c: %f\n", a, b, c);
 
 	return (solve_quadratic(a, b, c, flag));
 }

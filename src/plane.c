@@ -1,5 +1,21 @@
 #include "../inc/minirt.h"
 
+int	check_side(double *light, t_plane *plane)
+{
+	double	c_vector[3];
+	double	l_vector[3];
+	double	c_dot;
+	double	l_dot;
+
+	vec(plane->point, scene.camera.origin, c_vector);
+	vec(plane->point, light, l_vector);
+	c_dot = dot(plane->normal, c_vector);
+	l_dot = dot(plane->normal, l_vector);
+	if ((c_dot > 0 && l_dot < 0) || (c_dot < 0 && l_dot > 0))
+		return (1);
+	return (0);
+}
+
 double	check_hit_plane(void *self, double p[3], double origin[3], int flag)
 {
 	t_plane	*plane;
@@ -16,6 +32,8 @@ double	check_hit_plane(void *self, double p[3], double origin[3], int flag)
 	t = dot(plane->normal, oq) / dot(plane->normal, D);
 	if (!flag && t < 1)
 		return (0.0);
+	if (flag && check_side(origin, plane))
+		return (0.2);
 	return (t);
 }
 

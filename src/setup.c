@@ -41,11 +41,11 @@ double	to_rad(int deg)
 /* Sets up the viewport taking into account the FOV */
 void	setup_viewport(void)
 {
-	scene.viewport.distance = 1;
+	static double origin[3];
+
+	scene.viewport.distance = distance(origin, scene.camera.direction);
 	scene.viewport.width = 2 * scene.viewport.distance * tan(to_rad(scene.camera.fov / 2));
 	scene.viewport.height = scene.viewport.width * HEIGHT / WIDTH;
-	//scene.viewport.width = 1;
-	//scene.viewport.height = 1;
 }
 
 /* Maps point (X, Y) to the correponding point in viewport */

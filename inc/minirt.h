@@ -123,6 +123,7 @@ int		trace_ray(double *p);
 double	dot(double *v1, double *v2);
 void	vec(double *p1, double *p2, double *buff);
 double	solve_quadratic(double a, double b, double c, int flag);
+double	distance(double *p1, double *p2);
 
 int		get_list_min(t_aux **lst);
 void	add_to_list(double t, int color, t_aux **lst);

@@ -55,3 +55,7 @@ double	solve_quadratic(double a, double b, double c, int flag)
 	return (min(result1, result2));
 }
 
+double	distance(double *p1, double *p2)
+{
+	return (sqrt(pow(p1[X] - p2[X], 2) + pow(p1[Y] - p2[Y], 2) + pow(p1[Z] - p2[Z], 2)));
+}

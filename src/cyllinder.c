@@ -18,39 +18,106 @@ double	check_height(t_cyllinder *self, double t, double *origin, double *vector)
 	return (t);
 }
 
-/* void	rotate(t_cyllinder *self, double *D, double *V)
+double	check_width(t_cyllinder *self, double t, double *origin, double *vector)
 {
-	double angle;
-	double orientation;
-	double origin;
+	double	point[3];
+	double	v[3];
+	t_plane	*top;
+	t_plane	*down;
 
-	orientation[X] = 0;
-	orientation[Y] = 1;
-	orientation[Z] = 0;
-	origin[X] = 0;
-	origin[Y] = 0;
-	origin[Z] = 0;
-	angle = acos(dot(self->axis, orientation) / (distance(origin, self->axis) * distance(origin, orientation)));
-} */
+	printf("%f\n", t);
+	top = (t_plane *)self->top_cap;
+	down = (t_plane *)self->under_cap;
+	point[X] = origin[X] + t * vector[X];
+	point[Y] = origin[Y] + t * vector[Y];
+	point[Z] = origin[Z] + t * vector[Z];
+	v[X] = top->point[X] - point[X];
+	v[Y] = top->point[Y] - point[Y];
+	v[Z] = top->point[Z] - point[Z];
+	if (dot(v, self->axis))
+	{
+		v[X] = down->point[X] - point[X];
+		v[Y] = down->point[Y] - point[Y];
+		v[Z] = down->point[Z] - point[Z];
+	}
+	return (t * (vector_size(v) <= self->radius));
+}
+
+double	find_t(double *t)
+{
+	if (t[0] <= 0)
+	{
+		if (t[1] <= 0 || t[2] <= 0)
+			return (t[(t[2] > 0) + 1]);
+		return (min(t[1], t[2]));
+	}
+	if (t[1] <= 0)
+	{
+		if (t[0] <= 0 || t[2] <= 0)
+			return (t[(t[2] > 0) * 2]);
+		return (min(t[0], t[2]));
+	}
+	if (t[2] <= 0)
+	{
+		if (t[1] <= 0 || t[0] <= 0)
+			return (t[(t[1] > 0)]);
+		return (min(t[1], t[2]));
+	}
+	return (min(min(t[1], t[0]), t[2]));
+}
 
 double	check_hit_cyllinder(void *self, double p[3], double origin[3], int flag)
 {
 	double		a;
 	double		b;
 	double		c;
-	double		D[3];
-	double		V[3];
 	t_cyllinder	*cyllinder;
+	double		v[3];
+	double		d[3];
+	double		t[3];
 
 	cyllinder = (t_cyllinder *) self;
-	vec(origin, p, D);
-	vec(cyllinder->center, origin, V);
+	vec(origin, p, v);
+	vec(cyllinder->center, origin, d);
+	a = dot(v, v) * pow(vector_size(cyllinder->axis), 2) - pow(dot(v, cyllinder->axis), 2);
+	b = 2 * dot(d, v) * pow(vector_size(cyllinder->axis), 2) - 2 * dot(v, cyllinder->axis) * dot(d, cyllinder->axis);
+	c = (dot(d, d) - pow(cyllinder->radius, 2)) * pow(vector_size(cyllinder->axis), 2) - pow(dot(d, cyllinder->axis), 2);
+	t[0] = check_height(cyllinder, solve_quadratic(a, b, c, flag), origin, v);
+	// t[1] = check_width(cyllinder, check_hit_plane(cyllinder->top_cap, p, origin, flag), origin, v);
+	// t[2] = check_width(cyllinder, check_hit_plane(cyllinder->under_cap, p, origin, flag), origin, v);
+	// return (find_t(t));
+	return (t[0]);
+}
 
-	a = dot(D, D) - pow(dot(D, cyllinder->axis), 2);
-	b = 2 * (dot(D, V) - (dot(D, cyllinder->axis) * dot(V, cyllinder->axis)));
-	c = dot(V, V) - pow(dot(V, cyllinder->axis), 2) - pow(cyllinder->radius, 2);
+void	add_caps(t_cyllinder *self)
+{
+	int		i;
+	double	t[2];
+	double	quadratic[3];
+	t_plane	*top_cap;
+	t_plane	*down_cap;
 
-	return (check_height(cyllinder, solve_quadratic(a, b, c, flag), origin, D));
+	top_cap = (t_plane *)ft_calloc(1, sizeof(t_plane));
+	down_cap = (t_plane *)ft_calloc(1, sizeof(t_plane));
+	i = -1;
+	while (++i < 3)
+	{
+		top_cap->normal[i] = self->axis[i];
+		down_cap->normal[i] = self->axis[i];
+	}
+	quadratic[0] = dot(self->axis, self->axis);
+	quadratic[1] = 2 * dot(self->axis, self->center);
+	quadratic[2] = dot(self->center, self->center) - (pow(self->height, 2) / 4);
+	t[0] = (-quadratic[1] - sqrt(pow(quadratic[1], 2) - 4 * quadratic[0] * quadratic[2])) / (2 * quadratic[0]);
+	t[1] = (-quadratic[1] + sqrt(pow(quadratic[1], 2) - 4 * quadratic[0] * quadratic[2])) / (2 * quadratic[0]);
+	i = -1;
+	while (++i < 2)
+	{
+		down_cap->normal[i] = self->center[i] + t[0] * self->axis[i];
+		top_cap->normal[i] = self->center[i] + t[1] * self->axis[i];
+	}
+	self->top_cap = top_cap;
+	self->under_cap = down_cap;
 }
 
 void	add_cyllinder(char **info)
@@ -76,6 +143,7 @@ void	add_cyllinder(char **info)
 	coords_interpreter(info[2], new_cyllinder->axis);
 	coords_interpreter(info[4], &new_cyllinder->height);
 	new_cyllinder->radius /= 2;
+	add_caps(new_cyllinder);
 	new_shape->shape = new_cyllinder;
 	add_back_shape(new_shape);
 }

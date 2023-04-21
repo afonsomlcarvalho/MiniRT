@@ -49,7 +49,9 @@ typedef struct s_cyllinder
 	double	center[3];
 	double	radius;
 	double	axis[3];
-	double height;
+	double 	height;
+	void	*top_cap;
+	void	*under_cap;
 }	t_cyllinder;
 
 typedef struct s_shape
@@ -119,23 +121,31 @@ void	setup_camera(char **info);
 void	setup_viewport(void);
 void	canvas_to_viewport(int x, int y, double *p);
 int		trace_ray(double *p);
+double	to_rad(int deg);
+double	to_deg(double rad);
 
 double	dot(double *v1, double *v2);
 void	vec(double *p1, double *p2, double *buff);
 double	solve_quadratic(double a, double b, double c, int flag);
 double	distance(double *p1, double *p2);
+double	vector_size(double *vector);
+double	min(double n1, double n2);
 
 int		get_list_min(t_aux **lst);
 void	add_to_list(double t, int color, t_aux **lst);
 void	delete_list(t_aux **lst);
 
-
+void	x_rotate(double *vector, double angle);
+void	y_rotate(double *vector, double angle);
+void	z_rotate(double *vector, double angle);
+void	rotate(double *vector, double *angle);
 
 void	add_back_shape(t_shape *new_shape);
 
 void	add_sphere(char **info);
 
 void	add_plane(char **info);
+double	check_hit_plane(void *self, double p[3], double origin[3], int flag);
 
 void	add_cyllinder(char **info);
 

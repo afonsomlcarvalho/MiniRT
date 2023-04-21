@@ -59,3 +59,8 @@ double	distance(double *p1, double *p2)
 {
 	return (sqrt(pow(p1[X] - p2[X], 2) + pow(p1[Y] - p2[Y], 2) + pow(p1[Z] - p2[Z], 2)));
 }
+
+double	vector_size(double *vector)
+{
+	return (sqrt(pow(vector[X], 2) + pow(vector[Y], 2) + pow(vector[Z], 2)));
+}

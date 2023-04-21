@@ -38,6 +38,11 @@ double	to_rad(int deg)
 	return (deg * M_PI / 180);
 }
 
+double	to_deg(double rad)
+{
+	return (rad * 180 / M_PI);
+}
+
 /* Sets up the viewport taking into account the FOV */
 void	setup_viewport(void)
 {

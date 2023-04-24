@@ -47,9 +47,7 @@ double	to_deg(double rad)
 /* Sets up the viewport taking into account the FOV */
 void	setup_viewport(void)
 {
-	static double origin[3];
-
-	scene.viewport.distance = distance(origin, scene.camera.direction);
+	scene.viewport.distance = 1;
 	scene.viewport.width = 2 * scene.viewport.distance * tan(to_rad(scene.camera.fov / 2));
 	scene.viewport.height = scene.viewport.width * HEIGHT / WIDTH;
 }
@@ -57,7 +55,19 @@ void	setup_viewport(void)
 /* Maps point (X, Y) to the correponding point in viewport */
 void	canvas_to_viewport(int x, int y, double *p)
 {
+	double	angle[3];
+
 	p[X] = x * (scene.viewport.width / WIDTH) + scene.camera.origin[X];
 	p[Y] = -y * (scene.viewport.height / HEIGHT) + scene.camera.origin[Y];
 	p[Z] = scene.viewport.distance + scene.camera.origin[Z];
+	angle[0] = 0;
+	angle[1] = 0;
+	if (sqrt(pow(scene.camera.direction[Z], 2) + pow(scene.camera.direction[Y], 2)))
+		angle[0] = acos(scene.camera.direction[Z] / sqrt(pow(scene.camera.direction[Z], 2) + pow(scene.camera.direction[Y], 2)));
+	if (sqrt(pow(scene.camera.direction[Z], 2) + pow(scene.camera.direction[X], 2)))
+		angle[1] = acos(scene.camera.direction[Z] / sqrt(pow(scene.camera.direction[Z], 2) + pow(scene.camera.direction[X], 2)));
+	angle[2] = 0;
+	rotate(p, angle); 
+	if (x == 0 && y == 0)
+		printf("%lf %lf\n%lf %lf %lf\n", to_deg(angle[0]), to_deg(angle[1]), p[X], p[Y], p[Z]);
 }

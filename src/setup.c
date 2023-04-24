@@ -6,6 +6,7 @@ void	setup_scene(void)
 	scene.win = mlx_new_window(scene.mlx, WIDTH, HEIGHT, "test");
 	scene.img.img_ptr = mlx_new_image(scene.mlx, WIDTH, HEIGHT);
 	scene.img.address = mlx_get_data_addr(scene.img.img_ptr, &scene.img.bpp, &scene.img.line_length, &scene.img.endian);
+	scene.selected = NULL;
 	// scene.shapes = NULL;
 }
 

@@ -64,3 +64,10 @@ double	vector_size(double *vector)
 {
 	return (sqrt(pow(vector[X], 2) + pow(vector[Y], 2) + pow(vector[Z], 2)));
 }
+
+void	translate(double *point, double *vector)
+{
+	point[X] += vector[X];
+	point[Y] += vector[Y];
+	point[Z] += vector[Z];
+}

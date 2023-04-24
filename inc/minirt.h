@@ -98,6 +98,7 @@ typedef struct s_scene
 	t_vpt	viewport;
 	t_shape	*shapes;
 	t_light	*lights;
+	t_shape	*selected;
 }	t_scene;
 
 typedef struct s_aux
@@ -130,6 +131,7 @@ double	solve_quadratic(double a, double b, double c, int flag);
 double	distance(double *p1, double *p2);
 double	vector_size(double *vector);
 double	min(double n1, double n2);
+void	translate(double *point, double *vector);
 
 int		get_list_min(t_aux **lst);
 void	add_to_list(double t, int color, t_aux **lst);
@@ -148,5 +150,8 @@ void	add_plane(char **info);
 double	check_hit_plane(void *self, double p[3], double origin[3], int flag);
 
 void	add_cyllinder(char **info);
+void	substitute_caps(t_cyllinder *self);
+
+int		end();
 
 #endif

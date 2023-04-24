@@ -24,7 +24,7 @@ int	trace_ray(double *p)
 	while (tmp)
 	{
 		t = tmp->check_hit(tmp->shape, p, scene.camera.origin, 0);
-		if (t)
+		if (t > 0)
 		{
 			determine_light(light, t, p);
 			color = rgb_to_color(tmp->color, light);

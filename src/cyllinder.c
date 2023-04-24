@@ -34,7 +34,7 @@ double	check_width(t_cyllinder *self, double t, double *origin, double *vector)
 	v[X] = top->point[X] - point[X];
 	v[Y] = top->point[Y] - point[Y];
 	v[Z] = top->point[Z] - point[Z];
-	if (dot(v, self->axis))
+	if (dot(v, self->axis) > 0.0000001 && dot(v, self->axis) < -0.0000001)
 	{
 		v[X] = down->point[X] - point[X];
 		v[Y] = down->point[Y] - point[Y];
@@ -61,7 +61,7 @@ double	find_t(double *t)
 	{
 		if (t[1] <= 0 || t[0] <= 0)
 			return (t[(t[1] > 0)]);
-		return (min(t[1], t[2]));
+		return (min(t[1], t[0]));
 	}
 	return (min(min(t[1], t[0]), t[2]));
 }
@@ -151,3 +151,13 @@ void	add_cyllinder(char **info)
 	// printf("%lf %lf %lf\n%lf %lf %lf\n", ((t_plane *)(new_cyllinder->top_cap))->point[0], ((t_plane *)(new_cyllinder->top_cap))->point[1], ((t_plane *)(new_cyllinder->top_cap))->point[2], ((t_plane *)(new_cyllinder->under_cap))->point[0], ((t_plane *)(new_cyllinder->under_cap))->point[1], ((t_plane *)(new_cyllinder->under_cap))->point[2]);
 	add_back_shape(new_shape);
 }
+
+/* int	main()
+{
+	double	t[3];
+
+	t[0] = 0.002;
+	t[1] = -110;
+	t[2] = -10;
+	printf("%f\n", find_t(t));
+} */

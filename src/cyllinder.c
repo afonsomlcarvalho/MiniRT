@@ -1,5 +1,51 @@
 #include "../inc/minirt.h"
 
+int	check_plane(t_plane *plane, t_cyllinder *self, double *point, double *normal)
+{
+	double	vector[3];
+
+	vec(point, plane->point, vector);
+	if (dot(vector, plane->normal) < 0.0000001 && dot(vector, plane->normal) > -0.0000001)
+	{
+		vec(self->center, plane->point, vector);
+		normalize_vector(vector, normal);
+		return (1);
+	}
+	return (0);
+}
+
+void	side_normal(t_cyllinder *self, double *point, double *normal)
+{
+	double	k;
+	double	vector[3];
+	double	axis_point[3];
+
+	vec(point, self->center, vector);
+	k = -dot(vector, self->axis) / dot(self->axis, self->axis);
+	axis_point[X] = self->center[X] + k * self->axis[X];
+	axis_point[Y] = self->center[Y] + k * self->axis[Y];
+	axis_point[Z] = self->center[Z] + k * self->axis[Z];
+	vec(axis_point, point, vector);
+	normalize_vector(vector, normal);
+}
+
+void	get_normal_cyllinder(void *self, double t, double *p, double *normal)
+{
+	double		point[3];
+	t_cyllinder	*cyllinder;
+	t_plane		*top;
+	t_plane		*under;
+
+
+	cyllinder = (t_cyllinder *) self;
+	top = (t_plane *) cyllinder->top_cap;
+	under = (t_plane *) cyllinder->under_cap;
+	find_point(t, p, point);
+	if (check_plane(top, cyllinder, point, normal) || check_plane(under, cyllinder, point, normal))
+		return ;
+	side_normal(cyllinder, point, normal);
+}
+
 double	check_height(t_cyllinder *self, double t, double *origin, double *vector)
 {
 	double	point[3];
@@ -139,6 +185,7 @@ void	add_cyllinder(char **info)
 	new_shape->check_hit = check_hit_cyllinder;
 	new_shape->spec = DEF_SPEC;
 	new_shape->next = NULL;
+	new_shape->get_normal = get_normal_cyllinder;
 
 	new_cyllinder = (t_cyllinder *)ft_calloc(1, sizeof(t_cyllinder));
 	if (!new_cyllinder)

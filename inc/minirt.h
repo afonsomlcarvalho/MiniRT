@@ -148,7 +148,7 @@ double	solve_quadratic(double a, double b, double c, int flag);
 double	distance(double *p1, double *p2);
 double	vector_size(double *vector);
 double	min(double n1, double n2);
-void	normalize_vector(double *origin, double *destination, double *norm);
+void	normalize_vector(double *vector, double *norm);
 void	mult_vecs(double factor, double *vec, double *buff);
 void	subtract_vecs(double *v1, double *v2, double *buff);
 void	translate(double *point, double *vector);

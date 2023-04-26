@@ -2,16 +2,12 @@
 
 void	get_normal_plane(void *self, double t, double *p, double *normal)
 {
-	double		point[3];
 	t_plane		*plane;
 
 	(void) t;
 	(void) p;
 	plane = (t_plane *) self;
-	point[X] = 0;
-	point[Y] = 0;
-	point[Z] = 0;
-	normalize_vector(point, plane->normal, normal);
+	normalize_vector(plane->normal, normal);
 }
 
 int	check_side(double *light, t_plane *plane)

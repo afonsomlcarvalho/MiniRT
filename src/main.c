@@ -93,7 +93,7 @@ int	select_piece(int button, int x, int y)
 		scene.selected = 0;
 	else
 	{
-		while (cur && !scene.selected)
+		while (cur /* && !scene.selected */)
 		{
 			if (cur->check_hit(cur->shape, point, scene.camera.origin, 0) && (t == 0 || cur->check_hit(cur->shape, point, scene.camera.origin, 0) < t))
 			{

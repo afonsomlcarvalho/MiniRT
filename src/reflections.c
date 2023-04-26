@@ -10,6 +10,8 @@ void	diffuse_reflection(double *colision, double *normal, t_light *cur, double *
 
 	vec(colision, cur->position, L);
 	prod = dot(normal, L);
+	// if (colision[X] == 0 && colision[Y] == 0 && colision[Z] == 8)
+	// 		printf("colision: 0 0 8\ncur->position: %f %f %f\nnormal: %f %f %f\nprod: %f\n", cur->position[X], cur->position[Y], cur->position[Z], normal[X], normal[Y], normal[Z], prod);
 	if (prod > 0)
 	{
 		i = -1;

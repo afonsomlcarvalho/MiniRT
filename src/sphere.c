@@ -3,11 +3,13 @@
 void	get_normal_sphere(void *self, double t, double *p, double *normal)
 {
 	double		point[3];
+	double		vector[3];
 	t_sphere	*sphere;
 
 	sphere = (t_sphere *) self;
 	find_point(t, p, point);
-	normalize_vector(sphere->center, point, normal);
+	vec(sphere->center, point, vector);
+	normalize_vector(vector, normal);
 }
 
 double	check_hit_sphere(void *self, double p[3], double origin[3], int flag)

@@ -133,8 +133,9 @@ void	add_cyllinder(char **info)
 		return ;	//TODO: Error Handling
 
 	new_shape->type = CYLLINDER;
-	coords_interpreter(info[5], new_shape->color);
+	get_color(info[5], new_shape->color);
 	new_shape->check_hit = check_hit_cyllinder;
+	new_shape->spec = DEF_SPEC;
 	new_shape->next = NULL;
 
 	new_cyllinder = (t_cyllinder *)ft_calloc(1, sizeof(t_cyllinder));

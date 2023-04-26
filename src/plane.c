@@ -1,5 +1,19 @@
 #include "../inc/minirt.h"
 
+void	get_normal_plane(void *self, double t, double *p, double *normal)
+{
+	double		point[3];
+	t_plane		*plane;
+
+	(void) t;
+	(void) p;
+	plane = (t_plane *) self;
+	point[X] = 0;
+	point[Y] = 0;
+	point[Z] = 0;
+	normalize_vector(point, plane->normal, normal);
+}
+
 int	check_side(double *light, t_plane *plane)
 {
 	double	c_vector[3];
@@ -47,8 +61,10 @@ void	add_plane(char **info)
 		return ;	//TODO: Error Handling
 
 	new_shape->type = PLANE;
-	coords_interpreter(info[3], new_shape->color);
+	get_color(info[3], new_shape->color);
 	new_shape->check_hit = check_hit_plane;
+	new_shape->get_normal = get_normal_plane;
+	new_shape->spec = -1;
 	new_shape->next = NULL;
 
 	new_plane = (t_plane *)ft_calloc(1, sizeof(t_plane));

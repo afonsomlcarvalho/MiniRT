@@ -38,7 +38,12 @@ void	draw_canvas()
 
 void	apply_translation_and_rotation(t_shape *selected, double *vector, double *angle)
 {
-	if (selected->type == SPHERE)
+	if (!selected)
+	{
+		translate(scene.camera.origin, vector);
+		rotate(scene.camera.direction, angle);
+	}
+	else if (selected->type == SPHERE)
 		translate(((t_sphere *)(selected->shape))->center, vector);
 	else if (selected->type == CYLLINDER)
 	{
@@ -63,8 +68,6 @@ int	key_press(int keycode)
 
 	if (keycode == 65307)
 		end();
-	if (!scene.selected)
-		return (0);
 	vector[X] = ((keycode == 100) - (keycode == 97)) * 0.1;
 	vector[Y] = ((keycode == 119) - (keycode == 115)) * 0.1;
 	vector[Z] = ((keycode == 101) - (keycode == 113)) * 0.1;

@@ -55,19 +55,22 @@ void	setup_viewport(void)
 /* Maps point (X, Y) to the correponding point in viewport */
 void	canvas_to_viewport(int x, int y, double *p)
 {
-	double	angle[3];
+	double			width_vector[3];
+	double			height_vector[3];
+	static double	up[3];
 
-	p[X] = x * (scene.viewport.width / WIDTH) + scene.camera.origin[X];
-	p[Y] = -y * (scene.viewport.height / HEIGHT) + scene.camera.origin[Y];
-	p[Z] = scene.viewport.distance + scene.camera.origin[Z];
-	angle[0] = 0;
-	angle[1] = 0;
-	if (sqrt(pow(scene.camera.direction[Z], 2) + pow(scene.camera.direction[Y], 2)))
-		angle[0] = acos(scene.camera.direction[Z] / sqrt(pow(scene.camera.direction[Z], 2) + pow(scene.camera.direction[Y], 2)));
-	if (sqrt(pow(scene.camera.direction[Z], 2) + pow(scene.camera.direction[X], 2)))
-		angle[1] = acos(scene.camera.direction[Z] / sqrt(pow(scene.camera.direction[Z], 2) + pow(scene.camera.direction[X], 2)));
-	angle[2] = 0;
-	rotate(p, angle); 
-	if (x == 0 && y == 0)
-		printf("%lf %lf\n%lf %lf %lf\n", to_deg(angle[0]), to_deg(angle[1]), p[X], p[Y], p[Z]);
+	up[1] = 1;
+	cross_product(up, scene.camera.direction, width_vector);
+	if (!scene.camera.direction[X] && !scene.camera.direction[Z] && scene.camera.direction[Y])
+	{
+		width_vector[X] = 1;
+		width_vector[Y] = 0;
+		width_vector[Z] = 0;
+	}
+	cross_product(width_vector, scene.camera.direction, height_vector);
+	p[X] = scene.camera.origin[X] + scene.camera.direction[X] + (((double)x / WIDTH) * (scene.viewport.width / vector_size(width_vector))) * width_vector[X] + (((double)y / HEIGHT) * (scene.viewport.height / vector_size(height_vector))) * height_vector[X];
+	p[Y] = scene.camera.origin[Y] + scene.camera.direction[Y] + (((double)x / WIDTH) * (scene.viewport.width / vector_size(width_vector))) * width_vector[Y] + (((double)y / HEIGHT) * (scene.viewport.height / vector_size(height_vector))) * height_vector[Y];
+	p[Z] = scene.camera.origin[Z] + scene.camera.direction[Z] + (((double)x / WIDTH) * (scene.viewport.width / vector_size(width_vector))) * width_vector[Z] + (((double)y / HEIGHT) * (scene.viewport.height / vector_size(height_vector))) * height_vector[Z];
+	// if (x == 0 && y == 0)
+		// printf("Origin: %f %f %f\nDirection: %f %f %f\nPoint: %f %f %f\nWidth: %f %f %f\nHeight: %f %f %f\n    \n", scene.camera.origin[X],scene.camera.origin[Y],scene.camera.origin[Z],scene.camera.direction[X],scene.camera.direction[Y],scene.camera.direction[Z],p[X],p[Y],p[Z], width_vector[X], width_vector[Y], width_vector[Z], height_vector[X], height_vector[Y], height_vector[Z]);
 }

@@ -132,6 +132,7 @@ double	distance(double *p1, double *p2);
 double	vector_size(double *vector);
 double	min(double n1, double n2);
 void	translate(double *point, double *vector);
+void	cross_product(double *v1, double *v2, double *buf);
 
 int		get_list_min(t_aux **lst);
 void	add_to_list(double t, int color, t_aux **lst);

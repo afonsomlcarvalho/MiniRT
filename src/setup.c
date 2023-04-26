@@ -68,9 +68,9 @@ void	canvas_to_viewport(int x, int y, double *p)
 		width_vector[Z] = 0;
 	}
 	cross_product(width_vector, scene.camera.direction, height_vector);
-	p[X] = scene.camera.origin[X] + scene.camera.direction[X] + (((double)x / WIDTH) * (scene.viewport.width / vector_size(width_vector))) * width_vector[X] + (((double)y / HEIGHT) * (scene.viewport.height / vector_size(height_vector))) * height_vector[X];
-	p[Y] = scene.camera.origin[Y] + scene.camera.direction[Y] + (((double)x / WIDTH) * (scene.viewport.width / vector_size(width_vector))) * width_vector[Y] + (((double)y / HEIGHT) * (scene.viewport.height / vector_size(height_vector))) * height_vector[Y];
-	p[Z] = scene.camera.origin[Z] + scene.camera.direction[Z] + (((double)x / WIDTH) * (scene.viewport.width / vector_size(width_vector))) * width_vector[Z] + (((double)y / HEIGHT) * (scene.viewport.height / vector_size(height_vector))) * height_vector[Z];
+	p[X] = scene.camera.origin[X] + scene.camera.direction[X] + (((double)x / WIDTH) * (scene.viewport.width / vector_size(width_vector))) * width_vector[X] + (((double)-y / HEIGHT) * (scene.viewport.height / vector_size(height_vector))) * height_vector[X];
+	p[Y] = scene.camera.origin[Y] + scene.camera.direction[Y] + (((double)x / WIDTH) * (scene.viewport.width / vector_size(width_vector))) * width_vector[Y] + (((double)-y / HEIGHT) * (scene.viewport.height / vector_size(height_vector))) * height_vector[Y];
+	p[Z] = scene.camera.origin[Z] + scene.camera.direction[Z] + (((double)x / WIDTH) * (scene.viewport.width / vector_size(width_vector))) * width_vector[Z] + (((double)-y / HEIGHT) * (scene.viewport.height / vector_size(height_vector))) * height_vector[Z];
 	// if (x == 0 && y == 0)
 		// printf("Origin: %f %f %f\nDirection: %f %f %f\nPoint: %f %f %f\nWidth: %f %f %f\nHeight: %f %f %f\n    \n", scene.camera.origin[X],scene.camera.origin[Y],scene.camera.origin[Z],scene.camera.direction[X],scene.camera.direction[Y],scene.camera.direction[Z],p[X],p[Y],p[Z], width_vector[X], width_vector[Y], width_vector[Z], height_vector[X], height_vector[Y], height_vector[Z]);
 }

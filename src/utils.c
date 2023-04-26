@@ -36,6 +36,28 @@ int	coords_interpreter(char *coords, double *point)
 	return (1);
 }
 
+void	get_color(char *coords, int *colors)
+{
+	int		red;
+	int		green;
+	int		blue;
+	char	**arr;
+
+	arr = ft_split(coords, ',');
+	if (!arr)
+		return ;	// TODO: ERROR HANDLING
+	red = ft_atoi(arr[0]);
+	green = ft_atoi(arr[1]);
+	blue = ft_atoi(arr[2]);
+	if (red < 0 || red > 255 ||
+		green < 0 || green > 255 ||
+		blue < 0 || blue > 255)
+		return ;	// TODO: ERROR HANDLING
+	colors[0] = red;
+	colors[1] = green;
+	colors[2] = blue;
+}
+
 void	free_array(char **array)
 {
 	int	i;
@@ -50,19 +72,20 @@ void	free_array(char **array)
 	array = NULL;
 }
 
-int	rgb_to_color(double *rgb, double *light)
+int	rgb_to_color(int *rgb, double *light)
 {
-	int		i;
-	int		color;
+	int	red;
+	int	green;
+	int	blue;
 
-	i = 0;
-	color = 0;
-	while (i < 3)
-	{
-		if (rgb[i] < 0 || rgb[i] > 255)
-			return (0);
-		color += rgb[i] * light[i] * pow(16, 4 - 2 * i);
-		i++;
-	}
-	return (color);
+	red = rgb[0] * light[0];
+	green = rgb[1] * light[1];
+	blue = rgb[2] * light[2];
+	if (red > 255)
+		red = 255;
+	if (green > 255)
+		green = 255;
+	if (blue > 255)
+		blue = 255;
+	return ((red << 16) + (green << 8) + blue);
 }

@@ -1,4 +1,5 @@
 #include "../inc/minirt.h"
+#include <stdio.h>
 
 void	add_back_light(t_light *new_light)
 {
@@ -33,6 +34,8 @@ void	light_setup(char **info, int flag)
 	add_back_light(light);
 }
 
+/* Finds the intersection point of the ray from the camera passing
+ * through point p according to t */
 void	find_point(double t, double *p, double *buf)
 {
 	buf[X] = scene.camera.origin[X] + t * (p[X] - scene.camera.origin[X]);
@@ -50,27 +53,24 @@ void	find_point(double t, double *p, double *buf)
 int	check_all(t_light *light, double *colision)
 {
 	t_shape	*cur;
+	double	t;
 
 	cur = scene.shapes;
 	while (cur)
 	{
-		if (colision[0] == -1.042889 && colision[1] == -0.067166 && colision[2] == 3.718171)
-			printf("t: %lf\n", cur->check_hit(cur->shape, colision, light->position, 2));
-		if (cur->check_hit(cur->shape, colision, light->position, 1) < 0.999999999 && cur->check_hit(cur->shape, colision,light->position, 1) > 0)
-		{
-			// printf("t: %lf\n", cur->check_hit(cur->shape, colision, light->position, 2));
+		t = cur->check_hit(cur->shape, colision, light->position, 1);
+		if (t < 0.999999999 && t > 0)
 			return (0);
-		}
 		cur = cur->next;
 	}
 	return (1);
 }
 
-void	determine_light(double *light, double t, double *p)
+void	determine_light(double *light, double t, double *p, double *normal)
 {
 	t_light	*cur;
 	double	colision[3];
-	int	i;
+	int		i;
 
 	light[0] = 0;
 	light[1] = 0;
@@ -79,18 +79,17 @@ void	determine_light(double *light, double t, double *p)
 	find_point(t, p, colision);
 	while (cur)
 	{
-		if (!cur->type || check_all(cur, colision))
+		if (cur->type == AMBIENT)
 		{
 			i = -1;
 			while (++i < 3)
-				light[i] += cur->brightness * cur->color[i] / 255;
+				light[i] += cur->brightness * (cur->color[i] / 255);
+		}
+		else if (!is_in_shadow(colision, cur))
+		{
+			diffuse_reflection(colision, normal, cur, light);
+			specular_reflection(colision, normal, cur, light);
 		}
 		cur = cur->next;
-	}
-	i = -1;
-	while (++i < 3)
-	{
-		if (light[i] > 1)
-			light[i] = 1;
 	}
 }

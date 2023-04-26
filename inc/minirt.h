@@ -13,14 +13,28 @@
 # define Y	1
 # define Z	2
 
-# define WIDTH	1080
-# define HEIGHT	1080
+# define WIDTH		1080
+# define HEIGHT		1080
+# define DEF_SPEC	200
 
 enum e_type
 {
 	SPHERE,
 	CYLLINDER,
 	PLANE
+};
+
+enum e_reflection
+{
+	DIFFUSE,
+	SPECULAR,
+	BOTH
+};
+
+enum e_light
+{
+	AMBIENT,
+	POINT
 };
 
 typedef	struct s_light
@@ -59,7 +73,9 @@ typedef struct s_shape
 	int				type;
 	void			*shape;
 	double			(*check_hit)(void *self, double point[3], double origin[3], int flag);
-	double			color[3];
+	void			(*get_normal)(void *self, double t, double *p, double *normal);
+	int				color[3];
+	int				spec;
 	struct s_shape	*next;
 }	t_shape;
 
@@ -97,6 +113,7 @@ typedef struct s_scene
 	t_cam	camera;
 	t_vpt	viewport;
 	t_shape	*shapes;
+	t_shape	*cur;
 	t_light	*lights;
 }	t_scene;
 
@@ -113,9 +130,9 @@ void	parser(int argc, char **argv);
 int		coords_interpreter(char *coords, double *point);
 void	free_array(char **array);
 void	parsing_error(char *str);
-int		rgb_to_color(double *rgb, double *light);
+int		rgb_to_color(int *rgb, double *light);
 void	light_setup(char **info, int flag);
-void	determine_light(double *light, double t, double *p);
+void	determine_light(double *light, double t, double *p, double *normal);
 void	setup_scene(void);
 void	setup_camera(char **info);
 void	setup_viewport(void);
@@ -130,6 +147,9 @@ double	solve_quadratic(double a, double b, double c, int flag);
 double	distance(double *p1, double *p2);
 double	vector_size(double *vector);
 double	min(double n1, double n2);
+void	normalize_vector(double *origin, double *destination, double *norm);
+void	mult_vecs(double factor, double *vec, double *buff);
+void	subtract_vecs(double *v1, double *v2, double *buff);
 
 int		get_list_min(t_aux **lst);
 void	add_to_list(double t, int color, t_aux **lst);
@@ -148,5 +168,12 @@ void	add_plane(char **info);
 double	check_hit_plane(void *self, double p[3], double origin[3], int flag);
 
 void	add_cyllinder(char **info);
+
+void	find_point(double t, double *p, double *buf);
+void	get_color(char *coords, int *colors);
+
+void	diffuse_reflection(double *colision, double *normal, t_light *cur, double *light);
+void	specular_reflection(double *colision, double *normal, t_light *cur, double *light);
+int		is_in_shadow(double *colision, t_light *light);
 
 #endif

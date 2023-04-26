@@ -16,6 +16,7 @@ int	trace_ray(double *p)
 	t_shape	*tmp;
 	int		color;
 	double	light[3];
+	double	normal[3];
 	
 	lst = (t_aux **)ft_calloc(1, sizeof(t_aux));
 	if (!lst)
@@ -26,14 +27,16 @@ int	trace_ray(double *p)
 		t = tmp->check_hit(tmp->shape, p, scene.camera.origin, 0);
 		if (t > 0)
 		{
-			determine_light(light, t, p);
+			scene.cur = tmp;
+			tmp->get_normal(tmp->shape, t, p, normal);
+			determine_light(light, t, p, normal);
 			color = rgb_to_color(tmp->color, light);
 			add_to_list(t, color, lst);
 		}
 		tmp = tmp->next;
 	}
 	if (!*lst)
-		color = 0;
+		color = 0xffffffff;
 	else
 		color = get_list_min(lst);
 	delete_list(lst);

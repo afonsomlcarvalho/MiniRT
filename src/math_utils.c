@@ -1,4 +1,5 @@
 #include "../inc/minirt.h"
+#include <math.h>
 
 /* Returns the dot product between V1 and V2 */
 double	dot(double *v1, double *v2)
@@ -35,8 +36,6 @@ double	solve_quadratic(double a, double b, double c, int flag)
 		return (0.0);
 	result1 = ((-b + sqrt(pow(b, 2) - 4.0 * a * c)) / (2.0 * a));
 	result2 = ((-b - sqrt(pow(b, 2) - 4.0 * a * c)) / (2.0 * a));
-	if (flag == 2)
-		printf("\na: %lf, b: %lf, c: %lf\nrsults: %lf %lf\n", a, b, c, result1, result2);
 	if (!flag && (result1 < 1 || result2 < 1))
 	{
 		if (result1 < 1 && result2 < 1)
@@ -64,3 +63,34 @@ double	vector_size(double *vector)
 {
 	return (sqrt(pow(vector[X], 2) + pow(vector[Y], 2) + pow(vector[Z], 2)));
 }
+
+/* Normalizes the vector starting at ORIGIN and ending at DESTINATION 
+ * storing the new vector in NORM */
+void	normalize_vector(double *origin, double *destination, double *norm)
+{
+	double	size;
+	double	v[3];
+
+	vec(origin, destination, v);
+	size = sqrt(pow(v[X], 2) + pow(v[Y], 2) + pow(v[Z], 2));
+	norm[X] = v[X] / size;
+	norm[Y] = v[Y] / size;
+	norm[Z] = v[Z] / size;
+}
+
+/* Multiplies each point of VEC by FACTOR, storing the result in BUFF*/
+void	mult_vecs(double factor, double *vec, double *buff)
+{
+	buff[X] = vec[X] * factor;
+	buff[Y] = vec[Y] * factor;
+	buff[Z] = vec[Z] * factor;
+}
+
+/* Stores the result of the operation V1 - V2 in BUFF */
+void	subtract_vecs(double *v1, double *v2, double *buff)
+{
+	buff[X] = v1[X] - v2[X];
+	buff[Y] = v1[Y] - v2[Y];
+	buff[Z] = v1[Z] - v2[Z];
+}
+

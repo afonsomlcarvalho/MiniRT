@@ -6,6 +6,7 @@ void	setup_scene(void)
 	scene.win = mlx_new_window(scene.mlx, WIDTH, HEIGHT, "test");
 	scene.img.img_ptr = mlx_new_image(scene.mlx, WIDTH, HEIGHT);
 	scene.img.address = mlx_get_data_addr(scene.img.img_ptr, &scene.img.bpp, &scene.img.line_length, &scene.img.endian);
+	scene.selected = NULL;
 	// scene.shapes = NULL;
 }
 
@@ -46,9 +47,7 @@ double	to_deg(double rad)
 /* Sets up the viewport taking into account the FOV */
 void	setup_viewport(void)
 {
-	static double origin[3];
-
-	scene.viewport.distance = distance(origin, scene.camera.direction);
+	scene.viewport.distance = 1;
 	scene.viewport.width = 2 * scene.viewport.distance * tan(to_rad(scene.camera.fov / 2));
 	scene.viewport.height = scene.viewport.width * HEIGHT / WIDTH;
 }
@@ -56,7 +55,22 @@ void	setup_viewport(void)
 /* Maps point (X, Y) to the correponding point in viewport */
 void	canvas_to_viewport(int x, int y, double *p)
 {
-	p[X] = x * (scene.viewport.width / WIDTH) + scene.camera.origin[X];
-	p[Y] = -y * (scene.viewport.height / HEIGHT) + scene.camera.origin[Y];
-	p[Z] = scene.viewport.distance + scene.camera.origin[Z];
+	double			width_vector[3];
+	double			height_vector[3];
+	static double	up[3];
+
+	up[1] = 1;
+	cross_product(up, scene.camera.direction, width_vector);
+	if (!scene.camera.direction[X] && !scene.camera.direction[Z] && scene.camera.direction[Y])
+	{
+		width_vector[X] = 1;
+		width_vector[Y] = 0;
+		width_vector[Z] = 0;
+	}
+	cross_product(width_vector, scene.camera.direction, height_vector);
+	p[X] = scene.camera.origin[X] + scene.camera.direction[X] + (((double)x / WIDTH) * (scene.viewport.width / vector_size(width_vector))) * width_vector[X] + (((double)y / HEIGHT) * (scene.viewport.height / vector_size(height_vector))) * height_vector[X];
+	p[Y] = scene.camera.origin[Y] + scene.camera.direction[Y] + (((double)x / WIDTH) * (scene.viewport.width / vector_size(width_vector))) * width_vector[Y] + (((double)y / HEIGHT) * (scene.viewport.height / vector_size(height_vector))) * height_vector[Y];
+	p[Z] = scene.camera.origin[Z] + scene.camera.direction[Z] + (((double)x / WIDTH) * (scene.viewport.width / vector_size(width_vector))) * width_vector[Z] + (((double)y / HEIGHT) * (scene.viewport.height / vector_size(height_vector))) * height_vector[Z];
+	// if (x == 0 && y == 0)
+		// printf("Origin: %f %f %f\nDirection: %f %f %f\nPoint: %f %f %f\nWidth: %f %f %f\nHeight: %f %f %f\n    \n", scene.camera.origin[X],scene.camera.origin[Y],scene.camera.origin[Z],scene.camera.direction[X],scene.camera.direction[Y],scene.camera.direction[Z],p[X],p[Y],p[Z], width_vector[X], width_vector[Y], width_vector[Z], height_vector[X], height_vector[Y], height_vector[Z]);
 }

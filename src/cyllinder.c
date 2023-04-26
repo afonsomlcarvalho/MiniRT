@@ -25,7 +25,6 @@ double	check_width(t_cyllinder *self, double t, double *origin, double *vector)
 	t_plane	*top;
 	t_plane	*down;
 
-	// printf("%f\n", t);
 	top = (t_plane *)self->top_cap;
 	down = (t_plane *)self->under_cap;
 	point[X] = origin[X] + t * vector[X];
@@ -34,7 +33,7 @@ double	check_width(t_cyllinder *self, double t, double *origin, double *vector)
 	v[X] = top->point[X] - point[X];
 	v[Y] = top->point[Y] - point[Y];
 	v[Z] = top->point[Z] - point[Z];
-	if (dot(v, self->axis) > 0.0000001 && dot(v, self->axis) < -0.0000001)
+	if (dot(v, self->axis) > 0.0000001 || dot(v, self->axis) < -0.0000001)
 	{
 		v[X] = down->point[X] - point[X];
 		v[Y] = down->point[Y] - point[Y];
@@ -86,7 +85,6 @@ double	check_hit_cyllinder(void *self, double p[3], double origin[3], int flag)
 	t[1] = check_width(cyllinder, check_hit_plane(cyllinder->top_cap, p, origin, flag), origin, v);
 	t[2] = check_width(cyllinder, check_hit_plane(cyllinder->under_cap, p, origin, flag), origin, v);
 	return (find_t(t));
-	// return (t[0]);
 }
 
 void	add_caps(t_cyllinder *self)
@@ -110,7 +108,6 @@ void	add_caps(t_cyllinder *self)
 	quadratic[2] =  -(pow(self->height, 2) / 4);
 	t[0] = (-quadratic[1] - sqrt(pow(quadratic[1], 2) - 4 * quadratic[0] * quadratic[2])) / (2 * quadratic[0]);
 	t[1] = (-quadratic[1] + sqrt(pow(quadratic[1], 2) - 4 * quadratic[0] * quadratic[2])) / (2 * quadratic[0]);
-	// printf("%lf %lf\n", t[0], t[1]);
 	i = -1;
 	while (++i < 3)
 	{
@@ -119,8 +116,13 @@ void	add_caps(t_cyllinder *self)
 	}
 	self->top_cap = top_cap;
 	self->under_cap = down_cap;
-	// printf("%lf %lf %lf\n%lf %lf %lf\n", ((t_plane *)(self->top_cap))->point[0], ((t_plane *)(self->top_cap))->point[1], ((t_plane *)(self->top_cap))->point[2], ((t_plane *)(self->under_cap))->point[0], ((t_plane *)(self->under_cap))->point[1], ((t_plane *)(self->under_cap))->point[2]);
+}
 
+void	substitute_caps(t_cyllinder *self)
+{
+	free(self->top_cap);
+	free(self->under_cap);
+	add_caps(self);
 }
 
 void	add_cyllinder(char **info)
@@ -149,16 +151,5 @@ void	add_cyllinder(char **info)
 	new_cyllinder->radius /= 2;
 	add_caps(new_cyllinder);
 	new_shape->shape = new_cyllinder;
-	// printf("%lf %lf %lf\n%lf %lf %lf\n", ((t_plane *)(new_cyllinder->top_cap))->point[0], ((t_plane *)(new_cyllinder->top_cap))->point[1], ((t_plane *)(new_cyllinder->top_cap))->point[2], ((t_plane *)(new_cyllinder->under_cap))->point[0], ((t_plane *)(new_cyllinder->under_cap))->point[1], ((t_plane *)(new_cyllinder->under_cap))->point[2]);
 	add_back_shape(new_shape);
 }
-
-/* int	main()
-{
-	double	t[3];
-
-	t[0] = 0.002;
-	t[1] = -110;
-	t[2] = -10;
-	printf("%f\n", find_t(t));
-} */

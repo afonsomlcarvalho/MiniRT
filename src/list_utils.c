@@ -62,5 +62,6 @@ void	delete_list(t_aux **lst)
 		*lst = (*lst)->next;
 		free(tmp);
 	}
+	free(lst);
 }
 

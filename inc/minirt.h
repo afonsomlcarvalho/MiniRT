@@ -115,6 +115,7 @@ typedef struct s_scene
 	t_shape	*shapes;
 	t_shape	*cur;
 	t_light	*lights;
+	t_shape	*selected;
 }	t_scene;
 
 typedef struct s_aux
@@ -150,6 +151,8 @@ double	min(double n1, double n2);
 void	normalize_vector(double *origin, double *destination, double *norm);
 void	mult_vecs(double factor, double *vec, double *buff);
 void	subtract_vecs(double *v1, double *v2, double *buff);
+void	translate(double *point, double *vector);
+void	cross_product(double *v1, double *v2, double *buf);
 
 int		get_list_min(t_aux **lst);
 void	add_to_list(double t, int color, t_aux **lst);
@@ -168,6 +171,9 @@ void	add_plane(char **info);
 double	check_hit_plane(void *self, double p[3], double origin[3], int flag);
 
 void	add_cyllinder(char **info);
+void	substitute_caps(t_cyllinder *self);
+
+int		end();
 
 void	find_point(double t, double *p, double *buf);
 void	get_color(char *coords, int *colors);

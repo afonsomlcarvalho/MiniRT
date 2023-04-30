@@ -56,20 +56,7 @@ void	get_color(char *coords, int *colors)
 	colors[0] = red;
 	colors[1] = green;
 	colors[2] = blue;
-}
-
-void	free_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-	array = NULL;
+	free_array(arr);
 }
 
 int	rgb_to_color(int *rgb, double *light)

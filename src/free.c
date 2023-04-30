@@ -31,6 +31,17 @@ void	clear_lights()
 	}
 }
 
+void	free_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+		free(array[i++]);
+	free(array);
+	array = NULL;
+}
+
 void	free_all()
 {
 	clear_shapes();

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <unistd.h>
+#include <pthread.h>
 
 #include "../lib/libft/inc/libft.h"
 #include "../lib/mlx_linux/mlx.h"
@@ -16,6 +17,8 @@
 # define WIDTH		1080
 # define HEIGHT		1080
 # define DEF_SPEC	200
+
+# define THREAD		20
 
 enum e_type
 {
@@ -142,6 +145,9 @@ int		trace_ray(double *p);
 double	to_rad(int deg);
 double	to_deg(double rad);
 
+void	split_canva();
+void	draw_canvas();
+
 double	dot(double *v1, double *v2);
 void	vec(double *p1, double *p2, double *buff);
 double	solve_quadratic(double a, double b, double c, int flag);
@@ -181,5 +187,7 @@ void	get_color(char *coords, int *colors);
 void	diffuse_reflection(double *colision, double *normal, t_light *cur, double *light);
 void	specular_reflection(double *colision, double *normal, t_light *cur, double *light);
 int		is_in_shadow(double *colision, t_light *light);
+
+void	free_array(char **array);
 
 #endif

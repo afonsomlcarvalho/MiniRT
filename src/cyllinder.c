@@ -128,8 +128,8 @@ double	check_hit_cyllinder(void *self, double p[3], double origin[3], int flag)
 	b = 2 * dot(d, v) * pow(vector_size(cyllinder->axis), 2) - 2 * dot(v, cyllinder->axis) * dot(d, cyllinder->axis);
 	c = (dot(d, d) - pow(cyllinder->radius, 2)) * pow(vector_size(cyllinder->axis), 2) - pow(dot(d, cyllinder->axis), 2);
 	t[0] = check_height(cyllinder, solve_quadratic(a, b, c, flag), origin, v);
-	t[1] = check_width(cyllinder, check_hit_plane(cyllinder->top_cap, p, origin, flag), origin, v);
-	t[2] = check_width(cyllinder, check_hit_plane(cyllinder->under_cap, p, origin, flag), origin, v);
+	t[1] = check_width(cyllinder, check_hit_plane(cyllinder->top_cap, p, origin, flag * 2), origin, v);
+	t[2] = check_width(cyllinder, check_hit_plane(cyllinder->under_cap, p, origin, flag * 2), origin, v);
 	return (find_t(t));
 }
 

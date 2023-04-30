@@ -42,7 +42,7 @@ double	check_hit_plane(void *self, double p[3], double origin[3], int flag)
 	t = dot(plane->normal, oq) / dot(plane->normal, D);
 	if (!flag && t < 1)
 		return (0.0);
-	if (flag && check_side(origin, plane))
+	if (flag == 1 && check_side(origin, plane))
 		return (0.2);
 	return (t);
 }

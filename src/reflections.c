@@ -1,4 +1,5 @@
 #include "../inc/minirt.h"
+#include <stdio.h>
 
 /* Adds diffuse reflection to the COLISION point according to the 
  * NORMAL vector and light CUR, storing the results in LIGHT */
@@ -29,7 +30,7 @@ void	get_reflected_ray(double *incoming_ray, double *normal, double *reflected_r
 
 	mult_vecs(dot(normal, incoming_ray), normal, Ln);
 	subtract_vecs(incoming_ray, Ln, Lp);
-	subtract_vecs(Ln, Lp, reflected_ray);
+	subtract_vecs(Lp, Ln, reflected_ray);
 }
 
 void	specular_reflection(double *origin, double *colision, double *normal, t_light *cur, double *light, t_shape *shape)
@@ -39,13 +40,18 @@ void	specular_reflection(double *origin, double *colision, double *normal, t_lig
 	double	R[3];
 	double	V[3];
 	double	prod;
-	int		i;
+	int		i;	
+	double	Ln[3];
+	double	Lp[3];
+
 
 	if (shape->spec == -1)
 		return ;
 	vec(colision, cur->position, L);
 	vec(colision, origin, V);
-	get_reflected_ray(L, normal, R);
+	mult_vecs(dot(normal, L), normal, Ln);
+	subtract_vecs(L, Ln, Lp);
+	subtract_vecs(Ln, Lp, R);
 	prod = dot(R, V);
 	if (prod > 0)
 	{

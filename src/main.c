@@ -92,5 +92,20 @@ int	main(int argc, char **argv)
 	mlx_hook(scene.win, 17, 0, end, NULL);
 	mlx_hook(scene.win, 4, (1L<<2), select_piece, NULL);
 	mlx_loop(scene.mlx);
+	/*
+	double	incoming_ray[3];
+	double	reflected_ray[3];
+	double	normal[3];
+
+	normal[X] = 0.0;
+	normal[Y] = 1.0;
+	normal[Z] = 0.0;
+
+	incoming_ray[X] = 1.0;
+	incoming_ray[Y] = -1.0;
+	incoming_ray[Z] = 0.0;
+
+	get_reflected_ray(incoming_ray, normal, reflected_ray);
+	*/
 	return (0);
 }

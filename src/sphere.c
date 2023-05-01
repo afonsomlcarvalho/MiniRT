@@ -56,7 +56,7 @@ int	add_sphere(char **info)
 	new_shape->check_hit = check_hit_sphere;
 	new_shape->get_normal = get_normal_sphere;
 	new_shape->spec = DEF_SPEC;
-	new_shape->reflection = 0.5;
+	new_shape->reflection = 0.4;
 	new_shape->next = NULL;
 
 	if (coords_interpreter(info[1], new_sphere->center))

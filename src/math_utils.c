@@ -32,17 +32,17 @@ double	solve_quadratic(double a, double b, double c, int flag)
 	double	result1;
 	double	result2;
 
-	if ((pow(b, 2) - 4 * a * c) < 0)
+	if ((pow(b, 2) - 4 * a * c) < 0.00000001)
 		return (0.0);
 	result1 = ((-b + sqrt(pow(b, 2) - 4.0 * a * c)) / (2.0 * a));
 	result2 = ((-b - sqrt(pow(b, 2) - 4.0 * a * c)) / (2.0 * a));
-	if (!flag && (result1 < 0 || result2 < 0))
+	if (!flag && (result1 < 0.0000001 || result2 < 0.00000001))
 	{
-		if (result1 < 0 && result2 < 0)
+		if (result1 < 0.0000001 && result2 < 0.000000001)
 			return (0.0);
-		if (result1 < 0)
+		if (result1 < 0.0000001)
 			return (result2);
-		if (result2 < 0)
+		if (result2 < 0.0000001)
 			return (result1);
 	}
 	if (flag && result1 == 0)

@@ -69,7 +69,7 @@ int	check_all(t_light *light, double *colision)
 	while (cur)
 	{
 		t = cur->check_hit(cur->shape, colision, light->position, 1);
-		if (t < 0.999999999 && t > 0)
+		if (t < 0.999999999 && t > 0.0000001)
 			return (0);
 		cur = cur->next;
 	}

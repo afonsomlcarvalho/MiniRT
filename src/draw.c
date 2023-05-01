@@ -44,7 +44,12 @@ void	*draw_parcel(void *x)
 		while (n < WIDTH / THREAD)
 		{
 			canvas_to_viewport(i + n, y, p);
+<<<<<<< HEAD
 			color = trace_ray(scene.camera.origin, p, REFLECTIONS);
+=======
+			color = trace_ray(scene.camera.origin, p, 1);
+			pthread_mutex_lock(&canva);
+>>>>>>> mirrors
 			my_mlx_pixel_put(&scene.img, i + n + WIDTH/2, y + HEIGHT/2, color);
 			n++;
 		}

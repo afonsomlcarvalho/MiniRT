@@ -29,7 +29,7 @@ void	side_normal(t_cyllinder *self, double *point, double *normal)
 	normalize_vector(vector, normal);
 }
 
-void	get_normal_cyllinder(void *self, double t, double *p, double *normal)
+void	get_normal_cyllinder(void *self, double t, double *origin, double *p, double *normal)
 {
 	double		point[3];
 	t_cyllinder	*cyllinder;
@@ -40,7 +40,7 @@ void	get_normal_cyllinder(void *self, double t, double *p, double *normal)
 	cyllinder = (t_cyllinder *) self;
 	top = (t_plane *) cyllinder->top_cap;
 	under = (t_plane *) cyllinder->under_cap;
-	find_point(t, p, point);
+	find_point(t, origin, p, point);
 	if (check_plane(top, cyllinder, point, normal) || check_plane(under, cyllinder, point, normal))
 		return ;
 	side_normal(cyllinder, point, normal);

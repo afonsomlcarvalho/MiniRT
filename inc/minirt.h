@@ -137,7 +137,7 @@ int		coords_interpreter(char *coords, double *point);
 void	free_array(char **array);
 int		parsing_error(char *str);
 int		rgb_to_color(int *rgb, double *light);
-void	light_setup(char **info, int flag);
+int		light_setup(char **info, int flag);
 void	determine_light(double *light, double t, double *origin, double *p, double *normal, t_shape *shape);
 void	setup_scene(void);
 int		setup_camera(char **info);
@@ -185,7 +185,7 @@ int		end();
 void	free_all(int flag);
 
 void	find_point(double t, double *origin, double *p, double *buf);
-void	get_color(char *coords, int *colors);
+int		get_color(char *coords, int *colors);
 int		array_size(char **array);
 int		check_normalized_vector(double *vector);
 

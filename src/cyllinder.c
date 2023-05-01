@@ -1,5 +1,51 @@
 #include "../inc/minirt.h"
 
+int	check_plane(t_plane *plane, t_cyllinder *self, double *point, double *normal)
+{
+	double	vector[3];
+
+	vec(point, plane->point, vector);
+	if (dot(vector, plane->normal) < 0.0000001 && dot(vector, plane->normal) > -0.0000001)
+	{
+		vec(self->center, plane->point, vector);
+		normalize_vector(vector, normal);
+		return (1);
+	}
+	return (0);
+}
+
+void	side_normal(t_cyllinder *self, double *point, double *normal)
+{
+	double	k;
+	double	vector[3];
+	double	axis_point[3];
+
+	vec(point, self->center, vector);
+	k = -dot(vector, self->axis) / dot(self->axis, self->axis);
+	axis_point[X] = self->center[X] + k * self->axis[X];
+	axis_point[Y] = self->center[Y] + k * self->axis[Y];
+	axis_point[Z] = self->center[Z] + k * self->axis[Z];
+	vec(axis_point, point, vector);
+	normalize_vector(vector, normal);
+}
+
+void	get_normal_cyllinder(void *self, double t, double *p, double *normal)
+{
+	double		point[3];
+	t_cyllinder	*cyllinder;
+	t_plane		*top;
+	t_plane		*under;
+
+
+	cyllinder = (t_cyllinder *) self;
+	top = (t_plane *) cyllinder->top_cap;
+	under = (t_plane *) cyllinder->under_cap;
+	find_point(t, p, point);
+	if (check_plane(top, cyllinder, point, normal) || check_plane(under, cyllinder, point, normal))
+		return ;
+	side_normal(cyllinder, point, normal);
+}
+
 double	check_height(t_cyllinder *self, double t, double *origin, double *vector)
 {
 	double	point[3];
@@ -82,8 +128,8 @@ double	check_hit_cyllinder(void *self, double p[3], double origin[3], int flag)
 	b = 2 * dot(d, v) * pow(vector_size(cyllinder->axis), 2) - 2 * dot(v, cyllinder->axis) * dot(d, cyllinder->axis);
 	c = (dot(d, d) - pow(cyllinder->radius, 2)) * pow(vector_size(cyllinder->axis), 2) - pow(dot(d, cyllinder->axis), 2);
 	t[0] = check_height(cyllinder, solve_quadratic(a, b, c, flag), origin, v);
-	t[1] = check_width(cyllinder, check_hit_plane(cyllinder->top_cap, p, origin, flag), origin, v);
-	t[2] = check_width(cyllinder, check_hit_plane(cyllinder->under_cap, p, origin, flag), origin, v);
+	t[1] = check_width(cyllinder, check_hit_plane(cyllinder->top_cap, p, origin, flag * 2), origin, v);
+	t[2] = check_width(cyllinder, check_hit_plane(cyllinder->under_cap, p, origin, flag * 2), origin, v);
 	return (find_t(t));
 }
 
@@ -125,31 +171,40 @@ void	substitute_caps(t_cyllinder *self)
 	add_caps(self);
 }
 
-void	add_cyllinder(char **info)
+int	add_cyllinder(char **info)
 {
 	t_shape		*new_shape;
 	t_cyllinder	*new_cyllinder;
+	int			error;
 
+	error = 0;
 	new_shape = ft_calloc(1, sizeof(t_shape));
 	if (!new_shape)
-		return ;	//TODO: Error Handling
+		return 0;	//TODO: Error Handling
+	new_cyllinder = (t_cyllinder *)ft_calloc(1, sizeof(t_cyllinder));
+	if (!new_cyllinder)
+		return 0;	//TODO: Error Handling
 
+	new_shape->shape = new_cyllinder;
+	add_back_shape(new_shape);
+	if (array_size(info) != 6)
+		return (parsing_error("Invalid number of arguments for cyllinder.\n"));
 	new_shape->type = CYLLINDER;
-	get_color(info[5], new_shape->color);
+	if (get_color(info[5], new_shape->color))
+		error += parsing_error("Invalid cyllinder colour.\n");
 	new_shape->check_hit = check_hit_cyllinder;
 	new_shape->spec = DEF_SPEC;
 	new_shape->next = NULL;
-
-	new_cyllinder = (t_cyllinder *)ft_calloc(1, sizeof(t_cyllinder));
-	if (!new_cyllinder)
-		return ;	//TODO: Error Handling
-
-	coords_interpreter(info[1], new_cyllinder->center);
-	coords_interpreter(info[3], &new_cyllinder->radius);
-	coords_interpreter(info[2], new_cyllinder->axis);
-	coords_interpreter(info[4], &new_cyllinder->height);
+	new_shape->get_normal = get_normal_cyllinder;
+	if (coords_interpreter(info[1], new_cyllinder->center))
+		error += parsing_error("Invalid cyllinder center.\n");
+	if (coords_interpreter(info[3], &new_cyllinder->radius))
+		error += parsing_error("Invalid cyllinder radius.\n");
+	if (coords_interpreter(info[2], new_cyllinder->axis) || check_normalized_vector(new_cyllinder->axis))
+		error += parsing_error("Invalid cyllinder axis.\n");
+	if (coords_interpreter(info[4], &new_cyllinder->height))
+		error += parsing_error("Invalid cyllinder height.\n");
 	new_cyllinder->radius /= 2;
 	add_caps(new_cyllinder);
-	new_shape->shape = new_cyllinder;
-	add_back_shape(new_shape);
+	return (error);
 }

@@ -31,19 +31,33 @@ void	clear_lights()
 	}
 }
 
-void	free_all()
+void	free_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+		free(array[i++]);
+	free(array);
+	array = NULL;
+}
+
+void	free_all(int flag)
 {
 	clear_shapes();
 	clear_lights();
-	mlx_destroy_image(scene.mlx, scene.img.img_ptr);
-	mlx_destroy_window(scene.mlx, scene.win);
-	mlx_destroy_display(scene.mlx);
-	free(scene.mlx);
+	if (flag)
+	{
+		mlx_destroy_image(scene.mlx, scene.img.img_ptr);
+		mlx_destroy_window(scene.mlx, scene.win);
+		mlx_destroy_display(scene.mlx);
+		free(scene.mlx);
+	}
+	exit(0);
 }
 
 int	end()
 {
-	free_all();
-	exit(0);
+	free_all(1);
 	return (0);
 }

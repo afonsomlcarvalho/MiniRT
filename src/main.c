@@ -2,14 +2,6 @@
 
 t_scene	scene;
 
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = img->address + (y * img->line_length + x * (img->bpp / 8));
-	*(unsigned int*)dst = color;
-}
-
 double	*to_point(int x, int y, int z)
 {
 	static double point[3];
@@ -17,23 +9,6 @@ double	*to_point(int x, int y, int z)
 	point[Y] = y;
 	point[Z] = z;
 	return (point);
-}
-
-void	draw_canvas()
-{
-	double	p[3];
-	int		color;
-
-	for (int x = -WIDTH/2; x < WIDTH/2; x++)
-	{
-		for (int y = -HEIGHT/2; y < HEIGHT/2; y++)
-		{
-			canvas_to_viewport(x, y, p);
-			color = trace_ray(scene.camera.origin, p, 2);
-			my_mlx_pixel_put(&scene.img, x + WIDTH/2, y + HEIGHT/2, color);
-		}
-	}
-	mlx_put_image_to_window(scene.mlx, scene.win, scene.img.img_ptr, 0, 0);
 }
 
 void	apply_translation_and_rotation(t_shape *selected, double *vector, double *angle)
@@ -93,7 +68,7 @@ int	select_piece(int button, int x, int y)
 		scene.selected = 0;
 	else
 	{
-		while (cur && !scene.selected)
+		while (cur /* && !scene.selected */)
 		{
 			if (cur->check_hit(cur->shape, point, scene.camera.origin, 0) && (t == 0 || cur->check_hit(cur->shape, point, scene.camera.origin, 0) < t))
 			{

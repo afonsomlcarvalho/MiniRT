@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <unistd.h>
+#include <pthread.h>
 
 #include "../lib/libft/inc/libft.h"
 #include "../lib/mlx_linux/mlx.h"
@@ -18,6 +19,7 @@
 # define DEF_SPEC	200
 
 # define BACKGROUND	0xffffffff
+# define THREAD		20
 
 enum e_type
 {
@@ -44,7 +46,7 @@ typedef	struct s_light
 	double			brightness;
 	double			position[3];
 	int				type;
-	double			color[3];
+	int				color[3];
 	struct s_light	*next;
 }	t_light;
 
@@ -133,17 +135,20 @@ extern t_scene scene;
 void	parser(int argc, char **argv);
 int		coords_interpreter(char *coords, double *point);
 void	free_array(char **array);
-void	parsing_error(char *str);
+int		parsing_error(char *str);
 int		rgb_to_color(int *rgb, double *light);
 void	light_setup(char **info, int flag);
 void	determine_light(double *light, double t, double *origin, double *p, double *normal, t_shape *shape);
 void	setup_scene(void);
-void	setup_camera(char **info);
+int		setup_camera(char **info);
 void	setup_viewport(void);
 void	canvas_to_viewport(int x, int y, double *p);
 int		trace_ray(double *origin, double *p, int recur);
 double	to_rad(int deg);
 double	to_deg(double rad);
+
+void	split_canva();
+void	draw_canvas();
 
 double	dot(double *v1, double *v2);
 void	vec(double *p1, double *p2, double *buff);
@@ -151,7 +156,7 @@ double	solve_quadratic(double a, double b, double c, int flag);
 double	distance(double *p1, double *p2);
 double	vector_size(double *vector);
 double	min(double n1, double n2);
-void	normalize_vector(double *origin, double *destination, double *norm);
+void	normalize_vector(double *vector, double *norm);
 void	mult_vecs(double factor, double *vec, double *buff);
 void	subtract_vecs(double *v1, double *v2, double *buff);
 void	translate(double *point, double *vector);
@@ -168,22 +173,27 @@ void	rotate(double *vector, double *angle);
 
 void	add_back_shape(t_shape *new_shape);
 
-void	add_sphere(char **info);
+int		add_sphere(char **info);
 
-void	add_plane(char **info);
+int		add_plane(char **info);
 double	check_hit_plane(void *self, double p[3], double origin[3], int flag);
 
-void	add_cyllinder(char **info);
+int		add_cyllinder(char **info);
 void	substitute_caps(t_cyllinder *self);
 
 int		end();
+void	free_all(int flag);
 
 void	find_point(double t, double *origin, double *p, double *buf);
 void	get_color(char *coords, int *colors);
+int		array_size(char **array);
+int		check_normalized_vector(double *vector);
 
 void	diffuse_reflection(double *colision, double *normal, t_light *cur, double *light);
 void	specular_reflection(double *origin, double *colision, double *normal, t_light *cur, double *light, t_shape *shape);
 void	get_reflected_ray(double *incoming_ray, double *normal, double *reflected_ray);
 int		is_in_shadow(double *colision, t_light *light);
+
+void	free_array(char **array);
 
 #endif

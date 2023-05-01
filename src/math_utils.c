@@ -66,16 +66,14 @@ double	vector_size(double *vector)
 
 /* Normalizes the vector starting at ORIGIN and ending at DESTINATION 
  * storing the new vector in NORM */
-void	normalize_vector(double *origin, double *destination, double *norm)
+void	normalize_vector(double *vector, double *norm)
 {
 	double	size;
-	double	v[3];
 
-	vec(origin, destination, v);
-	size = sqrt(pow(v[X], 2) + pow(v[Y], 2) + pow(v[Z], 2));
-	norm[X] = v[X] / size;
-	norm[Y] = v[Y] / size;
-	norm[Z] = v[Z] / size;
+	size = sqrt(pow(vector[X], 2) + pow(vector[Y], 2) + pow(vector[Z], 2));
+	norm[X] = vector[X] / size;
+	norm[Y] = vector[Y] / size;
+	norm[Z] = vector[Z] / size;
 }
 
 /* Multiplies each point of VEC by FACTOR, storing the result in BUFF*/

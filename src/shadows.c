@@ -12,7 +12,7 @@ int	is_in_shadow(double *colision, t_light *light)
 	while (tmp)
 	{
 		t = tmp->check_hit(tmp->shape, light->position, colision, 1);
-		if (t > 0.0000001 && t < 0.99999999999)
+		if (t > 0.00000001 && t < 0.99999999)
 			return (1);
 		tmp = tmp->next;
 	}

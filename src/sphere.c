@@ -3,11 +3,13 @@
 void	get_normal_sphere(void *self, double t, double *origin, double *p, double *normal)
 {
 	double		point[3];
+	double		vector[3];
 	t_sphere	*sphere;
 
 	sphere = (t_sphere *) self;
 	find_point(t, origin, p, point);
-	normalize_vector(sphere->center, point, normal);
+	vec(sphere->center, point, vector);
+	normalize_vector(vector, normal);
 }
 
 double	check_hit_sphere(void *self, double p[3], double origin[3], int flag)
@@ -29,30 +31,39 @@ double	check_hit_sphere(void *self, double p[3], double origin[3], int flag)
 	return (solve_quadratic(a, b, c, flag));
 }
 
-void	add_sphere(char **info)
+int	add_sphere(char **info)
 {
 	t_shape		*new_shape;
 	t_sphere	*new_sphere;
+	int			error;
 
+	error = 0;
 	new_shape = ft_calloc(1, sizeof(t_shape));
 	if (!new_shape)
-		return ;	//TODO: Error Handling
+		return 0;	//TODO: Error Handling
 
+	new_sphere = (t_sphere *)ft_calloc(1, sizeof(t_sphere));
+	if (!new_sphere)
+		return 0;	//TODO: Error Handling
+
+	new_shape->shape = new_sphere;
+	add_back_shape(new_shape);
+	if (array_size(info) != 4)
+		return (parsing_error("Invalid number of arguments for sphere.\n"));
 	new_shape->type = SPHERE;
-	get_color(info[3], new_shape->color);
+	if (get_color(info[3], new_shape->color))
+		error += parsing_error("Invalid sphere colors.\n");
 	new_shape->check_hit = check_hit_sphere;
 	new_shape->get_normal = get_normal_sphere;
 	new_shape->spec = DEF_SPEC;
 	new_shape->reflection = 0.5;
 	new_shape->next = NULL;
 
-	new_sphere = (t_sphere *)ft_calloc(1, sizeof(t_sphere));
-	if (!new_sphere)
-		return ;	//TODO: Error Handling
-
-	coords_interpreter(info[1], new_sphere->center);
-	coords_interpreter(info[2], &new_sphere->radius);
-	new_sphere->radius /= 2;
-	new_shape->shape = new_sphere;
-	add_back_shape(new_shape);
+	if (coords_interpreter(info[1], new_sphere->center))
+		error += parsing_error("Invalid sphere center coords.\n");
+	if (coords_interpreter(info[2], &new_sphere->radius))
+		error += parsing_error("Invalid sphere raidus.\n");
+	else
+		new_sphere->radius /= 2;
+	return (error);
 }

@@ -62,9 +62,11 @@ void	canvas_to_viewport(int x, int y, double *p)
 {
 	double			width_vector[3];
 	double			height_vector[3];
-	static double	up[3];
+	double			up[3];
 
 	up[1] = 1;
+	up[0] = 0;
+	up[2] = 0;
 	cross_product(up, scene.camera.direction, width_vector);
 	if (!scene.camera.direction[X] && !scene.camera.direction[Z] && scene.camera.direction[Y])
 	{

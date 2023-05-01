@@ -1,31 +1,32 @@
 #include "../inc/minirt.h"
 
-/* Returns the color of the smalles double of LST */
-int	get_list_min(t_aux **lst)
+/* Returns the closest object in LST */
+t_aux	*get_closest_object(t_aux **lst)
 {
 	double	min;
-	int		color;
 	t_aux	*tmp;
+	t_aux	*closest;
 
 	if (!lst || !*lst)
-		return (0);	//TODO: Error Handling
+		return (NULL);
 	tmp = *lst;
+	closest = tmp;
 	min = tmp->t;
-	color = tmp->color;
+	
 	while (tmp)
 	{
 		if (tmp->t < min)
 		{
 			min = tmp->t;
-			color = tmp->color;
+			closest = tmp;
 		}
 		tmp = tmp->next;
 	}
-	return (color);
+	return (closest);
 }
 
 /* Adds a node with the value T to t_aux LST */
-void	add_to_list(double t, int color, t_aux **lst)
+void	add_to_list(double t, int color, t_shape *shape, t_aux **lst)
 {
 	t_aux	*new;
 	t_aux	*tmp;
@@ -37,6 +38,7 @@ void	add_to_list(double t, int color, t_aux **lst)
 		return ;	//TODO: Error Handling
 	new->t = t;
 	new->color = color;
+	new->self = shape;
 	new->next = NULL;
 	if (!*lst)
 	{

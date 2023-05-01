@@ -17,6 +17,8 @@
 # define HEIGHT		1080
 # define DEF_SPEC	200
 
+# define BACKGROUND	0xffffffff
+
 enum e_type
 {
 	SPHERE,
@@ -73,9 +75,10 @@ typedef struct s_shape
 	int				type;
 	void			*shape;
 	double			(*check_hit)(void *self, double point[3], double origin[3], int flag);
-	void			(*get_normal)(void *self, double t, double *p, double *normal);
+	void			(*get_normal)(void *self, double t, double *origin, double *p, double *normal);
 	int				color[3];
 	int				spec;
+	double			reflection;
 	struct s_shape	*next;
 }	t_shape;
 
@@ -113,7 +116,6 @@ typedef struct s_scene
 	t_cam	camera;
 	t_vpt	viewport;
 	t_shape	*shapes;
-	t_shape	*cur;
 	t_light	*lights;
 	t_shape	*selected;
 }	t_scene;
@@ -122,6 +124,7 @@ typedef struct s_aux
 {
 	double			t;
 	int				color;
+	t_shape			*self;
 	struct s_aux	*next;
 }	t_aux;
 
@@ -133,12 +136,12 @@ void	free_array(char **array);
 void	parsing_error(char *str);
 int		rgb_to_color(int *rgb, double *light);
 void	light_setup(char **info, int flag);
-void	determine_light(double *light, double t, double *p, double *normal);
+void	determine_light(double *light, double t, double *origin, double *p, double *normal, t_shape *shape);
 void	setup_scene(void);
 void	setup_camera(char **info);
 void	setup_viewport(void);
 void	canvas_to_viewport(int x, int y, double *p);
-int		trace_ray(double *p);
+int		trace_ray(double *origin, double *p, int recur);
 double	to_rad(int deg);
 double	to_deg(double rad);
 
@@ -154,8 +157,8 @@ void	subtract_vecs(double *v1, double *v2, double *buff);
 void	translate(double *point, double *vector);
 void	cross_product(double *v1, double *v2, double *buf);
 
-int		get_list_min(t_aux **lst);
-void	add_to_list(double t, int color, t_aux **lst);
+t_aux	*get_closest_object(t_aux **lst);
+void	add_to_list(double t, int color, t_shape *shape, t_aux **lst);
 void	delete_list(t_aux **lst);
 
 void	x_rotate(double *vector, double angle);
@@ -175,11 +178,12 @@ void	substitute_caps(t_cyllinder *self);
 
 int		end();
 
-void	find_point(double t, double *p, double *buf);
+void	find_point(double t, double *origin, double *p, double *buf);
 void	get_color(char *coords, int *colors);
 
 void	diffuse_reflection(double *colision, double *normal, t_light *cur, double *light);
-void	specular_reflection(double *colision, double *normal, t_light *cur, double *light);
+void	specular_reflection(double *origin, double *colision, double *normal, t_light *cur, double *light, t_shape *shape);
+void	get_reflected_ray(double *incoming_ray, double *normal, double *reflected_ray);
 int		is_in_shadow(double *colision, t_light *light);
 
 #endif

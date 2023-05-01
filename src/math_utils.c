@@ -36,13 +36,13 @@ double	solve_quadratic(double a, double b, double c, int flag)
 		return (0.0);
 	result1 = ((-b + sqrt(pow(b, 2) - 4.0 * a * c)) / (2.0 * a));
 	result2 = ((-b - sqrt(pow(b, 2) - 4.0 * a * c)) / (2.0 * a));
-	if (!flag && (result1 < 1 || result2 < 1))
+	if (!flag && (result1 < 0 || result2 < 0))
 	{
-		if (result1 < 1 && result2 < 1)
+		if (result1 < 0 && result2 < 0)
 			return (0.0);
-		if (result1 < 1)
+		if (result1 < 0)
 			return (result2);
-		if (result2 < 1)
+		if (result2 < 0)
 			return (result1);
 	}
 	if (flag && result1 == 0)

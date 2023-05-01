@@ -36,11 +36,11 @@ void	light_setup(char **info, int flag)
 
 /* Finds the intersection point of the ray from the camera passing
  * through point p according to t */
-void	find_point(double t, double *p, double *buf)
+void	find_point(double t, double *origin, double *p, double *buf)
 {
-	buf[X] = scene.camera.origin[X] + t * (p[X] - scene.camera.origin[X]);
-	buf[Y] = scene.camera.origin[Y] + t * (p[Y] - scene.camera.origin[Y]);
-	buf[Z] = scene.camera.origin[Z] + t * (p[Z] - scene.camera.origin[Z]);
+	buf[X] = origin[X] + t * (p[X] - origin[X]);
+	buf[Y] = origin[Y] + t * (p[Y] - origin[Y]);
+	buf[Z] = origin[Z] + t * (p[Z] - origin[Z]);
 }
 
 /* void new_point(t_light *light, double *colision)
@@ -66,7 +66,7 @@ int	check_all(t_light *light, double *colision)
 	return (1);
 }
 
-void	determine_light(double *light, double t, double *p, double *normal)
+void	determine_light(double *light, double t, double *origin, double *p, double *normal, t_shape *shape)
 {
 	t_light	*cur;
 	double	colision[3];
@@ -76,7 +76,7 @@ void	determine_light(double *light, double t, double *p, double *normal)
 	light[1] = 0;
 	light[2] = 0;
 	cur = scene.lights;
-	find_point(t, p, colision);
+	find_point(t, origin, p, colision);
 	while (cur)
 	{
 		if (cur->type == AMBIENT)
@@ -88,7 +88,7 @@ void	determine_light(double *light, double t, double *p, double *normal)
 		else if (!is_in_shadow(colision, cur))
 		{
 			diffuse_reflection(colision, normal, cur, light);
-			specular_reflection(colision, normal, cur, light);
+			specular_reflection(origin, colision, normal, cur, light, shape);
 		}
 		cur = cur->next;
 	}

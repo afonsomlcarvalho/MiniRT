@@ -1,12 +1,12 @@
 #include "../inc/minirt.h"
 
-void	get_normal_sphere(void *self, double t, double *p, double *normal)
+void	get_normal_sphere(void *self, double t, double *origin, double *p, double *normal)
 {
 	double		point[3];
 	t_sphere	*sphere;
 
 	sphere = (t_sphere *) self;
-	find_point(t, p, point);
+	find_point(t, origin, p, point);
 	normalize_vector(sphere->center, point, normal);
 }
 
@@ -43,6 +43,7 @@ void	add_sphere(char **info)
 	new_shape->check_hit = check_hit_sphere;
 	new_shape->get_normal = get_normal_sphere;
 	new_shape->spec = DEF_SPEC;
+	new_shape->reflection = 0.5;
 	new_shape->next = NULL;
 
 	new_sphere = (t_sphere *)ft_calloc(1, sizeof(t_sphere));

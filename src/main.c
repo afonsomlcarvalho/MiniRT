@@ -29,7 +29,7 @@ void	draw_canvas()
 		for (int y = -HEIGHT/2; y < HEIGHT/2; y++)
 		{
 			canvas_to_viewport(x, y, p);
-			color = trace_ray(p);
+			color = trace_ray(scene.camera.origin, p, 2);
 			my_mlx_pixel_put(&scene.img, x + WIDTH/2, y + HEIGHT/2, color);
 		}
 	}

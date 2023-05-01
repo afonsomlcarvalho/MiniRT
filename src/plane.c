@@ -1,12 +1,13 @@
 #include "../inc/minirt.h"
 
-void	get_normal_plane(void *self, double t, double *p, double *normal)
+void	get_normal_plane(void *self, double t, double *origin, double *p, double *normal)
 {
 	double		point[3];
 	t_plane		*plane;
 
 	(void) t;
 	(void) p;
+	(void) origin;
 	plane = (t_plane *) self;
 	point[X] = 0;
 	point[Y] = 0;
@@ -46,8 +47,8 @@ double	check_hit_plane(void *self, double p[3], double origin[3], int flag)
 	t = dot(plane->normal, oq) / dot(plane->normal, D);
 	if (!flag && t < 1)
 		return (0.0);
-	if (flag && check_side(origin, plane))
-		return (0.2);
+	//if (flag && check_side(origin, plane))
+	//	return (0.2);
 	return (t);
 }
 
@@ -65,6 +66,7 @@ void	add_plane(char **info)
 	new_shape->check_hit = check_hit_plane;
 	new_shape->get_normal = get_normal_plane;
 	new_shape->spec = -1;
+	new_shape->reflection = 0;
 	new_shape->next = NULL;
 
 	new_plane = (t_plane *)ft_calloc(1, sizeof(t_plane));

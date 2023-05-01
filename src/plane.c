@@ -72,7 +72,7 @@ int	add_plane(char **info)
 	new_shape->check_hit = check_hit_plane;
 	new_shape->get_normal = get_normal_plane;
 	new_shape->spec = -1;
-	new_shape->reflection = 0;
+	new_shape->reflection = 0.2;
 	new_shape->next = NULL;
 	if (coords_interpreter(info[1], new_plane->point))
 		error += parsing_error("Invalid plane position.\n");

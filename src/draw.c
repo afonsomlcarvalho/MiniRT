@@ -20,7 +20,7 @@ void	draw_canvas()
 		for (int y = -HEIGHT/2; y < HEIGHT/2; y++)
 		{
 			canvas_to_viewport(x, y, p);
-			color = trace_ray(scene.camera.origin, p, 2);
+			color = trace_ray(scene.camera.origin, p, 1);
 			my_mlx_pixel_put(&scene.img, x + WIDTH/2, y + HEIGHT/2, color);
 		}
 	}
@@ -44,7 +44,7 @@ void	*draw_parcel(void *x)
 		while (n < WIDTH / THREAD)
 		{
 			canvas_to_viewport(i + n, y, p);
-			color = trace_ray(scene.camera.origin, p, 2);
+			color = trace_ray(scene.camera.origin, p, 1);
 			pthread_mutex_lock(&canva);
 			my_mlx_pixel_put(&scene.img, i + n + WIDTH/2, y + HEIGHT/2, color);
 			pthread_mutex_unlock(&canva);

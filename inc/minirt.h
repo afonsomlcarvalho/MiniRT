@@ -18,8 +18,8 @@
 # define HEIGHT		1080
 # define DEF_SPEC	200
 
-# define BACKGROUND	0xffffffff
-# define THREAD		20
+# define BACKGROUND	0
+# define THREAD		50
 
 enum e_type
 {

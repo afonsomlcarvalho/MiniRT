@@ -47,29 +47,35 @@ double	check_hit_plane(void *self, double p[3], double origin[3], int flag)
 	return (t);
 }
 
-void	add_plane(char **info)
+int	add_plane(char **info)
 {
-	t_shape		*new_shape;
-	t_plane		*new_plane;
+	t_shape	*new_shape;
+	t_plane	*new_plane;
+	int		error;
 
 	new_shape = ft_calloc(1, sizeof(t_shape));
+	error = 0;
 	if (!new_shape)
-		return ;	//TODO: Error Handling
+		return 0;	//TODO: Error Handling
+	add_back_shape(new_shape);
+	new_plane = (t_plane *)ft_calloc(1, sizeof(t_plane));
+	new_shape->shape = new_plane;
+	if (!new_plane)
+		return 0;	//TODO: Error Handling
 
+	if (array_size(info) != 4)
+		return (parsing_error("Invalid number of arguments for plane.\n"));
 	new_shape->type = PLANE;
-	get_color(info[3], new_shape->color);
+	if (get_color(info[3], new_shape->color))
+		error += parsing_error("Invalid plane colour.\n");
 	new_shape->check_hit = check_hit_plane;
 	new_shape->get_normal = get_normal_plane;
 	new_shape->spec = -1;
 	new_shape->next = NULL;
-
-	new_plane = (t_plane *)ft_calloc(1, sizeof(t_plane));
-	new_shape->shape = new_plane;
-	if (!new_plane)
-		return ;	//TODO: Error Handling
-
-	coords_interpreter(info[1], new_plane->point);
-	coords_interpreter(info[2], new_plane->normal);
-	add_back_shape(new_shape);
+	if (coords_interpreter(info[1], new_plane->point))
+		error += parsing_error("Invalid plane position.\n");
+	if (coords_interpreter(info[2], new_plane->normal) || check_normalized_vector(new_plane->normal))
+		error += parsing_error("Invalid plane normal vector.\n");
+	return (error);
 }
 

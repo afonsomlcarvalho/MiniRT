@@ -10,27 +10,32 @@ void	setup_scene(void)
 	// scene.shapes = NULL;
 }
 
-void	setup_camera(char **info)
+int	check_camera(void)
+{
+	int	error;
+
+	error = 0;
+	if (scene.camera.fov < 0 || scene.camera.fov > 180)
+		error += parsing_error("Invalid camera FOV.\n");
+	if (check_normalized_vector(scene.camera.direction))
+		error += parsing_error("Invalid camera direction.\n");
+	return (error);
+}
+
+int	setup_camera(char **info)
 {
 	static int	c;
-	int			i;
 
 	if (c)
-		parsing_error("More than one camera.\n");
+		return (parsing_error("More than one camera.\n"));
+	if (array_size(info) != 4)
+		return (parsing_error("Invalid number of arguments for camera.\n"));
 	coords_interpreter(info[1], scene.camera.origin);
 	coords_interpreter(info[2], scene.camera.direction);
 	scene.camera.fov = ft_atoi(info[3]);
-	i = 0;
-	while (i < 3)
-	{
-		if (scene.camera.direction[i] > 1 || scene.camera.direction[i] < -1)
-			parsing_error("Invalid camera direction.\n");
-		i++;
-	}
-	if (scene.camera.fov > 180 || scene.camera.fov < 0)
-		parsing_error("Invalid FOV.\n");
 	c++;
 	setup_viewport();
+	return (check_camera());
 }
 
 /* Converts degrees to radians */

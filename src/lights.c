@@ -18,20 +18,30 @@ void	add_back_light(t_light *new_light)
 	tmp->next = new_light;
 }
 
-void	light_setup(char **info, int flag)
+int	light_setup(char **info, int flag)
 {
-	t_light	*light;
+	t_light		*light;
+	static int	c;
+	int			error;
 
+	if (!flag && c)
+		return (parsing_error("More than one ambient light.\n"));
 	light = ft_calloc(1, sizeof(t_light));
-	coords_interpreter(info[1 + flag], &light->brightness);
-	if (light->brightness < 0 || light->brightness > 1)
-		parsing_error("Invalid brightness\n");
-	coords_interpreter(info[2 + flag], light->color);
-	light->type = flag;
-	light->next = NULL;
-	if (flag)
-		coords_interpreter(info[1], light->position);
+	error = 0;
 	add_back_light(light);
+	if (array_size(info) != 3 + flag)
+		return (parsing_error("Invalid number of arguments for lights.\n"));
+	if (coords_interpreter(info[1 + flag], &light->brightness) || light->brightness < 0 || light->brightness > 1)
+		error += parsing_error("Invalid light brightness.\n");
+	// coords_interpreter(info[2 + flag], light->color);
+	if (get_color(info[2 + flag], light->color))
+		error += parsing_error("Invalid light colour.\n");
+	light->type = flag;
+	c += (flag == 0);
+	light->next = NULL;
+	if (flag && coords_interpreter(info[1], light->position))
+		error += parsing_error("Invalid light position.\n");
+	return (error);
 }
 
 /* Finds the intersection point of the ray from the camera passing

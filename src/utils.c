@@ -18,7 +18,7 @@ int	coords_interpreter(char *coords, double *point)
 		while (coords[i] && coords[i] != '.' && coords[i] != ',')
 		{
 			if (!ft_isdigit(coords[i]))
-				return (0);
+				return (1);
 			point[axis] = point[axis] * 10 + (coords[i++] - '0');
 		}
 		if (coords[i] == '.' && i++)
@@ -26,17 +26,17 @@ int	coords_interpreter(char *coords, double *point)
 			while (coords[i] && coords[i] != ',')
 			{
 				if (!ft_isdigit(coords[i]))
-					return (0);
+					return (1);
 				point[axis] += (coords[i++] - '0') / pow(10, decimal++);
 			}
 		}
 		point[axis++] *= (sign == 0) - (sign != 0);
 		i += coords[i] == ',';
 	}
-	return (1);
+	return (0);
 }
 
-void	get_color(char *coords, int *colors)
+int	get_color(char *coords, int *colors)
 {
 	int		red;
 	int		green;
@@ -45,18 +45,19 @@ void	get_color(char *coords, int *colors)
 
 	arr = ft_split(coords, ',');
 	if (!arr)
-		return ;	// TODO: ERROR HANDLING
+		return 0;	// TODO: ERROR HANDLING
 	red = ft_atoi(arr[0]);
 	green = ft_atoi(arr[1]);
 	blue = ft_atoi(arr[2]);
+	free_array(arr);
 	if (red < 0 || red > 255 ||
 		green < 0 || green > 255 ||
 		blue < 0 || blue > 255)
-		return ;	// TODO: ERROR HANDLING
+		return (1);
 	colors[0] = red;
 	colors[1] = green;
 	colors[2] = blue;
-	free_array(arr);
+	return (0);
 }
 
 int	rgb_to_color(int *rgb, double *light)
@@ -75,4 +76,28 @@ int	rgb_to_color(int *rgb, double *light)
 	if (blue > 255)
 		blue = 255;
 	return ((red << 16) + (green << 8) + blue);
+}
+
+int	array_size(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+		i++;
+	return (i);
+}
+
+int	check_normalized_vector(double *vector)
+{
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		if (vector[i] < -1 || vector[i] > 1)
+			return (1);
+		i++;
+	}
+	return (0);
 }

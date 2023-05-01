@@ -171,32 +171,40 @@ void	substitute_caps(t_cyllinder *self)
 	add_caps(self);
 }
 
-void	add_cyllinder(char **info)
+int	add_cyllinder(char **info)
 {
 	t_shape		*new_shape;
 	t_cyllinder	*new_cyllinder;
+	int			error;
 
+	error = 0;
 	new_shape = ft_calloc(1, sizeof(t_shape));
 	if (!new_shape)
-		return ;	//TODO: Error Handling
+		return 0;	//TODO: Error Handling
+	new_cyllinder = (t_cyllinder *)ft_calloc(1, sizeof(t_cyllinder));
+	if (!new_cyllinder)
+		return 0;	//TODO: Error Handling
 
+	new_shape->shape = new_cyllinder;
+	add_back_shape(new_shape);
+	if (array_size(info) != 6)
+		return (parsing_error("Invalid number of arguments for cyllinder.\n"));
 	new_shape->type = CYLLINDER;
-	get_color(info[5], new_shape->color);
+	if (get_color(info[5], new_shape->color))
+		error += parsing_error("Invalid cyllinder colour.\n");
 	new_shape->check_hit = check_hit_cyllinder;
 	new_shape->spec = DEF_SPEC;
 	new_shape->next = NULL;
 	new_shape->get_normal = get_normal_cyllinder;
-
-	new_cyllinder = (t_cyllinder *)ft_calloc(1, sizeof(t_cyllinder));
-	if (!new_cyllinder)
-		return ;	//TODO: Error Handling
-
-	coords_interpreter(info[1], new_cyllinder->center);
-	coords_interpreter(info[3], &new_cyllinder->radius);
-	coords_interpreter(info[2], new_cyllinder->axis);
-	coords_interpreter(info[4], &new_cyllinder->height);
+	if (coords_interpreter(info[1], new_cyllinder->center))
+		error += parsing_error("Invalid cyllinder center.\n");
+	if (coords_interpreter(info[3], &new_cyllinder->radius))
+		error += parsing_error("Invalid cyllinder radius.\n");
+	if (coords_interpreter(info[2], new_cyllinder->axis) || check_normalized_vector(new_cyllinder->axis))
+		error += parsing_error("Invalid cyllinder axis.\n");
+	if (coords_interpreter(info[4], &new_cyllinder->height))
+		error += parsing_error("Invalid cyllinder height.\n");
 	new_cyllinder->radius /= 2;
 	add_caps(new_cyllinder);
-	new_shape->shape = new_cyllinder;
-	add_back_shape(new_shape);
+	return (error);
 }

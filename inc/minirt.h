@@ -45,7 +45,7 @@ typedef	struct s_light
 	double			brightness;
 	double			position[3];
 	int				type;
-	double			color[3];
+	int				color[3];
 	struct s_light	*next;
 }	t_light;
 
@@ -133,12 +133,12 @@ extern t_scene scene;
 void	parser(int argc, char **argv);
 int		coords_interpreter(char *coords, double *point);
 void	free_array(char **array);
-void	parsing_error(char *str);
+int		parsing_error(char *str);
 int		rgb_to_color(int *rgb, double *light);
-void	light_setup(char **info, int flag);
+int		light_setup(char **info, int flag);
 void	determine_light(double *light, double t, double *p, double *normal);
 void	setup_scene(void);
-void	setup_camera(char **info);
+int		setup_camera(char **info);
 void	setup_viewport(void);
 void	canvas_to_viewport(int x, int y, double *p);
 int		trace_ray(double *p);
@@ -171,18 +171,21 @@ void	rotate(double *vector, double *angle);
 
 void	add_back_shape(t_shape *new_shape);
 
-void	add_sphere(char **info);
+int		add_sphere(char **info);
 
-void	add_plane(char **info);
+int		add_plane(char **info);
 double	check_hit_plane(void *self, double p[3], double origin[3], int flag);
 
-void	add_cyllinder(char **info);
+int		add_cyllinder(char **info);
 void	substitute_caps(t_cyllinder *self);
 
 int		end();
+void	free_all(int flag);
 
 void	find_point(double t, double *p, double *buf);
-void	get_color(char *coords, int *colors);
+int		get_color(char *coords, int *colors);
+int		array_size(char **array);
+int		check_normalized_vector(double *vector);
 
 void	diffuse_reflection(double *colision, double *normal, t_light *cur, double *light);
 void	specular_reflection(double *colision, double *normal, t_light *cur, double *light);

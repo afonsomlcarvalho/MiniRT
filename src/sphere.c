@@ -62,7 +62,7 @@ int	add_sphere(char **info)
 	if (coords_interpreter(info[1], new_sphere->center))
 		error += parsing_error("Invalid sphere center coords.\n");
 	if (coords_interpreter(info[2], &new_sphere->radius))
-		error += parsing_error("Invalid sphere raidus.\n");
+		error += parsing_error("Invalid sphere radius.\n");
 	else
 		new_sphere->radius /= 2;
 	return (error);

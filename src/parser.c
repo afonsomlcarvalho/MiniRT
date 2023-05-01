@@ -43,6 +43,8 @@ void	parser(int argc, char **argv)
 			error += add_plane(info);
 		else if (!ft_strncmp("cy", info[0], ft_strlen(info[0])))
 			error += add_cyllinder(info);
+		else if (!ft_strncmp("co", info[0], ft_strlen(info[0])))
+			error += add_cone(info);
 		// else if (info[0][0] != '\n')
 		// 	error += parsing_error("Invalid identifier.\n");
 		free_array(info);

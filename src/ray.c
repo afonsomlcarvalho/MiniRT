@@ -75,6 +75,7 @@ int	trace_ray(double *origin, double *p, int recur)
 		local_color = BACKGROUND;
 	else
 	{
+		
 		local_color = closest->color;
 		if (closest->self->reflection != 0 && recur != 0)
 		{

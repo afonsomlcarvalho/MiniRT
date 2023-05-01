@@ -33,7 +33,7 @@ void	apply_translation_and_rotation(t_shape *selected, double *vector, double *a
 		translate(((t_plane *)(selected->shape))->point, vector);
 		rotate(((t_plane *)(selected->shape))->normal, angle);
 	}
-	draw_canvas();
+	split_canva();
 }
 
 int	key_press(int keycode)
@@ -86,7 +86,7 @@ int	main(int argc, char **argv)
 	parser(argc, argv);
 	setup_scene();
 
-	draw_canvas();
+	split_canva();
 
 	mlx_hook(scene.win, 2, 1L<<0, key_press, NULL);
 	mlx_hook(scene.win, 17, 0, end, NULL);

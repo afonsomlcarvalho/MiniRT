@@ -20,12 +20,14 @@
 
 # define BACKGROUND	0xffffffff
 # define THREAD		20
+# define REFLECTIONS 0
 
 enum e_type
 {
 	SPHERE,
 	CYLLINDER,
-	PLANE
+	PLANE,
+	CONE
 };
 
 enum e_reflection
@@ -55,6 +57,15 @@ typedef struct s_sphere
 	double	center[3];
 	double	radius;
 }	t_sphere;
+
+typedef struct s_cone
+{
+	double	vertix[3];
+	double	axis[3];
+	double	angle;
+	double	height;
+	void	*base;
+}	t_cone;
 
 typedef struct s_plane
 {
@@ -180,6 +191,8 @@ double	check_hit_plane(void *self, double p[3], double origin[3], int flag);
 
 int		add_cyllinder(char **info);
 void	substitute_caps(t_cyllinder *self);
+
+int		add_cone(char **info);
 
 int		end();
 void	free_all(int flag);

@@ -7,6 +7,16 @@ int	parsing_error(char *str)
 	return (1);
 }
 
+int	check_name(char *filename)
+{
+	int	i;
+
+	i = 0;
+	while (filename[i])
+		i++;
+	return ((filename[i - 3] != '.') + (filename[i - 2] != 'r') + (filename[i - 1] != 't'));
+}
+
 void	parser(int argc, char **argv)
 {
 	int			fd;
@@ -17,6 +27,8 @@ void	parser(int argc, char **argv)
 	if (argc != 2)
 		error += parsing_error("Invalid number of arguments.\n");
 	fd = open(argv[1], O_RDONLY);
+	if (check_name(argv[1]) || fd == -1)
+		error += parsing_error("Invalid filename.\n");
 	line = get_next_line(fd);
 	while (line)
 	{

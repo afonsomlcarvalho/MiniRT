@@ -5,47 +5,47 @@
  * NORMAL vector and light CUR, storing the results in LIGHT */
 void	diffuse_reflection(t_lightaux *lightaux, t_light *cur)
 {
-	double	L[3];
+	double	l[3];
 	double	prod;
 	int		i;
 
-	vec(lightaux->colision, cur->position, L);
-	prod = dot(lightaux->normal, L);
+	vec(lightaux->colision, cur->position, l);
+	prod = dot(lightaux->normal, l);
 	if (prod > 0)
 	{
 		i = -1;
 		while (++i < 3)
 			lightaux->light[i] += 0.9 * (cur->brightness * prod / \
-			(vector_size(lightaux->normal) * vector_size(L))) * (cur->color[i] / 255);
+			(vector_size(lightaux->normal) * vector_size(l))) * \
+			(cur->color[i] / 255);
 	}
 }
 
-void	specular_reflection(t_lightaux *lightaux, double *origin, t_light *cur, t_shape *shape)
+void	specular_reflection(t_lightaux *lightaux, double *origin, \
+		t_light *cur, t_shape *shape)
 {
-	double	L[3];
-
-	double	R[3];
-	double	V[3];
-	double	prod;
-	int		i;	
-	double	Ln[3];
-	double	Lp[3];
-
+	t_specaux	*specaux;
+	double		prod;
+	int			i;	
 
 	if (shape->spec == -1)
 		return ;
-	vec(lightaux->colision, cur->position, L);
-	vec(lightaux->colision, origin, V);
-	mult_vecs(dot(lightaux->normal, L), lightaux->normal, Ln);
-	subtract_vecs(L, Ln, Lp);
-	subtract_vecs(Ln, Lp, R);
-	prod = dot(R, V);
+	specaux = (t_specaux *) ft_calloc(1, sizeof(t_specaux));
+	if (!specaux)
+		return ;//TODO: Error Handling
+	vec(lightaux->colision, cur->position, specaux->l);
+	vec(lightaux->colision, origin, specaux->v);
+	mult_vecs(dot(lightaux->normal, specaux->l), lightaux->normal, specaux->ln);
+	subtract_vecs(specaux->l, specaux->ln, specaux->lp);
+	subtract_vecs(specaux->ln, specaux->lp, specaux->r);
+	prod = dot(specaux->r, specaux->v);
 	if (prod > 0)
 	{
 		i = -1;
 		while (++i < 3)
 			lightaux->light[i] += cur->brightness * pow(prod / \
-			(vector_size(R) * vector_size(V)), shape->spec) * (cur->color[i] / 255);
+			(vector_size(specaux->r) * vector_size(specaux->v)), \
+			shape->spec) * (cur->color[i] / 255);
 	}
+	free(specaux);
 }
-

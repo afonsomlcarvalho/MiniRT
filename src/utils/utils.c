@@ -1,49 +1,47 @@
 #include "../../inc/minirt.h"
 
+int	coords_interpreter_aux(char *coords, double *point, int *i, int axis)
+{
+	int	decimal;
+
+	decimal = 1;
+	while (coords[*i] && coords[*i] != '.' && coords[*i] != ',')
+	{
+		if (!ft_isdigit(coords[*i]))
+			return (1);
+		point[axis] = point[axis] * 10 + (coords[(*i)++] - '0');
+	}
+	if (coords[*i] == '.' && (*i)++)
+	{
+		while (coords[*i] && coords[*i] != ',')
+		{
+			if (!ft_isdigit(coords[*i]))
+				return (1);
+			point[axis] += (coords[(*i)++] - '0') / pow(10, decimal++);
+		}
+	}
+	return (0);
+}
+
 int	coords_interpreter(char *coords, double *point)
 {
 	int	i;
 	int	axis;
 	int	sign;
-	int	decimal;
 
 	i = 0;
 	axis = 0;
 	while (coords[i])
 	{
-		decimal = 1;
 		sign = coords[i] == '-';
 		if (sign)
 			i++;
-		while (coords[i] && coords[i] != '.' && coords[i] != ',')
-		{
-			if (!ft_isdigit(coords[i]))
-				return (1);
-			point[axis] = point[axis] * 10 + (coords[i++] - '0');
-		}
-		if (coords[i] == '.' && i++)
-		{
-			while (coords[i] && coords[i] != ',')
-			{
-				if (!ft_isdigit(coords[i]))
-					return (1);
-				point[axis] += (coords[i++] - '0') / pow(10, decimal++);
-			}
-		}
+		if (coords_interpreter_aux(coords, point, &i, axis))
+			return (1);
 		point[axis++] *= (sign == 0) - (sign != 0);
 		i += coords[i] == ',';
 	}
 	return (0);
-}
-
-int	array_size(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-		i++;
-	return (i);
 }
 
 int	check_normalized_vector(double *vector)
@@ -71,12 +69,13 @@ void	find_point(double t, double *origin, double *p, double *buf)
 
 /* Calculates the reflection of INCOMING_RAY according ro the surface NORMAL
  * and stores the resulting vector in REFLECTED_RAY */
-void	get_reflected_ray(double *incoming_ray, double *normal, double *reflected_ray)
+void	get_reflected_ray(double *incoming_ray, \
+double *normal, double *reflected_ray)
 {
-	double	Ln[3];
-	double	Lp[3];
+	double	ln[3];
+	double	lp[3];
 
-	mult_vecs(dot(normal, incoming_ray), normal, Ln);
-	subtract_vecs(incoming_ray, Ln, Lp);
-	subtract_vecs(Lp, Ln, reflected_ray);
+	mult_vecs(dot(normal, incoming_ray), normal, ln);
+	subtract_vecs(incoming_ray, ln, lp);
+	subtract_vecs(lp, ln, reflected_ray);
 }

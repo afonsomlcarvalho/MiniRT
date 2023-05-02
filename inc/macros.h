@@ -1,7 +1,7 @@
 #ifndef MACROS_H
 # define MACROS_H
 
-#include "minirt.h"
+# include "minirt.h"
 
 # define X	0
 # define Y	1

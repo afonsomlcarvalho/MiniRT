@@ -12,7 +12,6 @@ t_aux	*get_closest_object(t_aux **lst)
 	tmp = *lst;
 	closest = tmp;
 	min = tmp->t;
-	
 	while (tmp)
 	{
 		if (tmp->t < min)

@@ -17,30 +17,36 @@ int	key_press(int keycode)
 	return (0);
 }
 
-int	select_piece(int button, int x, int y)
+static void	select_piece_aux(double *point)
 {
 	double	t;
-	t_shape			*cur;
-	double			point[3];
+	t_shape	*cur;
+
+	cur = g_scene.shapes;
+	t = 0;
+	while (cur)
+	{
+		if (cur->check_hit(cur->shape, point, g_scene.camera.origin, 0) && \
+		(t == 0 || \
+		cur->check_hit(cur->shape, point, g_scene.camera.origin, 0) < t))
+		{
+			g_scene.selected = cur;
+			t = cur->check_hit(cur->shape, point, g_scene.camera.origin, 0);
+		}
+		cur = cur->next;
+	}
+}
+
+int	select_piece(int button, int x, int y)
+{
+	double	point[3];
 
 	if (button != 1)
 		return (0);
-	cur = g_scene.shapes;
-	t = 0;
 	canvas_to_viewport(x - WIDTH / 2, y - HEIGHT / 2, point);
 	if (g_scene.selected)
 		g_scene.selected = 0;
 	else
-	{
-		while (cur /* && !g_scene.selected */)
-		{
-			if (cur->check_hit(cur->shape, point, g_scene.camera.origin, 0) && (t == 0 || cur->check_hit(cur->shape, point, g_scene.camera.origin, 0) < t))
-			{
-				g_scene.selected = cur;
-				t = cur->check_hit(cur->shape, point, g_scene.camera.origin, 0);
-			}
-			cur = cur->next;
-		}
-	}
+		select_piece_aux(point);
 	return (0);
 }

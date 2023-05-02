@@ -1,6 +1,6 @@
 #include "../../inc/minirt.h"
 
-static void	clear_shapes()
+static void	clear_shapes(void)
 {
 	t_shape	*temp;
 
@@ -19,7 +19,7 @@ static void	clear_shapes()
 	g_scene.shapes = NULL;
 }
 
-static void	clear_lights()
+static void	clear_lights(void)
 {
 	t_light	*temp;
 
@@ -56,7 +56,7 @@ void	free_all(int flag)
 	exit(0);
 }
 
-int	end()
+int	end(void)
 {
 	free_all(1);
 	return (0);

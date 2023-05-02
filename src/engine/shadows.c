@@ -3,11 +3,11 @@
 /* Checks if the COLISION point is in shadow */
 int	is_in_shadow(double *colision, t_light *light)
 {
-	double	L[3];
+	double	l[3];
 	double	t;
 	t_shape	*tmp;
 
-	vec(colision, light->position, L);
+	vec(colision, light->position, l);
 	tmp = g_scene.shapes;
 	while (tmp)
 	{

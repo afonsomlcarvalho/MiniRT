@@ -6,7 +6,7 @@
 #    By: gda_cruz <gda_cruz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 18:53:37 by gda_cruz          #+#    #+#              #
-#    Updated: 2023/05/01 17:00:19 by gda_cruz         ###   ########.fr        #
+#    Updated: 2023/05/02 11:22:20 by gda_cruz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ MLX_DIR =       $(LIB_DIR)/mlx_linux
 
 ####### COMPILER #######
 CC      =       gcc
-CFLAGS  =       -Wall -Wextra -Werror -pthread -g
+CFLAGS  =       -Wall -Wextra -Werror -pthread -g -O3
 LFT_FLAGS =     -L$(LIBFT_DIR) -lft
 MLX_FLAGS =     -L$(MLX_DIR) -lmlx_Linux -L/usr/lib -I$(MLX_DIR) -lXext -lX11 -lm -lz
 OFLAGS =        -I/usr/include -I$(MLX_DIR) -O3

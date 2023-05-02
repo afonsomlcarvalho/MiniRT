@@ -16,6 +16,14 @@ void	subtract_vecs(double *v1, double *v2, double *buff)
 	buff[Z] = v1[Z] - v2[Z];
 }
 
+/* Stores the result of the operation V1 + V2 in BUFF */
+void	add_vecs(double *v1, double *v2, double *buff)
+{
+	buff[X] = v1[X] + v2[X];
+	buff[Y] = v1[Y] + v2[Y];
+	buff[Z] = v1[Z] + v2[Z];
+}
+
 void	translate(double *point, double *vector)
 {
 	point[X] += vector[X];

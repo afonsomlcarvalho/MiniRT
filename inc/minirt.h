@@ -64,6 +64,7 @@ typedef struct s_cone
 	double	axis[3];
 	double	angle;
 	double	height;
+	double	radius;
 	void	*base;
 }	t_cone;
 

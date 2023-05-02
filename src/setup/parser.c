@@ -14,14 +14,38 @@ static int	check_name(char *filename)
 	i = 0;
 	while (filename[i])
 		i++;
-	return ((filename[i - 3] != '.') + (filename[i - 2] != 'r') + (filename[i - 1] != 't'));
+	return ((filename[i - 3] != '.') + (filename[i - 2] != 'r') \
+			+ (filename[i - 1] != 't'));
+}
+
+void	parse_line(char *line, int *error)
+{
+	char		**info;
+
+	info = ft_split(line, ' ');
+	if (!ft_strncmp("C", info[0], ft_strlen(info[0])))
+		*error += setup_camera(info);
+	else if (!ft_strncmp("sp", info[0], ft_strlen(info[0])))
+		*error += add_sphere(info);
+	else if (!ft_strncmp("A", info[0], ft_strlen(info[0])) \
+	|| !ft_strncmp("L", info[0], ft_strlen(info[0])))
+		*error += light_setup(info, info[0][0] == 'L');
+	else if (!ft_strncmp("pl", info[0], ft_strlen(info[0])))
+		*error += add_plane(info);
+	else if (!ft_strncmp("cy", info[0], ft_strlen(info[0])))
+		*error += add_cylinder(info);
+	else if (!ft_strncmp("co", info[0], ft_strlen(info[0])))
+		*error += add_cone(info);
+	else if (info[0][0] != '\n')
+		*error += parsing_error("Invalid identifier.\n");
+	free_array(info);
+	free(line);
 }
 
 void	parser(int argc, char **argv)
 {
 	int			fd;
 	char		*line;
-	char		**info;
 	static int	error;
 
 	if (argc != 2)
@@ -32,23 +56,7 @@ void	parser(int argc, char **argv)
 	line = get_next_line(fd);
 	while (line)
 	{
-		info = ft_split(line, ' ');
-		if (!ft_strncmp("C", info[0], ft_strlen(info[0])))
-			error += setup_camera(info);
-		else if (!ft_strncmp("sp", info[0], ft_strlen(info[0])))
-			error += add_sphere(info);
-		else if (!ft_strncmp("A", info[0], ft_strlen(info[0])) || !ft_strncmp("L", info[0], ft_strlen(info[0])))
-			error += light_setup(info, info[0][0] == 'L');
-		else if (!ft_strncmp("pl", info[0], ft_strlen(info[0])))
-			error += add_plane(info);
-		else if (!ft_strncmp("cy", info[0], ft_strlen(info[0])))
-			error += add_cylinder(info);
-		else if (!ft_strncmp("co", info[0], ft_strlen(info[0])))
-			error += add_cone(info);
-		// else if (info[0][0] != '\n')
-		// 	error += parsing_error("Invalid identifier.\n");
-		free_array(info);
-		free(line);
+		parse_line(line, &error);
 		line = get_next_line(fd);
 	}
 	close(fd);

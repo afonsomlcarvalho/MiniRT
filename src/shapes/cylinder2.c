@@ -5,7 +5,8 @@ int	check_plane(t_plane *plane, t_cylinder *self, double *point, double *normal)
 	double	vector[3];
 
 	vec(point, plane->point, vector);
-	if (dot(vector, plane->normal) < 0.0000001 && dot(vector, plane->normal) > -0.0000001)
+	if (dot(vector, plane->normal) < 0.0000001 && \
+	dot(vector, plane->normal) > -0.0000001)
 	{
 		vec(self->center, plane->point, vector);
 		normalize_vector(vector, normal);
@@ -35,11 +36,11 @@ void	get_normal_cylinder(void *self, double *colision, double *normal)
 	t_plane		*top;
 	t_plane		*under;
 
-
 	cylinder = (t_cylinder *) self;
 	top = (t_plane *) cylinder->top_cap;
 	under = (t_plane *) cylinder->under_cap;
-	if (check_plane(top, cylinder, colision, normal) || check_plane(under, cylinder, colision, normal))
+	if (check_plane(top, cylinder, colision, normal) || \
+	check_plane(under, cylinder, colision, normal))
 		return ;
 	side_normal(cylinder, colision, normal);
 }
@@ -53,7 +54,8 @@ double	check_height(t_cylinder *self, double t, double *origin, double *vector)
 	point[X] = origin[X] + t * vector[X];
 	point[Y] = origin[Y] + t * vector[Y];
 	point[Z] = origin[Z] + t * vector[Z];
-	k = (dot(point, self->axis) - dot(self->center, self->axis)) / dot(self->axis, self->axis);
+	k = (dot(point, self->axis) - \
+	dot(self->center, self->axis)) / dot(self->axis, self->axis);
 	p1[X] = self->center[X] + k * self->axis[X];
 	p1[Y] = self->center[Y] + k * self->axis[Y];
 	p1[Z] = self->center[Z] + k * self->axis[Z];
@@ -85,4 +87,3 @@ double	check_width(t_cylinder *self, double t, double *origin, double *vector)
 	}
 	return (t * (vector_size(v) <= self->radius));
 }
-

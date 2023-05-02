@@ -39,6 +39,9 @@ void	split_canva(void);
 
 /********** cone.c **********/
 int		add_cone(char **info);
+void	substitute_cone_base(t_cone *cone);
+double	check_hit_cone(void *self, double p[3], double origin[3], int flag);
+
 
 /******** cylinder.c ********/
 int		add_cylinder(char **info);
@@ -95,6 +98,10 @@ int		is_in_shadow(double *colision, t_light *light);
 int		end(void);
 void	free_all(int flag);
 void	free_array(char **array);
+
+/******* setup_utils.c ******/
+
+void	set_vectors(double *w_vector, double *h_vector);
 
 /******* list_utils.c *******/
 void	delete_list(t_aux **lst);

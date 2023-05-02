@@ -1,30 +1,11 @@
 #include "../../inc/minirt.h"
 
-pthread_mutex_t	canva;
-
 static void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
 	char	*dst;
 
 	dst = img->address + (y * img->line_length + x * (img->bpp / 8));
-	*(unsigned int*)dst = color;
-}
-
-void	draw_canvas()
-{
-	double	p[3];
-	int		color;
-
-	for (int x = -WIDTH/2; x < WIDTH/2; x++)
-	{
-		for (int y = -HEIGHT/2; y < HEIGHT/2; y++)
-		{
-			canvas_to_viewport(x, y, p);
-			color = trace_ray(g_scene.camera.origin, p, REFLECTIONS);
-			my_mlx_pixel_put(&g_scene.img, x + WIDTH/2, y + HEIGHT/2, color);
-		}
-	}
-	mlx_put_image_to_window(g_scene.mlx, g_scene.win, g_scene.img.img_ptr, 0, 0);
+	*(unsigned int *) dst = color;
 }
 
 static void	*draw_parcel(void *x)
@@ -45,7 +26,8 @@ static void	*draw_parcel(void *x)
 		{
 			canvas_to_viewport(i + n, y, p);
 			color = trace_ray(g_scene.camera.origin, p, REFLECTIONS);
-			my_mlx_pixel_put(&g_scene.img, i + n + WIDTH/2, y + HEIGHT/2, color);
+			my_mlx_pixel_put(&g_scene.img, i + n + WIDTH / 2, \
+			y + HEIGHT / 2, color);
 			n++;
 		}
 		y++;
@@ -53,7 +35,7 @@ static void	*draw_parcel(void *x)
 	return (NULL);
 }
 
-void	split_canva()
+void	split_canva(void)
 {
 	pthread_t	parcel[THREAD];
 	int			i;
@@ -69,5 +51,6 @@ void	split_canva()
 	i = 0;
 	while (i < THREAD)
 		pthread_join(parcel[i++], NULL);
-	mlx_put_image_to_window(g_scene.mlx, g_scene.win, g_scene.img.img_ptr, 0, 0);
+	mlx_put_image_to_window(g_scene.mlx, g_scene.win, \
+	g_scene.img.img_ptr, 0, 0);
 }

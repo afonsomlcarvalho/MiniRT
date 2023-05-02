@@ -68,5 +68,11 @@ void	apply_translation_and_rotation(t_shape *selected, double *vector, double *a
 		translate(((t_plane *)(selected->shape))->point, vector);
 		rotate(((t_plane *)(selected->shape))->normal, angle);
 	}
+	else if (selected->type == CONE)
+	{
+		translate(((t_cone *)(selected->shape))->vertix, vector);
+		rotate(((t_cone *)(selected->shape))->axis, angle);
+		substitute_cone_base((t_cone *)(selected->shape));
+	}
 	split_canva();
 }

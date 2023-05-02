@@ -31,3 +31,13 @@ void	normalize_vector(double *vector, double *norm)
 	norm[Y] = vector[Y] / size;
 	norm[Z] = vector[Z] / size;
 }
+
+int	array_size(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+		i++;
+	return (i);
+}

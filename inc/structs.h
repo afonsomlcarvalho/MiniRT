@@ -9,7 +9,7 @@
  *		color		=> RGB color of the light
  *		next		=> pointer to the next light struct
  */
-typedef	struct s_light
+typedef struct s_light
 {
 	double			brightness;
 	double			position[3];
@@ -42,6 +42,7 @@ typedef struct s_cone
 	double	vertix[3];
 	double	axis[3];
 	double	angle;
+	double	radius;
 	double	height;
 	void	*base;
 }	t_cone;
@@ -71,7 +72,7 @@ typedef struct s_cylinder
 	double	center[3];
 	double	radius;
 	double	axis[3];
-	double 	height;
+	double	height;
 	void	*top_cap;
 	void	*under_cap;
 }	t_cylinder;
@@ -91,7 +92,8 @@ typedef struct s_shape
 {
 	int				type;
 	void			*shape;
-	double			(*check_hit)(void *self, double point[3], double origin[3], int flag);
+	double			(*check_hit)(void *self, double point[3], \
+					double origin[3], int flag);
 	void			(*get_normal)(void *self, double *colision, double *normal);
 	int				color[3];
 	int				spec;
@@ -184,5 +186,26 @@ typedef struct s_lightaux
 	double	normal[3];
 	double	colision[3];
 }	t_lightaux;
+
+typedef struct s_specaux
+{
+	double	l[3];
+	double	r[3];
+	double	v[3];
+	double	ln[3];
+	double	lp[3];
+}	t_specaux;
+
+typedef struct s_rayaux
+{
+	int		local_color;
+	int		reflected_color;
+	double	new_origin[3];
+	double	new_p[3];
+	double	reflected_ray[3];
+	double	incoming_ray[3];
+	double	normal[3];
+	t_aux	*closest;
+}	t_rayaux;
 
 #endif

@@ -108,14 +108,16 @@ double	min(double n1, double n2);
 double	distance(double *p1, double *p2);
 double	solve_quadratic(double a, double b, double c, int flag);
 
-/****** vector_utils.c ******/
+/******** vec_utils.c *******/
+int		array_size(char **array);
 double	dot(double *v1, double *v2);
 double	vector_size(double *vector);
 void	vec(double *p1, double *p2, double *buff);
 void	normalize_vector(double *vector, double *norm);
 
-/****** vector_utils2.c *****/
+/******* vec_utils2.c *******/
 void	translate(double *point, double *vector);
+void	add_vecs(double *v1, double *v2, double *buff);
 void	cross_product(double *v1, double *v2, double *buf);
 void	mult_vecs(double factor, double *vec, double *buff);
 void	subtract_vecs(double *v1, double *v2, double *buff);
@@ -128,14 +130,13 @@ void	apply_translation_and_rotation(t_shape *selected, double *vector, \
 /******* color_utils.c ******/
 int		get_color(char *coords, int *colors);
 int		rgb_to_color(int *rgb, double *light);
-int		get_full_color(int	local_color, int reflected_color, double r);
+int		get_full_color(int local_color, int reflected_color, double r);
 
 /******* event_utils.c ******/
 int		key_press(int keycode);
 int		select_piece(int button, int x, int y);
 
 /********** utils.c *********/
-int		array_size(char **array);
 int		check_normalized_vector(double *vector);
 int		coords_interpreter(char *coords, double *point);
 void	find_point(double t, double *origin, double *p, double *buf);

@@ -1,7 +1,7 @@
 #ifndef MACROS_H
 # define MACROS_H
 
-#include "minirt.h"
+# include "minirt.h"
 
 # define X	0
 # define Y	1
@@ -9,7 +9,7 @@
 
 # define WIDTH	1080
 # define HEIGHT	1080
-# define THREAD	20
+# define THREAD	30
 
 # define DEF_SPEC		200
 # define REFLECTIONS	2

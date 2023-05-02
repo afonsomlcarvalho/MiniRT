@@ -9,13 +9,13 @@ int	get_color(char *coords, int *colors)
 
 	arr = ft_split(coords, ',');
 	if (!arr)
-		return 0;	// TODO: ERROR HANDLING
+		return (0);	// TODO: ERROR HANDLING
 	red = ft_atoi(arr[0]);
 	green = ft_atoi(arr[1]);
 	blue = ft_atoi(arr[2]);
 	free_array(arr);
-	if (red < 0 || red > 255 ||
-		green < 0 || green > 255 ||
+	if (red < 0 || red > 255 || \
+		green < 0 || green > 255 || \
 		blue < 0 || blue > 255)
 		return (1);
 	colors[0] = red;
@@ -42,7 +42,7 @@ int	rgb_to_color(int *rgb, double *light)
 	return ((red << 16) + (green << 8) + blue);
 }
 
-int	get_full_color(int	local_color, int reflected_color, double r)
+int	get_full_color(int local_color, int reflected_color, double r)
 {
 	int	local[3];
 	int	reflected[3];
@@ -54,7 +54,6 @@ int	get_full_color(int	local_color, int reflected_color, double r)
 	reflected[0] = (reflected_color >> 16) & 255;
 	reflected[1] = (reflected_color >> 8) & 255;
 	reflected[2] = reflected_color & 255;
-
 	full[0] = local[0] * (1 - r) + reflected[0] * r;
 	full[1] = local[1] * (1 - r) + reflected[1] * r;
 	full[2] = local[2] * (1 - r) + reflected[2] * r;

@@ -57,7 +57,7 @@ void	get_normal_cone(void *self, double *colision, double *normal)
 	double	axis_point[3];
 
 	cone = (t_cone *) self;
-	base = (t_plane *) base;
+	base = (t_plane *) cone->base;
 	vec(colision, base->point, vector);
 	if (!dot(vector, cone->axis))
 	{

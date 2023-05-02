@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 18:53:37 by gda_cruz          #+#    #+#              #
-#    Updated: 2023/05/02 14:12:37 by amorais-         ###   ########.fr        #
+#    Updated: 2023/05/02 16:45:08 by gda-cruz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ $(OBJ_DIR):
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	@rm -rf lib/mlx_linux/obj lib/mlx_linux/test/main.o
+	@rm -rf lib/mlx_linux/obj lib/mlx_linux/test/main.o lib/mlx_linux/test/mlx-test
 
 fclean: clean
 	@make fclean -s -C $(LIBFT_DIR)

@@ -20,7 +20,7 @@ int	check_side(double *light, t_plane *plane)
 	vec(plane->point, light, l_vector);
 	c_dot = dot(plane->normal, c_vector);
 	l_dot = dot(plane->normal, l_vector);
-	if ((c_dot > 0 && l_dot < 0) || (c_dot < 0 && l_dot > 0))
+	if ((c_dot > 0.000000001 && l_dot < -0.000000001) || (c_dot < -0.000000001 && l_dot > 0.000000001))
 		return (1);
 	return (0);
 }
@@ -61,6 +61,8 @@ void	fill_plane(char **info, int *error, t_shape *new_shape, t_plane *plane)
 	if (coords_interpreter(info[2], plane->normal) || \
 	check_normalized_vector(plane->normal))
 		error += parsing_error("Invalid plane normal vector.\n");
+	if (dot(g_scene.camera.direction, plane->normal) > 0)
+		mult_vecs(-1, plane->normal, plane->normal);
 }
 
 int	add_plane(char **info)

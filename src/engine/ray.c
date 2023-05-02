@@ -62,7 +62,7 @@ int	trace_ray(double *origin, double *p, int recur)
 	trace_ray_aux(&local_color, &ref_color, rayaux, lst);
 	if (!rayaux->closest)
 		local_color = BACKGROUND;
-	else if (rayaux->closest->self->reflection != 0 && recur != 0)
+	else if (rayaux->closest->self->reflection != 0 && recur != 0 && !RUGGED)
 	{
 		setup_recursion(rayaux, origin, p);
 		ref_color = trace_ray(rayaux->new_origin, rayaux->new_p, recur - 1);

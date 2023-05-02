@@ -74,8 +74,12 @@ double *normal, double *reflected_ray)
 {
 	double	ln[3];
 	double	lp[3];
+	double	tmp[3];
 
-	mult_vecs(dot(normal, incoming_ray), normal, ln);
+	mult_vecs(1, normal, tmp);
+	if (dot(incoming_ray, normal) < 0)
+		mult_vecs(-1, normal, tmp);
+	mult_vecs(dot(tmp, incoming_ray), tmp, ln);
 	subtract_vecs(incoming_ray, ln, lp);
 	subtract_vecs(lp, ln, reflected_ray);
 }

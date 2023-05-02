@@ -90,6 +90,9 @@ void	specular_reflection(t_lightaux *lightaux, double *origin, \
 /********* shadows.c ********/
 int		is_in_shadow(double *colision, t_light *light);
 
+/********* texture.c ********/
+void	apply_texture(int *buff);
+
 //////////////////////////////
 /*********** UTILS **********/
 //////////////////////////////

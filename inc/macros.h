@@ -9,7 +9,7 @@
 
 # define WIDTH	1080
 # define HEIGHT	1080
-# define THREAD	50
+# define THREAD	30
 
 # define DEF_SPEC		200
 # define REFLECTIONS	2

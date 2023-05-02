@@ -14,7 +14,7 @@ double	check_height_cone(t_cone *self, double t, double *origin, double *p)
 	axis_point[Y] = self->vertix[Y] + k * self->axis[Y];
 	axis_point[Z] = self->vertix[Z] + k * self->axis[Z];
 	vec(self->vertix, axis_point, axis_point);
-	return (t * (vector_size(axis_point) <= self->height && k > 0));
+	return (t * (k <= self->height && k > 0));
 }
 
 double	check_width_cone(t_cone *self, double t, double *origin, double *dir)
@@ -51,6 +51,6 @@ double	check_hit_cone(void *self, double p[3], double origin[3], int flag)
 	quadratic[1], quadratic[2], flag), origin, p);
 	t[1] = check_width_cone(cone, check_hit_plane(cone->base, p, \
 	origin, flag * 2), origin, ray_direction);
-	return (t[0] * (t[1] < 0.9999999) + t[1] * (t[0] < 0.9999999) + \
-	min(t[0], t[1]) * (t[0] > 0.9999999 && t[1] > 0.9999999));
+	return (t[0] * (t[1] < 0.00000001) + t[1] * (t[0] < 0.00000001) + \
+	min(t[0], t[1]) * (t[0] > 0.00000001 && t[1] > 0.00000001));
 }

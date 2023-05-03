@@ -190,17 +190,19 @@ int	select_piece(int button, int x, int y)
 {
 	double	point[3];
 
-	if (button != 1)
+	if (button != 1 && button != 3)
 		return (0);
 	canvas_to_viewport(x - WIDTH / 2, y - HEIGHT / 2, point);
-	if (g_scene.selected)
+	if (button == 3 && g_scene.selected)
 	{
 		copy_color(g_scene.selected->backup_color, g_scene.selected->color);
 		g_scene.selected = 0;
 		split_canva();
 	}
-	else
+	else if (button == 1)
 	{
+		if (g_scene.selected)
+			copy_color(g_scene.selected->backup_color, g_scene.selected->color);
 		select_piece_aux(point);
 		if (g_scene.selected)
 		{

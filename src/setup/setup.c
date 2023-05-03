@@ -2,12 +2,21 @@
 
 void	setup_scene(void)
 {
+	t_light	*cur;
 	g_scene.mlx = mlx_init();
 	g_scene.win = mlx_new_window(g_scene.mlx, WIDTH, HEIGHT, "test");
 	g_scene.img.img_ptr = mlx_new_image(g_scene.mlx, WIDTH, HEIGHT);
 	g_scene.img.address = mlx_get_data_addr(g_scene.img.img_ptr, \
 	&g_scene.img.bpp, &g_scene.img.line_length, &g_scene.img.endian);
 	g_scene.selected = NULL;
+	g_scene.selected_light = NULL;
+	cur = g_scene.lights;
+	while (cur && !g_scene.selected_light)
+	{
+		if (cur->type)
+			g_scene.selected_light = cur;
+		cur = cur->next;
+	}
 }
 
 static int	check_camera(void)

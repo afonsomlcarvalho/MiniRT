@@ -163,6 +163,7 @@ typedef struct s_scene
 	t_shape	*shapes;
 	t_light	*lights;
 	t_shape	*selected;
+	t_light	*selected_light;
 }	t_scene;
 
 /*

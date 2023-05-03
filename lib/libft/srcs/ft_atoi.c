@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:10:46 by gda-cruz          #+#    #+#             */
-/*   Updated: 2023/05/03 15:53:58 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:12:08 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	ft_atoi(const char *nptr)
 		if (result > 2147483647)
 			return (-1);
 		if (result < -2147483648)
-			return (0);
+			return (-1);
 	}
 	if (*nptr)
-		return (0);
+		return (-1);
 	return (result);
 }

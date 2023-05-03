@@ -25,7 +25,7 @@ static void	*draw_parcel(void *x)
 		while (n < WIDTH / THREAD)
 		{
 			canvas_to_viewport(i + n, y, p);
-			color = trace_ray(g_scene.camera.origin, p, REFLECTIONS);
+			color = trace_ray(g_scene.camera.origin, p, g_scene.reflection);
 			apply_texture(&color);
 			my_mlx_pixel_put(&g_scene.img, i + n + WIDTH / 2, \
 			y + HEIGHT / 2, color);

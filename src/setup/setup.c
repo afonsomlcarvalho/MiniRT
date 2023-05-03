@@ -11,6 +11,7 @@ void	setup_scene(void)
 	g_scene.selected = NULL;
 	g_scene.selected_light = NULL;
 	cur = g_scene.lights;
+	g_scene.reflection = REFLECTIONS;
 	while (cur && !g_scene.selected_light)
 	{
 		if (cur->type)

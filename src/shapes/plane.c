@@ -54,7 +54,8 @@ void	fill_plane(char **info, int *error, t_shape *new_shape, t_plane *plane)
 	new_shape->check_hit = check_hit_plane;
 	new_shape->get_normal = get_normal_plane;
 	new_shape->spec = -1;
-	new_shape->reflection = 0.2;
+	if (coords_interpreter(info[4], &new_shape->reflection) || new_shape->reflection < 0 || new_shape->reflection >= 0.5)
+		error += parsing_error("Invalid plane reflection.\n");
 	new_shape->next = NULL;
 	if (coords_interpreter(info[1], plane->point))
 		error += parsing_error("Invalid plane position.\n");
@@ -80,7 +81,7 @@ int	add_plane(char **info)
 	new_shape->shape = new_plane;
 	if (!new_plane)
 		return 0;	//TODO: Error Handling
-	if (array_size(info) != 4)
+	if (array_size(info) != 5)
 		return (parsing_error("Invalid number of arguments for plane.\n"));
 	fill_plane(info, &error, new_shape, new_plane);
 	return (error);

@@ -63,7 +63,11 @@ static void	change_cone(int keycode)
 void	change_shape_size(int keycode)
 {
 	if (!g_scene.selected)
+	{
+		printf("%sError: No shape selected%s\n", RED_TEXT, RESET_TEXT);
+		fflush(stdout);
 		return ;
+	}
 	if (g_scene.selected->type == SPHERE)
 		change_sphere(keycode);
 	else if (g_scene.selected->type == CYLINDER)

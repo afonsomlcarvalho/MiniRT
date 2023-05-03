@@ -58,6 +58,7 @@ void	free_all(int flag)
 
 int	end(void)
 {
+	printf("%s\n[Quitting...]\n%s", CYAN_TEXT, RESET_TEXT);
 	free_all(1);
 	return (0);
 }

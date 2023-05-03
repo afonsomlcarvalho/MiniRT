@@ -70,6 +70,7 @@ int	select_piece(int button, int x, int y)
 	canvas_to_viewport(x - WIDTH / 2, y - HEIGHT / 2, point);
 	if (button == 3 && g_scene.selected)
 	{
+		printf("\n");
 		copy_color(g_scene.selected->backup_color, g_scene.selected->color);
 		g_scene.selected = 0;
 		split_canva();
@@ -81,6 +82,7 @@ int	select_piece(int button, int x, int y)
 		select_piece_aux(point);
 		if (g_scene.selected)
 		{
+			printf("\n");
 			apply_selection_color();
 			split_canva();
 		}

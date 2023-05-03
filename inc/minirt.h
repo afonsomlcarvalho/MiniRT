@@ -96,6 +96,26 @@ int		is_in_shadow(double *colision, t_light *light);
 void	apply_texture(int *buff);
 
 //////////////////////////////
+/********** EVENTS **********/
+//////////////////////////////
+
+/********* events.c *********/
+int		key_press(int keycode);
+int		select_piece(int button, int x, int y);
+
+/****** light_events.c ******/
+void	change_light(void);
+void	move_light(double *movement);
+
+/****** other_events.c ******/
+void	change_texture(void);
+void	change_reflection(void);
+void	change_depth(int keycode);
+
+/****** resize_events.c *****/
+void	change_shape_size(int keycode);
+
+//////////////////////////////
 /*********** UTILS **********/
 //////////////////////////////
 
@@ -145,10 +165,6 @@ int		rgb_to_color(int *rgb, double *light);
 int		get_full_color(int local_color, int reflected_color, double r);
 void	apply_selection_color(void);
 void	copy_color(int *original, int *copy);
-
-/******* event_utils.c ******/
-int		key_press(int keycode);
-int		select_piece(int button, int x, int y);
 
 /********** utils.c *********/
 int		check_normalized_vector(double *vector);

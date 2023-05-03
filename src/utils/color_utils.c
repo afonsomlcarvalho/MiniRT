@@ -78,9 +78,12 @@ void	apply_selection_color(void)
 	int		i;
 	double	new_color[3];
 
-	new_color[0] = g_scene.selected->color[0] + 100;
-	new_color[1] = g_scene.selected->color[1] + 100;
-	new_color[2] = g_scene.selected->color[2] + 100;
+	new_color[0] = g_scene.selected->color[0] + 85 * \
+		(1 + ((255 - g_scene.selected->color[0]) / 255));
+	new_color[1] = g_scene.selected->color[1] + 85 * \
+		(1 + ((255 - g_scene.selected->color[1]) / 255));
+	new_color[2] = g_scene.selected->color[2] + 85 * \
+		(1 + ((255 - g_scene.selected->color[2]) / 255));
 	if (new_color[0] > 255)
 		new_color[0] = 255;
 	if (new_color[1] > 255)

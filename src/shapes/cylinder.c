@@ -60,22 +60,22 @@ void	fill_cylinder(char **info, int *error, t_shape *shape, t_cylinder *cyli)
 {
 	shape->type = CYLINDER;
 	if (get_color(info[5], shape->color))
-		error += parsing_error("Invalid cylinder colour.\n");
+		*error += parsing_error("Invalid cylinder colour.\n");
 	shape->check_hit = check_hit_cylinder;
 	shape->spec = DEF_SPEC;
 	shape->next = NULL;
 	shape->get_normal = get_normal_cylinder;
 	if (coords_interpreter(info[6], &shape->reflection) || shape->reflection < 0 || shape->reflection >= 0.5)
-		error += parsing_error("Invalid cylinder reflection.\n");
+		*error += parsing_error("Invalid cylinder reflection.\n");
 	if (coords_interpreter(info[1], cyli->center))
-		error += parsing_error("Invalid cylinder center.\n");
+		*error += parsing_error("Invalid cylinder center.\n");
 	if (coords_interpreter(info[3], &cyli->radius) || cyli->radius <= 0)
-		error += parsing_error("Invalid cylinder radius.\n");
+		*error += parsing_error("Invalid cylinder radius.\n");
 	if (coords_interpreter(info[2], cyli->axis) || \
 	check_normalized_vector(cyli->axis))
-		error += parsing_error("Invalid cylinder axis.\n");
+		*error += parsing_error("Invalid cylinder axis.\n");
 	if (coords_interpreter(info[4], &cyli->height) || cyli->height <= 0)
-		error += parsing_error("Invalid cylinder height.\n");
+		*error += parsing_error("Invalid cylinder height.\n");
 	cyli->radius /= 2;
 	add_caps(cyli);
 }

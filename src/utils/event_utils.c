@@ -102,6 +102,7 @@ int	key_press(int keycode)
 	double	angle[3];
 	double	light[3];
 
+	printf("%d\n", keycode);
 	if (keycode == 65307)
 		end();
 	if (keycode == 114)

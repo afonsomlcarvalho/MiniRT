@@ -50,18 +50,18 @@ void	fill_plane(char **info, int *error, t_shape *new_shape, t_plane *plane)
 {
 	new_shape->type = PLANE;
 	if (get_color(info[3], new_shape->color))
-		error += parsing_error("Invalid plane colour.\n");
+		*error += parsing_error("Invalid plane colour.\n");
 	new_shape->check_hit = check_hit_plane;
 	new_shape->get_normal = get_normal_plane;
 	new_shape->spec = -1;
 	if (coords_interpreter(info[4], &new_shape->reflection) || new_shape->reflection < 0 || new_shape->reflection >= 0.5)
-		error += parsing_error("Invalid plane reflection.\n");
+		*error += parsing_error("Invalid plane reflection.\n");
 	new_shape->next = NULL;
 	if (coords_interpreter(info[1], plane->point))
-		error += parsing_error("Invalid plane position.\n");
+		*error += parsing_error("Invalid plane position.\n");
 	if (coords_interpreter(info[2], plane->normal) || \
 	check_normalized_vector(plane->normal))
-		error += parsing_error("Invalid plane normal vector.\n");
+		*error += parsing_error("Invalid plane normal vector.\n");
 	if (dot(g_scene.camera.direction, plane->normal) > 0)
 		mult_vecs(-1, plane->normal, plane->normal);
 }

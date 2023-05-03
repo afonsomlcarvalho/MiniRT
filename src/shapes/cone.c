@@ -56,7 +56,7 @@ void	fill_cone(char **info, int *error, t_shape *new_shape, t_cone *new_cone)
 	new_shape->next = NULL;
 	new_shape->get_normal = get_normal_cone;
 	if (coords_interpreter(info[6], &new_shape->reflection) || new_shape->reflection < 0 || new_shape->reflection >= 0.5)
-		error += parsing_error("Invalid cone reflection.\n");
+		*error += parsing_error("Invalid cone reflection.\n");
 	if (coords_interpreter(info[1], new_cone->vertix))
 		*error += parsing_error("Invalid cone vertix.\n");
 	if (coords_interpreter(info[3], &new_cone->angle) || \

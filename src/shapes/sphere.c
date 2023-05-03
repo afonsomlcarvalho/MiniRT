@@ -30,17 +30,17 @@ void	fill_sphere(char **info, int *error, t_shape *shape, t_sphere *sphere)
 {
 	shape->type = SPHERE;
 	if (get_color(info[3], shape->color))
-		error += parsing_error("Invalid sphere colors.\n");
+		*error += parsing_error("Invalid sphere colors.\n");
 	shape->check_hit = check_hit_sphere;
 	shape->get_normal = get_normal_sphere;
 	shape->spec = DEF_SPEC;
-	if (coords_interpreter(info[4], &shape->reflection) || shape->reflection < 0 || shape->reflection >= 0.5)
-		error += parsing_error("Invalid sphere reflection.\n");
-	shape->next = NULL;
+	if (coords_interpreter(info[4], &shape->reflection) || shape->reflection < 0 || shape->reflection > 0.5)
+		*error += parsing_error("Invalid sphere reflection.\n");
 	if (coords_interpreter(info[1], sphere->center))
-		error += parsing_error("Invalid sphere center coords.\n");
+		*error += parsing_error("Invalid sphere center coords.\n");
+	shape->next = NULL;
 	if (coords_interpreter(info[2], &sphere->radius) || sphere->radius <= 0)
-		error += parsing_error("Invalid sphere radius.\n");
+		*error += parsing_error("Invalid sphere radius.\n");
 	else
 		sphere->radius /= 2;
 }

@@ -33,6 +33,9 @@ void	canvas_to_viewport(int x, int y, double *p);
 void	draw_canvas(void);
 void	split_canva(void);
 
+/****** instructions.c ******/
+void	print_instructions(void);
+
 //////////////////////////////
 /********** SHAPES **********/
 //////////////////////////////

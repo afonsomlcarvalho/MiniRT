@@ -16,4 +16,12 @@
 # define BACKGROUND		0
 # define RUGGED			0
 
+# define RED_TEXT 		"\033[0;31m"
+# define GREEN_TEXT 	"\033[0;32m"
+# define YELLOW_TEXT 	"\033[0;33m"
+# define BLUE_TEXT 		"\033[0;34m"
+# define PURPLE_TEXT	"\033[0;35m"
+# define CYAN_TEXT 		"\033[0;36m"
+# define RESET_TEXT 	"\033[0;0m"
+
 #endif

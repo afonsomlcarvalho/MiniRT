@@ -38,7 +38,7 @@ void	fill_sphere(char **info, int *error, t_shape *shape, t_sphere *sphere)
 	shape->next = NULL;
 	if (coords_interpreter(info[1], sphere->center))
 		error += parsing_error("Invalid sphere center coords.\n");
-	if (coords_interpreter(info[2], &sphere->radius))
+	if (coords_interpreter(info[2], &sphere->radius) || sphere->radius <= 0)
 		error += parsing_error("Invalid sphere radius.\n");
 	else
 		sphere->radius /= 2;

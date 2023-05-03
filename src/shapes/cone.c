@@ -11,7 +11,7 @@ void	get_normal_cone(void *self, double *colision, double *normal)
 	cone = (t_cone *) self;
 	base = (t_plane *) cone->base;
 	vec(colision, base->point, vector);
-	if (!dot(vector, cone->axis))
+	if (dot(vector, cone->axis) > -0.00000001 && dot(vector, cone->axis) < 0.00000001)
 	{
 		vec(cone->vertix, base->point, normal);
 		return ;
@@ -57,13 +57,14 @@ void	fill_cone(char **info, int *error, t_shape *new_shape, t_cone *new_cone)
 	new_shape->get_normal = get_normal_cone;
 	if (coords_interpreter(info[1], new_cone->vertix))
 		*error += parsing_error("Invalid cone vertix.\n");
-	if (coords_interpreter(info[3], &new_cone->angle))
+	if (coords_interpreter(info[3], &new_cone->angle) || \
+	new_cone->angle < 0 || new_cone->angle > 179)
 		*error += parsing_error("Invalid cone angle.\n");
 	if (coords_interpreter(info[2], new_cone->axis) || \
 	check_normalized_vector(new_cone->axis))
 		*error += parsing_error("Invalid cone axis.\n");
 	normalize_vector(new_cone->axis, new_cone->axis);
-	if (coords_interpreter(info[4], &new_cone->height))
+	if (coords_interpreter(info[4], &new_cone->height) || new_cone->height <= 0)
 		*error += parsing_error("Invalid cone height.\n");
 	if (!*error)
 		new_cone->radius = tan(to_rad(new_cone->angle / 2)) * new_cone->height;

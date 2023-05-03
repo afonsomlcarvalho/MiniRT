@@ -48,8 +48,10 @@ double	check_hit_cone(void *self, double p[3], double origin[3], int flag)
 	dot(v_to_o, cone->axis));
 	quadratic[2] = dot(v_to_o, v_to_o) - (pow(cone->radius, 2) / \
 	pow(cone->height, 2) + 1) * pow(dot(v_to_o, cone->axis), 2);
-	t[0] = (-quadratic[1] - sqrt(pow(quadratic[1], 2) - 4 * quadratic[0] * quadratic[2])) / (2 * quadratic[0]);
-	t[1] = (-quadratic[1] + sqrt(pow(quadratic[1], 2) - 4 * quadratic[0] * quadratic[2])) / (2 * quadratic[0]);
+	t[0] = (-quadratic[1] - sqrt(pow(quadratic[1], 2) - \
+	4 * quadratic[0] * quadratic[2])) / (2 * quadratic[0]);
+	t[1] = (-quadratic[1] + sqrt(pow(quadratic[1], 2) - \
+	4 * quadratic[0] * quadratic[2])) / (2 * quadratic[0]);
 	t[0] = check_height_cone(cone, t[0], origin, p);
 	t[1] = check_height_cone(cone, t[1], origin, p);
 	t[2] = check_width_cone(cone, check_hit_plane(cone->base, p, \

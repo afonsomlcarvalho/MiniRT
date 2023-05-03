@@ -55,6 +55,8 @@ void	fill_cone(char **info, int *error, t_shape *new_shape, t_cone *new_cone)
 	new_shape->spec = DEF_SPEC;
 	new_shape->next = NULL;
 	new_shape->get_normal = get_normal_cone;
+	if (coords_interpreter(info[6], &new_shape->reflection) || new_shape->reflection < 0 || new_shape->reflection >= 0.5)
+		error += parsing_error("Invalid cone reflection.\n");
 	if (coords_interpreter(info[1], new_cone->vertix))
 		*error += parsing_error("Invalid cone vertix.\n");
 	if (coords_interpreter(info[3], &new_cone->angle) || \
@@ -86,7 +88,7 @@ int	add_cone(char **info)
 		return (0);	//TODO: Error Handling
 	new_shape->shape = new_cone;
 	add_back_shape(new_shape);
-	if (array_size(info) != 6)
+	if (array_size(info) != 7)
 		return (parsing_error("Invalid number of arguments for cone.\n"));
 	fill_cone(info, &error, new_shape, new_cone);
 	return (error);

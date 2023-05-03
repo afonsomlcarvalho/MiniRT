@@ -45,7 +45,6 @@ int		add_cone(char **info);
 void	substitute_cone_base(t_cone *cone);
 double	check_hit_cone(void *self, double p[3], double origin[3], int flag);
 
-
 /******** cylinder.c ********/
 int		add_cylinder(char **info);
 double	find_t(double *t);

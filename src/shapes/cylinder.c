@@ -65,6 +65,8 @@ void	fill_cylinder(char **info, int *error, t_shape *shape, t_cylinder *cyli)
 	shape->spec = DEF_SPEC;
 	shape->next = NULL;
 	shape->get_normal = get_normal_cylinder;
+	if (coords_interpreter(info[6], &shape->reflection) || shape->reflection < 0 || shape->reflection >= 0.5)
+		error += parsing_error("Invalid cylinder reflection.\n");
 	if (coords_interpreter(info[1], cyli->center))
 		error += parsing_error("Invalid cylinder center.\n");
 	if (coords_interpreter(info[3], &cyli->radius) || cyli->radius <= 0)
@@ -93,7 +95,7 @@ int	add_cylinder(char **info)
 		return 0;	//TODO: Error Handling
 	new_shape->shape = new_cylinder;
 	add_back_shape(new_shape);
-	if (array_size(info) != 6)
+	if (array_size(info) != 7)
 		return (parsing_error("Invalid number of arguments for cylinder.\n"));
 	fill_cylinder(info, &error, new_shape, new_cylinder);
 	return (error);

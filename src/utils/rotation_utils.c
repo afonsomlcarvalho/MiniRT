@@ -46,7 +46,8 @@ void	rotate(double *vector, double *angle)
 	z_rotate(vector, angle[2]);
 }
 
-void	apply_translation_and_rotation(t_shape *selected, double *vector, double *angle)
+void	apply_translation_and_rotation\
+(t_shape *selected, double *vector, double *angle)
 {
 	if (!selected)
 	{
@@ -58,8 +59,6 @@ void	apply_translation_and_rotation(t_shape *selected, double *vector, double *a
 	else if (selected->type == CYLINDER)
 	{
 		translate(((t_cylinder *)(selected->shape))->center, vector);
-		translate(((t_plane *)(((t_cylinder *)(selected->shape))->top_cap))->point, vector);
-		translate(((t_plane *)(((t_cylinder *)(selected->shape))->under_cap))->point, vector);
 		rotate(((t_cylinder *)(selected->shape))->axis, angle);
 		substitute_caps((t_cylinder *)(selected->shape));
 	}

@@ -34,7 +34,8 @@ void	fill_sphere(char **info, int *error, t_shape *shape, t_sphere *sphere)
 	shape->check_hit = check_hit_sphere;
 	shape->get_normal = get_normal_sphere;
 	shape->spec = DEF_SPEC;
-	shape->reflection = 0.3;
+	if (coords_interpreter(info[4], &shape->reflection) || shape->reflection < 0 || shape->reflection >= 0.5)
+		error += parsing_error("Invalid sphere reflection.\n");
 	shape->next = NULL;
 	if (coords_interpreter(info[1], sphere->center))
 		error += parsing_error("Invalid sphere center coords.\n");
@@ -59,7 +60,7 @@ int	add_sphere(char **info)
 		return 0;	//TODO: Error Handling
 	new_shape->shape = new_sphere;
 	add_back_shape(new_shape);
-	if (array_size(info) != 4)
+	if (array_size(info) != 5)
 		return (parsing_error("Invalid number of arguments for sphere.\n"));
 	fill_sphere(info, &error, new_shape, new_sphere);
 	return (error);

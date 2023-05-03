@@ -23,9 +23,9 @@ static void	change_sphere_radius(int keycode)
 	t_sphere	*sphere;
 	double		factor;
 
-	if (keycode == 65451)
+	if (keycode == 65363)
 		factor = 0.1;
-	else if (keycode == 65453)
+	else if (keycode == 65361)
 		factor = -0.1;
 	else
 		return ;
@@ -42,14 +42,14 @@ static void	change_cylinder_radius(int keycode)
 	double		factor;
 
 	factor = 0;
-	if (keycode == 65451 || keycode == 65362)
+	if (keycode == 65363 || keycode == 65362)
 		factor = 0.1;
-	else if (keycode == 65453 || keycode == 65364)
+	else if (keycode == 65361 || keycode == 65364)
 		factor = -0.1;
 	cylinder = g_scene.selected->shape;
 	if (cylinder->radius < 0.1 || cylinder->height < 1)
 		return ;
-	if (keycode == 65451 || keycode == 65453)
+	if (keycode == 65363 || keycode == 65361)
 		cylinder->radius *= (1 + factor);
 	else
 		cylinder->height *= (1 + factor);
@@ -96,24 +96,35 @@ void	move_light(double *movement)
 	g_scene.selected_light->position[Z] += movement[Z];
 }
 
+void	change_depth(int keycode)
+{
+	if (keycode == 65451 && g_scene.reflection < 6)
+		g_scene.reflection++;
+	else if (keycode == 65453 && g_scene.reflection > 0)
+		g_scene.reflection--;
+	split_canva();
+}
+
 int	key_press(int keycode)
 {
 	double	vector[3];
 	double	angle[3];
 	double	light[3];
 
-	printf("%d\n", keycode);
+	// printf("%d\n", keycode);
 	if (keycode == 65307)
 		end();
 	if (keycode == 114)
 		change_reflection();
 	else if (keycode == 65505)
 		change_texture();
-	else if (keycode == 65451 || keycode == 65453 || \
+	else if (keycode == 65363 || keycode == 65361 || \
 			keycode == 65362 || keycode == 65364)
 		change_shape_size(keycode);
 	else if (keycode == 32)
 		change_light();
+	else if (keycode == 65451 || keycode == 65453)
+		change_depth(keycode);
 	else
 	{
 		vector[X] = ((keycode == 100) - (keycode == 97)) * 0.1;
@@ -159,8 +170,19 @@ int	select_piece(int button, int x, int y)
 		return (0);
 	canvas_to_viewport(x - WIDTH / 2, y - HEIGHT / 2, point);
 	if (g_scene.selected)
+	{
+		copy_color(g_scene.selected->backup_color, g_scene.selected->color);
 		g_scene.selected = 0;
+		split_canva();
+	}
 	else
+	{
 		select_piece_aux(point);
+		if (g_scene.selected)
+		{
+			apply_selection_color();
+			split_canva();
+		}
+	}
 	return (0);
 }

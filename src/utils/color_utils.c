@@ -65,3 +65,29 @@ int	get_full_color(int local_color, int reflected_color, double r)
 		full[2] = 255;
 	return ((full[0] << 16) + (full[1] << 8) + full[2]);
 }
+
+void	copy_color(int *original, int *copy)
+{
+	copy[0] = original[0];
+	copy[1] = original[1];
+	copy[2] = original[2];
+}
+
+void	apply_selection_color(void)
+{
+	int		i;
+	double	new_color[3];
+
+	new_color[0] = g_scene.selected->color[0] + 100;
+	new_color[1] = g_scene.selected->color[1] + 100;
+	new_color[2] = g_scene.selected->color[2] + 100;
+	if (new_color[0] > 255)
+		new_color[0] = 255;
+	if (new_color[1] > 255)
+		new_color[1] = 255;
+	if (new_color[2] > 255)
+		new_color[2] = 255;
+	i = -1;
+	while (++i < 3)
+		g_scene.selected->color[i] = (int) new_color[i];
+}

@@ -143,6 +143,8 @@ void	apply_translation_and_rotation(t_shape *selected, double *vector, \
 int		get_color(char *coords, int *colors);
 int		rgb_to_color(int *rgb, double *light);
 int		get_full_color(int local_color, int reflected_color, double r);
+void	apply_selection_color(void);
+void	copy_color(int *original, int *copy);
 
 /******* event_utils.c ******/
 int		key_press(int keycode);

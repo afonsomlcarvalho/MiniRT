@@ -96,6 +96,7 @@ typedef struct s_shape
 					double origin[3], int flag);
 	void			(*get_normal)(void *self, double *colision, double *normal);
 	int				color[3];
+	int				backup_color[3];
 	int				spec;
 	double			reflection;
 	struct s_shape	*next;
@@ -159,13 +160,13 @@ typedef struct s_scene
 	t_img	img;
 
 	int		texture;
+	int		reflection;
 	t_cam	camera;
 	t_vpt	viewport;
 	t_shape	*shapes;
 	t_light	*lights;
 	t_shape	*selected;
 	t_light	*selected_light;
-	int		reflection;
 }	t_scene;
 
 /*

@@ -10,9 +10,9 @@ void	setup_scene(void)
 	&g_scene.img.bpp, &g_scene.img.line_length, &g_scene.img.endian);
 	g_scene.selected = NULL;
 	g_scene.texture = RUGGED;
+	g_scene.reflection = REFLECTIONS;
 	g_scene.selected_light = NULL;
 	cur = g_scene.lights;
-	g_scene.reflection = REFLECTIONS;
 	while (cur && !g_scene.selected_light)
 	{
 		if (cur->type)

@@ -51,6 +51,7 @@ void	fill_plane(char **info, int *error, t_shape *new_shape, t_plane *plane)
 	new_shape->type = PLANE;
 	if (get_color(info[3], new_shape->color))
 		*error += parsing_error("Invalid plane colour.\n");
+	copy_color(new_shape->color, new_shape->backup_color);
 	new_shape->check_hit = check_hit_plane;
 	new_shape->get_normal = get_normal_plane;
 	new_shape->spec = -1;

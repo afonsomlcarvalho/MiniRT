@@ -31,6 +31,7 @@ void	fill_sphere(char **info, int *error, t_shape *shape, t_sphere *sphere)
 	shape->type = SPHERE;
 	if (get_color(info[3], shape->color))
 		*error += parsing_error("Invalid sphere colors.\n");
+	copy_color(shape->color, shape->backup_color);
 	shape->check_hit = check_hit_sphere;
 	shape->get_normal = get_normal_sphere;
 	shape->spec = DEF_SPEC;

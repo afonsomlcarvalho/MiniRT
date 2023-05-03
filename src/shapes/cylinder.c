@@ -61,6 +61,7 @@ void	fill_cylinder(char **info, int *error, t_shape *shape, t_cylinder *cyli)
 	shape->type = CYLINDER;
 	if (get_color(info[5], shape->color))
 		*error += parsing_error("Invalid cylinder colour.\n");
+	copy_color(shape->color, shape->backup_color);
 	shape->check_hit = check_hit_cylinder;
 	shape->spec = DEF_SPEC;
 	shape->next = NULL;

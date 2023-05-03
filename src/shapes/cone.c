@@ -51,6 +51,7 @@ void	fill_cone(char **info, int *error, t_shape *new_shape, t_cone *new_cone)
 	new_shape->type = CONE;
 	if (get_color(info[5], new_shape->color))
 		*error += parsing_error("Invalid cone colour.\n");
+	copy_color(new_shape->color, new_shape->backup_color);
 	new_shape->check_hit = check_hit_cone;
 	new_shape->spec = DEF_SPEC;
 	new_shape->next = NULL;

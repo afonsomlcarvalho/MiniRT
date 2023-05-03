@@ -6,7 +6,7 @@
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:10:46 by gda-cruz          #+#    #+#             */
-/*   Updated: 2022/11/01 12:34:30 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:53:58 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ int	ft_atoi(const char *nptr)
 		if (result < -2147483648)
 			return (0);
 	}
+	if (*nptr)
+		return (0);
 	return (result);
 }

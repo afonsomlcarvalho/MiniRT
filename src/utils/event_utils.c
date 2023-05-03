@@ -23,14 +23,14 @@ static void	change_sphere_radius(int keycode)
 	t_sphere	*sphere;
 	double		factor;
 
-	if (keycode == 65451)
+	if (keycode == 65363)
 		factor = 0.1;
-	else if (keycode == 65453)
+	else if (keycode == 65361)
 		factor = -0.1;
 	else
 		return ;
 	sphere = g_scene.selected->shape;
-	if (sphere->radius < 0.1)
+	if (sphere->radius < 0.1 && keycode == 65361)
 		return ;
 	sphere->radius *= (1 + factor);
 	split_canva();
@@ -42,18 +42,39 @@ static void	change_cylinder_radius(int keycode)
 	double		factor;
 
 	factor = 0;
-	if (keycode == 65451 || keycode == 65362)
+	if (keycode == 65363 || keycode == 65362)
 		factor = 0.1;
-	else if (keycode == 65453 || keycode == 65364)
+	else if (keycode == 65361 || keycode == 65364)
 		factor = -0.1;
 	cylinder = g_scene.selected->shape;
-	if (cylinder->radius < 0.1 || cylinder->height < 1)
+	if ((cylinder->radius < 1 && keycode == 65361) || (cylinder->height < 1 && keycode == 65364))
 		return ;
-	if (keycode == 65451 || keycode == 65453)
+	if (keycode == 65363 || keycode == 65361)
 		cylinder->radius *= (1 + factor);
 	else
 		cylinder->height *= (1 + factor);
 	substitute_caps(cylinder);
+	split_canva();
+}
+
+void	change_cone(int keycode)
+{
+	t_cone	*cone;
+	double	factor;
+
+	factor = 0;
+	cone = g_scene.selected->shape;
+	if (keycode == 65362 || keycode == 65363)
+		factor = 0.1;
+	else if (keycode == 65364 || keycode == 65361)
+		factor = -0.1;
+	if ((cone->radius < 1 && keycode == 65361) || (cone->height < 1 && keycode == 65364))
+			return ;
+	if (keycode == 65361 || keycode == 65363)
+		cone->radius *= (1 + factor);
+	else
+		cone->height *= (1 + factor);
+	substitute_cone_base(cone);
 	split_canva();
 }
 
@@ -65,6 +86,8 @@ void	change_shape_size(int keycode)
 		change_sphere_radius(keycode);
 	else if (g_scene.selected->type == CYLINDER)
 		change_cylinder_radius(keycode);
+	else if (g_scene.selected->type == CONE)
+		change_cone(keycode);
 }
 
 void	change_light(void)
@@ -87,6 +110,7 @@ void	change_light(void)
 			cur = cur->next;
 		}
 	}
+	split_canva();
 }
 
 void	move_light(double *movement)
@@ -102,14 +126,13 @@ int	key_press(int keycode)
 	double	angle[3];
 	double	light[3];
 
-	printf("%d\n", keycode);
 	if (keycode == 65307)
 		end();
 	if (keycode == 114)
 		change_reflection();
 	else if (keycode == 65505)
 		change_texture();
-	else if (keycode == 65451 || keycode == 65453 || \
+	else if (keycode == 65361 || keycode == 65363 || \
 			keycode == 65362 || keycode == 65364)
 		change_shape_size(keycode);
 	else if (keycode == 32)

@@ -25,6 +25,8 @@ void	change_light(void)
 
 void	move_light(double *movement)
 {
+	if (!g_scene.selected_light)
+		return ;
 	g_scene.selected_light->position[X] += movement[X];
 	g_scene.selected_light->position[Y] += movement[Y];
 	g_scene.selected_light->position[Z] += movement[Z];

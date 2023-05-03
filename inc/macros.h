@@ -22,6 +22,7 @@
 # define BLUE_TEXT 		"\033[0;34m"
 # define PURPLE_TEXT	"\033[0;35m"
 # define CYAN_TEXT 		"\033[0;36m"
+# define CYAN_BOLD 		"\033[1;36m"
 # define RESET_TEXT 	"\033[0;0m"
 
 #endif

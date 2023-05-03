@@ -9,12 +9,13 @@ double	check_height_cone(t_cone *self, double t, double *origin, double *p)
 
 	find_point(t, origin, p, point);
 	vec(point, self->vertix, b);
-	k = -(dot(b, self->axis)) / dot(self->axis, self->axis);
+	k = (-dot(b, self->axis)) / dot(self->axis, self->axis);
 	axis_point[X] = self->vertix[X] + k * self->axis[X];
 	axis_point[Y] = self->vertix[Y] + k * self->axis[Y];
 	axis_point[Z] = self->vertix[Z] + k * self->axis[Z];
-	vec(self->vertix, axis_point, axis_point);
-	return (t * (vector_size(axis_point) <= self->height && k > 0));
+	// printf("%f\n", b[2]);
+	// printf("%f %d %d\n", t, distance(axis_point, self->vertix) <= self->height, k >= 0);
+	return (t * (distance(axis_point, self->vertix) <= self->height && k >= 0));
 }
 
 double	check_width_cone(t_cone *self, double t, double *origin, double *dir)
@@ -35,7 +36,7 @@ double	check_hit_cone(void *self, double p[3], double origin[3], int flag)
 	t_cone	*cone;
 	double	ray_direction[3];
 	double	v_to_o[3];
-	double	t[2];
+	double	t[3];
 
 	cone = (t_cone *) self;
 	vec(origin, p, ray_direction);
@@ -47,10 +48,11 @@ double	check_hit_cone(void *self, double p[3], double origin[3], int flag)
 	dot(v_to_o, cone->axis));
 	quadratic[2] = dot(v_to_o, v_to_o) - (pow(cone->radius, 2) / \
 	pow(cone->height, 2) + 1) * pow(dot(v_to_o, cone->axis), 2);
-	t[0] = check_height_cone(cone, solve_quadratic(quadratic[0], \
-	quadratic[1], quadratic[2], flag), origin, p);
-	t[1] = check_width_cone(cone, check_hit_plane(cone->base, p, \
+	t[0] = (-quadratic[1] - sqrt(pow(quadratic[1], 2) - 4 * quadratic[0] * quadratic[2])) / (2 * quadratic[0]);
+	t[1] = (-quadratic[1] + sqrt(pow(quadratic[1], 2) - 4 * quadratic[0] * quadratic[2])) / (2 * quadratic[0]);
+	t[0] = check_height_cone(cone, t[0], origin, p);
+	t[1] = check_height_cone(cone, t[1], origin, p);
+	t[2] = check_width_cone(cone, check_hit_plane(cone->base, p, \
 	origin, flag * 2), origin, ray_direction);
-	return (t[0] * (t[1] < 0.9999999) + t[1] * (t[0] < 0.9999999) + \
-	min(t[0], t[1]) * (t[0] > 0.9999999 && t[1] > 0.9999999));
+	return (find_t(t));
 }

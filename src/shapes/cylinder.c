@@ -67,12 +67,12 @@ void	fill_cylinder(char **info, int *error, t_shape *shape, t_cylinder *cyli)
 	shape->get_normal = get_normal_cylinder;
 	if (coords_interpreter(info[1], cyli->center))
 		error += parsing_error("Invalid cylinder center.\n");
-	if (coords_interpreter(info[3], &cyli->radius))
+	if (coords_interpreter(info[3], &cyli->radius) || cyli->radius <= 0)
 		error += parsing_error("Invalid cylinder radius.\n");
 	if (coords_interpreter(info[2], cyli->axis) || \
 	check_normalized_vector(cyli->axis))
 		error += parsing_error("Invalid cylinder axis.\n");
-	if (coords_interpreter(info[4], &cyli->height))
+	if (coords_interpreter(info[4], &cyli->height) || cyli->height <= 0)
 		error += parsing_error("Invalid cylinder height.\n");
 	cyli->radius /= 2;
 	add_caps(cyli);

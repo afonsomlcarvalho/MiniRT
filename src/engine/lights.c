@@ -58,7 +58,7 @@ void	determine_light(t_lightaux *lightaux, double *origin, t_shape *shape)
 		{
 			i = -1;
 			while (++i < 3)
-				lightaux->light[i] += cur->brightness * (cur->color[i] / 255);
+				lightaux->light[i] += cur->brightness * ((double) cur->color[i] / 255);
 		}
 		else if (!is_in_shadow(lightaux->colision, cur))
 		{

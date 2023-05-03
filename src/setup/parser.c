@@ -20,8 +20,14 @@ static int	check_name(char *filename)
 
 void	parse_line(char *line, int *error)
 {
-	char		**info;
+	char	**info;
+	int		i;
 
+	i = 0;
+	while (line[i] && line[i] != '\n')
+		i++;
+	if (i)
+		line[i] = 0;
 	info = ft_split(line, ' ');
 	if (!ft_strncmp("C", info[0], ft_strlen(info[0])))
 		*error += setup_camera(info);

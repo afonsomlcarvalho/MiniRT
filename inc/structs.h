@@ -158,6 +158,7 @@ typedef struct s_scene
 	void	*win;
 	t_img	img;
 
+	int		texture;
 	t_cam	camera;
 	t_vpt	viewport;
 	t_shape	*shapes;

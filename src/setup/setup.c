@@ -8,6 +8,7 @@ void	setup_scene(void)
 	g_scene.img.address = mlx_get_data_addr(g_scene.img.img_ptr, \
 	&g_scene.img.bpp, &g_scene.img.line_length, &g_scene.img.endian);
 	g_scene.selected = NULL;
+	g_scene.texture = RUGGED;
 }
 
 static int	check_camera(void)

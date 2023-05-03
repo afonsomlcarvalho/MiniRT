@@ -9,7 +9,7 @@ static double	get_rand(void)
 	positive = ((double)(rand() % 21)) / 21 * 1;
 	negative = ((double)(rand() % 21)) / 21 * -1;
 	total = positive + negative;
-	return (total * RUGGED);
+	return (total * g_scene.texture);
 }
 
 static void	get_color_weights(int *colors, double *buff)

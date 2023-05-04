@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lights.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:24 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 12:24:03 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:44:47 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	determine_light(t_lightaux *lightaux, double *origin, t_shape *shape)
 				lightaux->light[i] += cur->brightness * \
 				((double) cur->color[i] / 255);
 		}
-		else if (!g_scene.inside_object && !is_in_shadow(lightaux->colision, cur))
+		else if ((!g_scene.inside_object || is_inside_object(cur->position)) \
+		&& !is_in_shadow(lightaux->colision, cur))
 		{
 			diffuse_reflection(lightaux, cur);
 			specular_reflection(lightaux, origin, cur, shape);

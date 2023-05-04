@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:58 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 13:09:06 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:24:22 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	setup_scene(void)
 	g_scene.selected = NULL;
 	g_scene.texture = RUGGED;
 	g_scene.reflection = REFLECTIONS;
-	g_scene.inside_object = is_inside_object();
+	g_scene.inside_object = is_inside_object(g_scene.camera.origin);
 	g_scene.selected_light = NULL;
 	cur = g_scene.lights;
 	while (cur && !g_scene.selected_light)

@@ -83,10 +83,10 @@ int	add_cone(char **info)
 	error = 0;
 	new_shape = ft_calloc(1, sizeof(t_shape));
 	if (!new_shape)
-		return (0);	//TODO: Error Handling
+		error_handler();
 	new_cone = (t_cone *)ft_calloc(1, sizeof(t_cone));
 	if (!new_cone)
-		return (0);	//TODO: Error Handling
+		error_handler();
 	new_shape->shape = new_cone;
 	add_back_shape(new_shape);
 	if (array_size(info) != 7)

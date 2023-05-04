@@ -10,7 +10,7 @@ static void	get_object_intersections(double *origin, double *p, t_aux **lst)
 	tmp = g_scene.shapes;
 	lightaux = (t_lightaux *) ft_calloc(1, sizeof(t_lightaux));
 	if (!lightaux)
-		return ;	//TODO: Error Handling
+		error_handler();
 	while (tmp)
 	{
 		t = tmp->check_hit(tmp->shape, p, origin, 0);
@@ -57,7 +57,7 @@ int	trace_ray(double *origin, double *p, int recur)
 	lst = (t_aux **)ft_calloc(1, sizeof(t_aux *));
 	rayaux = (t_rayaux *)ft_calloc(1, sizeof(t_rayaux));
 	if (!lst || !rayaux)
-		return (-1);	//TODO: Error Handling
+		error_handler();
 	get_object_intersections(origin, p, lst);
 	trace_ray_aux(&local_color, &ref_color, rayaux, lst);
 	if (!rayaux->closest)

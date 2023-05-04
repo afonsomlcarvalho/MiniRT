@@ -123,6 +123,7 @@ void	change_shape_size(int keycode);
 int		end(void);
 void	free_all(int flag);
 void	free_array(char **array);
+void	error_handler(void);
 
 /******* setup_utils.c ******/
 

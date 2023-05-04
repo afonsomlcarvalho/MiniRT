@@ -76,12 +76,12 @@ int	add_plane(char **info)
 	new_shape = ft_calloc(1, sizeof(t_shape));
 	error = 0;
 	if (!new_shape)
-		return 0;	//TODO: Error Handling
+		error_handler();
 	add_back_shape(new_shape);
 	new_plane = (t_plane *)ft_calloc(1, sizeof(t_plane));
 	new_shape->shape = new_plane;
 	if (!new_plane)
-		return 0;	//TODO: Error Handling
+		error_handler();
 	if (array_size(info) != 5)
 		return (parsing_error("Invalid number of arguments for plane.\n"));
 	fill_plane(info, &error, new_shape, new_plane);

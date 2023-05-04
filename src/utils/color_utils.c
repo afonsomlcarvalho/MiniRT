@@ -9,7 +9,7 @@ int	get_color(char *coords, int *colors)
 
 	arr = ft_split(coords, ',');
 	if (!arr)
-		return (0);	// TODO: ERROR HANDLING
+		error_handler();
 	red = ft_atoi(arr[0]);
 	green = ft_atoi(arr[1]);
 	blue = ft_atoi(arr[2]);

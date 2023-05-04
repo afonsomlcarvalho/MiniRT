@@ -31,10 +31,10 @@ void	add_to_list(double t, int color, t_shape *shape, t_aux **lst)
 	t_aux	*tmp;
 
 	if (!lst)
-		return ;	//TODO: Error Handling
+		error_handler();
 	new = (t_aux *)malloc(sizeof(t_aux));
 	if (!new)
-		return ;	//TODO: Error Handling
+		error_handler();
 	new->t = t;
 	new->color = color;
 	new->self = shape;
@@ -56,7 +56,7 @@ void	delete_list(t_aux **lst)
 	t_aux	*tmp;
 
 	if (!lst)
-		return ;	//TODO: Error Handling
+		error_handler();
 	while (*lst)
 	{
 		tmp = *lst;

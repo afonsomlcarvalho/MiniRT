@@ -90,10 +90,10 @@ int	add_cylinder(char **info)
 	error = 0;
 	new_shape = ft_calloc(1, sizeof(t_shape));
 	if (!new_shape)
-		return 0;	//TODO: Error Handling
+		error_handler();
 	new_cylinder = (t_cylinder *)ft_calloc(1, sizeof(t_cylinder));
 	if (!new_cylinder)
-		return 0;	//TODO: Error Handling
+		error_handler();
 	new_shape->shape = new_cylinder;
 	add_back_shape(new_shape);
 	if (array_size(info) != 7)

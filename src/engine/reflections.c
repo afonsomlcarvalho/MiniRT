@@ -32,7 +32,7 @@ void	specular_reflection(t_lightaux *lightaux, double *origin, \
 		return ;
 	specaux = (t_specaux *) ft_calloc(1, sizeof(t_specaux));
 	if (!specaux)
-		return ;//TODO: Error Handling
+		error_handler();
 	vec(lightaux->colision, cur->position, specaux->l);
 	vec(lightaux->colision, origin, specaux->v);
 	mult_vecs(dot(lightaux->normal, specaux->l), lightaux->normal, specaux->ln);

@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:58 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 13:24:22 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:58:55 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	setup_scene(void)
 	g_scene.selected = NULL;
 	g_scene.texture = RUGGED;
 	g_scene.reflection = REFLECTIONS;
-	g_scene.inside_object = is_inside_object(g_scene.camera.origin);
+	is_inside_object(g_scene.camera.origin);
 	g_scene.selected_light = NULL;
 	cur = g_scene.lights;
 	while (cur && !g_scene.selected_light)
@@ -55,6 +55,7 @@ int	setup_camera(char **info)
 		return (parsing_error("Invalid number of arguments for camera.\n"));
 	coords_interpreter(info[1], g_scene.camera.origin);
 	coords_interpreter(info[2], g_scene.camera.direction);
+	normalize_vector(g_scene.camera.direction, g_scene.camera.direction);
 	g_scene.camera.fov = ft_atoi(info[3]);
 	g_scene.cam_counter++;
 	setup_viewport();

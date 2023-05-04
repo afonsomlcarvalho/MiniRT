@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:08 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:06:09 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:53:47 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	side_normal(t_cylinder *self, double *point, double *normal)
 	normalize_vector(vector, normal);
 }
 
-void	get_normal_cylinder(void *self, double *colision, double *normal)
+void	get_normal_cylinder(void *self, double *colision, double *normal, int cam_in)
 {
 	t_cylinder	*cylinder;
 	t_plane		*top;
@@ -55,6 +55,8 @@ void	get_normal_cylinder(void *self, double *colision, double *normal)
 	check_plane(under, cylinder, colision, normal))
 		return ;
 	side_normal(cylinder, colision, normal);
+	if (cam_in)
+		mult_vecs(-1, normal, normal);
 }
 
 double	check_height(t_cylinder *self, double t, double *origin, double *vector)

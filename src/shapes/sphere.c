@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:23 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:17:27 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:54:45 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minirt.h"
 
-static void	get_normal_sphere(void *self, double *colision, double *normal)
+static void	get_normal_sphere(void *self, double *colision, double *normal, int cam_in)
 {
 	double		vector[3];
 	t_sphere	*sphere;
@@ -20,6 +20,8 @@ static void	get_normal_sphere(void *self, double *colision, double *normal)
 	sphere = (t_sphere *) self;
 	vec(sphere->center, colision, vector);
 	normalize_vector(vector, normal);
+	if (cam_in)
+		mult_vecs(-1, normal, normal);
 }
 
 double	check_hit_sphere(void *self, double p[3], double origin[3], int flag)
@@ -77,5 +79,6 @@ int	add_sphere(char **info)
 	if (array_size(info) != 5)
 		return (parsing_error("Invalid number of arguments for sphere.\n"));
 	fill_sphere(info, &error, new_shape, new_sphere);
+	new_shape->camera_in = 0;
 	return (error);
 }

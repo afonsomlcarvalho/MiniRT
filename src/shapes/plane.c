@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:18 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:17:10 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:54:17 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minirt.h"
 
-void	get_normal_plane(void *self, double *colision, double *normal)
+void	get_normal_plane(void *self, double *colision, double *normal, int cam_in)
 {
 	t_plane		*plane;
 
+	(void) cam_in;
 	(void) colision;
 	plane = (t_plane *) self;
 	normalize_vector(plane->normal, normal);
@@ -99,5 +100,6 @@ int	add_plane(char **info)
 	if (array_size(info) != 5)
 		return (parsing_error("Invalid number of arguments for plane.\n"));
 	fill_plane(info, &error, new_shape, new_plane);
+	new_shape->camera_in = 0;
 	return (error);
 }

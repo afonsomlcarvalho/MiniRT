@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:21 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 13:45:42 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:39:17 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	inside_cone(t_cone *self, double *point)
 	distance(self->vertix, axis_point) < self->height && k > 0);
 }
 
-int	is_inside_object(double *point)
+void	is_inside_object(double *point)
 {
 	t_shape	*tmp;
 
@@ -81,13 +81,14 @@ int	is_inside_object(double *point)
 	{
 		if (tmp->type == SPHERE && \
 		inside_sphere((t_sphere *) tmp->shape, point))
-			return (1);
+			tmp->camera_in = 1;
 		else if (tmp->type == CYLINDER && \
 		inside_cylinder((t_cylinder *) tmp->shape, point))
-			return (1);
+			tmp->camera_in = 1;
 		else if (tmp->type == CONE && inside_cone((t_cone *)tmp->shape, point))
-			return (1);
+			tmp->camera_in = 1;
+		else
+			tmp->camera_in = 0;
 		tmp = tmp->next;
 	}
-	return (0);
 }

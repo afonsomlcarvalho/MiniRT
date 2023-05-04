@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:26 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:10:46 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:55:49 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	get_object_intersections(double *origin, double *p, t_aux **lst)
 		if (t > 0)
 		{
 			find_point(t, origin, p, lightaux->colision);
-			tmp->get_normal(tmp->shape, lightaux->colision, lightaux->normal);
+			tmp->get_normal(tmp->shape, lightaux->colision, lightaux->normal, tmp->camera_in);
 			determine_light(lightaux, origin, tmp);
 			color = rgb_to_color(tmp->color, lightaux->light);
 			add_to_list(t, color, tmp, lst);
@@ -44,7 +44,7 @@ static void	setup_recursion(t_rayaux *rayaux, double *origin, double *p)
 	find_point(rayaux->closest->t, origin, p, rayaux->new_origin);
 	vec(origin, p, rayaux->incoming_ray);
 	rayaux->closest->self->get_normal(rayaux->closest->self->shape, \
-		rayaux->new_origin, rayaux->normal);
+		rayaux->new_origin, rayaux->normal, rayaux->closest->self->camera_in);
 	get_reflected_ray(rayaux->incoming_ray, rayaux->normal, \
 		rayaux->reflected_ray);
 	add_vecs(rayaux->new_origin, rayaux->reflected_ray, rayaux->new_p);
@@ -75,7 +75,7 @@ int	trace_ray(double *origin, double *p, int recur)
 	get_object_intersections(origin, p, lst);
 	trace_ray_aux(&local_color, &ref_color, rayaux, lst);
 	if (rayaux->closest && rayaux->closest->self->reflection != 0 \
-	&& recur != 0 && !g_scene.texture)
+	&& recur != 0 && !g_scene.texture && !rayaux->closest->self->camera_in)
 	{
 		setup_recursion(rayaux, origin, p);
 		ref_color = trace_ray(rayaux->new_origin, rayaux->new_p, recur - 1);

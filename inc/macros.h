@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:10 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 12:07:13 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:26:27 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
 # define REFLECTIONS	2
 # define BACKGROUND		0
 # define RUGGED			0
-
-// # define malloc(x) NULL
 
 # define RED_TEXT 		"\033[0;31m"
 # define GREEN_TEXT 	"\033[0;32m"

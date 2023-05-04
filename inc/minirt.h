@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:12 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 13:23:36 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:56:31 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ double	check_height(t_cylinder *self, double t, double *origin, \
 double	check_width(t_cylinder *self, double t, double *origin, \
 		double *vector);
 void	side_normal(t_cylinder *self, double *point, double *normal);
-void	get_normal_cylinder(void *self, double *colision, double *normal);
+void	get_normal_cylinder(void *self, double *colision, double *normal, int cam_in);
 
 /********** plane.c *********/
 int		add_plane(char **info);
@@ -86,8 +86,9 @@ int		check_side(double *light, t_plane *plane);
 double	check_hit_plane(void *self, double p[3], double origin[3], int flag);
 
 /********* shapes.c *********/
-int		is_inside_object(double *point);
+int		is_(double *point);
 void	add_back_shape(t_shape *new_shape);
+void	is_inside_object(double *point);
 
 /********* sphere.c *********/
 int		add_sphere(char **info);

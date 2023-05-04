@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:05 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:13:30 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/05/04 14:33:33 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ int	add_cylinder(char **info)
 	if (array_size(info) != 7)
 		return (parsing_error("Invalid number of arguments for cylinder.\n"));
 	fill_cylinder(info, &error, new_shape, new_cylinder);
+	new_shape->camera_in = 0;
 	return (error);
 }

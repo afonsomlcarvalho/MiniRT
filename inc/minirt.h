@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:12 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 13:23:36 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:12:04 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,11 @@ int		check_side(double *light, t_plane *plane);
 double	check_hit_plane(void *self, double p[3], double origin[3], int flag);
 
 /********* shapes.c *********/
-int		is_inside_object(double *point);
 void	add_back_shape(t_shape *new_shape);
+int		inside_cone(void *self, double *point);
+int		inside_cylinder(void *self, double *point);
+int		inside_sphere(void *self, double *point);
+int		inside_plane(void *self, double *point);
 
 /********* sphere.c *********/
 int		add_sphere(char **info);
@@ -109,7 +112,7 @@ void	specular_reflection(t_lightaux *lightaux, double *origin, \
 		t_light *cur, t_shape *shape);
 
 /********* shadows.c ********/
-int		is_in_shadow(double *colision, t_light *light);
+int		is_in_shadow(double *colision, t_light *light, t_shape *shape);
 
 /********* texture.c ********/
 void	apply_texture(int *buff);
@@ -143,6 +146,7 @@ int		end(void);
 void	free_all(int flag);
 void	free_array(char **array);
 void	error_handler(void);
+void	is_error(int error);
 
 /******* setup_utils.c ******/
 

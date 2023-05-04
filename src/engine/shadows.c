@@ -6,14 +6,14 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:31 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:05:32 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:17:06 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minirt.h"
 
 /* Checks if the COLISION point is in shadow */
-int	is_in_shadow(double *colision, t_light *light)
+int	is_in_shadow(double *colision, t_light *light, t_shape *shape)
 {
 	double	l[3];
 	double	t;
@@ -21,6 +21,9 @@ int	is_in_shadow(double *colision, t_light *light)
 
 	vec(colision, light->position, l);
 	tmp = g_scene.shapes;
+	if (shape->is_inside(shape->shape, light->position) != \
+	shape->is_inside(shape->shape, g_scene.camera.origin))
+		return (1);
 	while (tmp)
 	{
 		t = tmp->check_hit(tmp->shape, light->position, colision, 1);

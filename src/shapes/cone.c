@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:00 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:12:44 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:57:32 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,6 @@ int	add_cone(char **info)
 	if (array_size(info) != 7)
 		return (parsing_error("Invalid number of arguments for cone.\n"));
 	fill_cone(info, &error, new_shape, new_cone);
+	new_shape->is_inside = inside_cone;
 	return (error);
 }

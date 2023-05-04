@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:21 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 13:45:42 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:39:25 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,46 +30,52 @@ void	add_back_shape(t_shape *new_shape)
 	tmp->next = new_shape;
 }
 
-int	inside_sphere(t_sphere *self, double *point)
+int	inside_sphere(void *self, double *point)
 {
 	double		left_hand;
+	t_sphere	*sphere;
 
-	left_hand = pow((point[X] - self->center[X]), 2) + \
-	pow((point[Y] - self->center[Y]), 2) + \
-	pow((point[Z] - self->center[Z]), 2);
-	return (left_hand < pow(self->radius, 2));
+	sphere = (t_sphere *) self;
+	left_hand = pow((point[X] - sphere->center[X]), 2) + \
+	pow((point[Y] - sphere->center[Y]), 2) + \
+	pow((point[Z] - sphere->center[Z]), 2);
+	return (left_hand < pow(sphere->radius, 2));
 }
 
-int	inside_cylinder(t_cylinder *self, double *point)
+int	inside_cylinder(void *self, double *point)
 {
 	double		alpha;
 	double		cp[3];
 	double		ap_size;
 	double		ca_size;
+	t_cylinder	*cylinder;
 
-	subtract_vecs(point, self->center, cp);
-	alpha = acos(dot(cp, self->axis) / \
-	(vector_size(cp) * vector_size(self->axis)));
+	cylinder = (t_cylinder *) self;
+	subtract_vecs(point, cylinder->center, cp);
+	alpha = acos(dot(cp, cylinder->axis) / \
+	(vector_size(cp) * vector_size(cylinder->axis)));
 	ap_size = sin(alpha) * vector_size(cp);
 	ca_size = cos(alpha) * vector_size(cp);
-	return ((ap_size < self->radius) && (ca_size < self->height / 2));
+	return ((ap_size < cylinder->radius) && (ca_size < cylinder->height / 2));
 }
 
-int	inside_cone(t_cone *self, double *point)
+int	inside_cone(void *self, double *point)
 {
 	double	axis_point[3];
 	double	k;
 	double	vector[3];
 	double	radius;
+	t_cone	*cone;
 
-	vec(point, self->vertix, vector);
-	k = (-dot(vector, self->axis)) / dot(self->axis, self->axis);
-	axis_point[X] = self->vertix[X] + k * self->axis[X];
-	axis_point[Y] = self->vertix[Y] + k * self->axis[Y];
-	axis_point[Z] = self->vertix[Z] + k * self->axis[Z];
-	radius = tan(to_rad(self->angle / 2)) * distance(self->vertix, axis_point);
+	cone = (t_cone *) self;
+	vec(point, cone->vertix, vector);
+	k = (-dot(vector, cone->axis)) / dot(cone->axis, cone->axis);
+	axis_point[X] = cone->vertix[X] + k * cone->axis[X];
+	axis_point[Y] = cone->vertix[Y] + k * cone->axis[Y];
+	axis_point[Z] = cone->vertix[Z] + k * cone->axis[Z];
+	radius = tan(to_rad(cone->angle / 2)) * distance(cone->vertix, axis_point);
 	return (distance(point, axis_point) < radius && \
-	distance(self->vertix, axis_point) < self->height && k > 0);
+	distance(cone->vertix, axis_point) < cone->height && k > 0);
 }
 
 int	is_inside_object(double *point)

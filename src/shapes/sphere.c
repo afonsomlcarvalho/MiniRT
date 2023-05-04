@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:23 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:17:27 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:44:24 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ int	add_sphere(char **info)
 	if (array_size(info) != 5)
 		return (parsing_error("Invalid number of arguments for sphere.\n"));
 	fill_sphere(info, &error, new_shape, new_sphere);
+	new_shape->is_inside = inside_sphere;
 	return (error);
 }

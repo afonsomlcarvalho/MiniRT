@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:29 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:05:30 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:22:29 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	diffuse_reflection(t_lightaux *lightaux, t_light *cur)
 	{
 		i = -1;
 		while (++i < 3)
-			lightaux->light[i] += 0.9 * (cur->brightness * prod / \
+			lightaux->light[i] += 0.9 * (cur->brightness * prod / 
 			(vector_size(lightaux->normal) * vector_size(l))) * \
 			(cur->color[i] / 255);
 	}

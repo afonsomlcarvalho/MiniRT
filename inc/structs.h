@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:15 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 13:09:19 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:44:44 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_shape
 	double			(*check_hit)(void *self, double point[3], \
 					double origin[3], int flag);
 	void			(*get_normal)(void *self, double *colision, double *normal);
+	int				(*is_inside)(void *self, double *point);
 	int				color[3];
 	int				backup_color[3];
 	int				spec;
@@ -173,7 +174,6 @@ typedef struct s_scene
 
 	int		texture;
 	int		reflection;
-	int		inside_object;
 	int		cam_counter;
 	t_cam	camera;
 	t_vpt	viewport;

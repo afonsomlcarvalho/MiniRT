@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:18 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:17:10 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:28:10 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	get_normal_plane(void *self, double *colision, double *normal)
 	(void) colision;
 	plane = (t_plane *) self;
 	normalize_vector(plane->normal, normal);
+	if (dot(g_scene.camera.direction, normal) > 0)
+		mult_vecs(-1, normal, normal);
 }
 
 int	check_side(double *light, t_plane *plane)
@@ -99,5 +101,6 @@ int	add_plane(char **info)
 	if (array_size(info) != 5)
 		return (parsing_error("Invalid number of arguments for plane.\n"));
 	fill_plane(info, &error, new_shape, new_plane);
+	new_shape->is_inside = inside_plane;
 	return (error);
 }

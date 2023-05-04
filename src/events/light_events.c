@@ -27,7 +27,8 @@ void	move_light(double *movement)
 {
 	if (!g_scene.selected_light)
 	{
-		printf("%sError: No light point available%s\n", RED_TEXT, RESET_TEXT);
+		if (movement[X] || movement[Y] || movement[Z])
+			printf("%sError: No light point available%s\n", RED_TEXT, RESET_TEXT);
 		return ;
 	}
 	g_scene.selected_light->position[X] += movement[X];

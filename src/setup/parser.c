@@ -29,6 +29,8 @@ void	parse_line(char *line, int *error)
 	if (i)
 		line[i] = 0;
 	info = ft_split(line, ' ');
+	if (!info[0])
+		return ;
 	if (!ft_strncmp("C", info[0], ft_strlen(info[0])))
 		*error += setup_camera(info);
 	else if (!ft_strncmp("sp", info[0], ft_strlen(info[0])))

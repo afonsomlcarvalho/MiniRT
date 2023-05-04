@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:58 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:15:15 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:47:40 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	setup_scene(void)
 	g_scene.selected = NULL;
 	g_scene.texture = RUGGED;
 	g_scene.reflection = REFLECTIONS;
+	g_scene.inside_object = is_inside_object();
 	g_scene.selected_light = NULL;
 	cur = g_scene.lights;
 	while (cur && !g_scene.selected_light)

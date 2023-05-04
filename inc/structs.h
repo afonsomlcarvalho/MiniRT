@@ -6,7 +6,7 @@
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:15 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:22:23 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:45:51 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ typedef struct s_scene
 
 	int		texture;
 	int		reflection;
+	int		inside_object;
 	t_cam	camera;
 	t_vpt	viewport;
 	t_shape	*shapes;

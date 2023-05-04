@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shapes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:21 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:06:22 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 12:00:37 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,34 @@ void	add_back_shape(t_shape *new_shape)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new_shape;
+}
+
+int	inside_sphere(void *self)
+{
+	t_sphere	*sphere;
+	double		left_hand;
+
+	sphere = (t_sphere *)self;
+	left_hand = pow((g_scene.camera.origin[X] - sphere->center[X]), 2) + \
+	pow((g_scene.camera.origin[Y] - sphere->center[Y]), 2) + \
+	pow((g_scene.camera.origin[Z] - sphere->center[Z]), 2);
+	return (left_hand < pow(sphere->radius, 2));
+}
+
+int	is_inside_object(void)
+{
+	t_shape	*tmp;
+
+	tmp = g_scene.shapes;
+	while (tmp)
+	{
+		if (tmp->type == SPHERE && inside_sphere(tmp->shape))
+			return (1);
+		else if (tmp->type == CYLINDER && inside_cylinder(tmp->shape))
+			return (1);
+		else if (tmp->type == CONE && inside_cylinder(tmp->shape))
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
 }

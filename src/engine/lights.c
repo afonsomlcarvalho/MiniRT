@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lights.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:24 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:05:25 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:47:19 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	determine_light(t_lightaux *lightaux, double *origin, t_shape *shape)
 	cur = g_scene.lights;
 	while (cur)
 	{
-		if (cur->type == AMBIENT)
+		if (cur->type == AMBIENT || g_scene.inside_object)
 		{
 			i = -1;
 			while (++i < 3)

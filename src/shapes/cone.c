@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:00 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:06:01 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:12:44 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	get_normal_cone(void *self, double *colision, double *normal)
 	cone = (t_cone *) self;
 	base = (t_plane *) cone->base;
 	vec(colision, base->point, vector);
-	if (dot(vector, cone->axis) > -0.00000001 && dot(vector, cone->axis) < 0.00000001)
+	if (dot(vector, cone->axis) > -0.00000001 \
+		&& dot(vector, cone->axis) < 0.00000001)
 	{
 		vec(cone->vertix, base->point, normal);
 		return ;
@@ -70,7 +71,8 @@ void	fill_cone(char **info, int *error, t_shape *new_shape, t_cone *new_cone)
 	new_shape->spec = DEF_SPEC;
 	new_shape->next = NULL;
 	new_shape->get_normal = get_normal_cone;
-	if (coords_interpreter(info[6], &new_shape->reflection) || new_shape->reflection < 0 || new_shape->reflection >= 0.5)
+	if (coords_interpreter(info[6], &new_shape->reflection) \
+	|| new_shape->reflection < 0 || new_shape->reflection >= 0.5)
 		*error += parsing_error("Invalid cone reflection.\n");
 	if (coords_interpreter(info[1], new_cone->vertix))
 		*error += parsing_error("Invalid cone vertix.\n");

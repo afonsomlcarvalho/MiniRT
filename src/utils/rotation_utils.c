@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotation_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:40 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:06:41 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:20:19 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	rotate(double *vector, double *angle)
 	z_rotate(vector, angle[2]);
 }
 
-void	apply_translation_and_rotation\
-(t_shape *selected, double *vector, double *angle)
+void	apply_translation_and_rotation(t_shape *selected, \
+	double *vector, double *angle)
 {
 	if (!selected)
 	{

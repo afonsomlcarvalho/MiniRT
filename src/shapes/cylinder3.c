@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:10 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:06:11 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:18:34 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,11 @@ void	t_discover(double *t, t_cylinder *self)
 	quadratic[0] * quadratic[2])) / (2 * quadratic[0]);
 }
 
-void	add_caps(t_cylinder *self)
+void	add_caps_aux(t_plane *top_cap, t_plane *down_cap, t_cylinder *self)
 {
 	int		i;
 	double	t[2];
-	t_plane	*top_cap;
-	t_plane	*down_cap;
 
-	top_cap = (t_plane *)ft_calloc(1, sizeof(t_plane));
-	if (!top_cap)
-		error_handler();
-	down_cap = (t_plane *)ft_calloc(1, sizeof(t_plane));
-	if (!down_cap)
-		error_handler();
 	i = -1;
 	while (++i < 3)
 	{
@@ -53,4 +45,18 @@ void	add_caps(t_cylinder *self)
 	}
 	self->top_cap = top_cap;
 	self->under_cap = down_cap;
+}
+
+void	add_caps(t_cylinder *self)
+{
+	t_plane	*top_cap;
+	t_plane	*down_cap;
+
+	top_cap = (t_plane *)ft_calloc(1, sizeof(t_plane));
+	if (!top_cap)
+		error_handler();
+	down_cap = (t_plane *)ft_calloc(1, sizeof(t_plane));
+	if (!down_cap)
+		error_handler();
+	add_caps_aux(top_cap, down_cap, self);
 }

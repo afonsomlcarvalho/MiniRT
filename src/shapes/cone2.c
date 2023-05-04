@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:03 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:06:04 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:13:07 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ double	check_height_cone(t_cone *self, double t, double *origin, double *p)
 	axis_point[X] = self->vertix[X] + k * self->axis[X];
 	axis_point[Y] = self->vertix[Y] + k * self->axis[Y];
 	axis_point[Z] = self->vertix[Z] + k * self->axis[Z];
-	// printf("%f\n", b[2]);
-	// printf("%f %d %d\n", t, distance(axis_point, self->vertix) <= self->height, k >= 0);
 	return (t * (distance(axis_point, self->vertix) <= self->height && k >= 0));
 }
 

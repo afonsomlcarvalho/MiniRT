@@ -6,7 +6,7 @@
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:21 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 12:00:37 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:01:47 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,22 @@ int	inside_sphere(void *self)
 	return (left_hand < pow(sphere->radius, 2));
 }
 
+int	inside_cylinder(void *self)
+{
+	t_cylinder	*cylinder;
+	double		alpha;
+	double		cp[3];
+	double		ap_size;
+	double		ca_size;
+
+	cylinder = (t_cylinder *)self;
+	subtract_vecs(g_scene.camera.origin, cylinder->center, cp);
+	alpha = acos(dot(cp, cylinder->axis) / (vector_size(cp) * vector_size(cylinder->axis)));
+	ap_size = sin(alpha) * vector_size(cp);
+	ca_size = cos(alpha) * vector_size(cp);
+	return ((ap_size < cylinder->radius) && (ca_size < cylinder->height / 2));
+}
+
 int	is_inside_object(void)
 {
 	t_shape	*tmp;
@@ -53,8 +69,8 @@ int	is_inside_object(void)
 			return (1);
 		else if (tmp->type == CYLINDER && inside_cylinder(tmp->shape))
 			return (1);
-		else if (tmp->type == CONE && inside_cylinder(tmp->shape))
-			return (1);
+		// else if (tmp->type == CONE && inside_cylinder(tmp->shape))
+		// 	return (1);
 		tmp = tmp->next;
 	}
 	return (0);

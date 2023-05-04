@@ -6,7 +6,7 @@
 /*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:24 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:47:19 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/05/04 12:24:03 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ void	determine_light(t_lightaux *lightaux, double *origin, t_shape *shape)
 	cur = g_scene.lights;
 	while (cur)
 	{
-		if (cur->type == AMBIENT || g_scene.inside_object)
+		if (cur->type == AMBIENT)
 		{
 			i = -1;
 			while (++i < 3)
 				lightaux->light[i] += cur->brightness * \
 				((double) cur->color[i] / 255);
 		}
-		else if (!is_in_shadow(lightaux->colision, cur))
+		else if (!g_scene.inside_object && !is_in_shadow(lightaux->colision, cur))
 		{
 			diffuse_reflection(lightaux, cur);
 			specular_reflection(lightaux, origin, cur, shape);

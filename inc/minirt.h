@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:12 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:18:18 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 12:18:25 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int		check_side(double *light, t_plane *plane);
 double	check_hit_plane(void *self, double p[3], double origin[3], int flag);
 
 /********* shapes.c *********/
+int		is_inside_object(void);
 void	add_back_shape(t_shape *new_shape);
 
 /********* sphere.c *********/

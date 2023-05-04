@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:15 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 14:55:01 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:39:15 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ typedef struct s_scene
 
 	int		texture;
 	int		reflection;
+	int		is_inside;
 	int		cam_counter;
 	t_cam	camera;
 	t_vpt	viewport;

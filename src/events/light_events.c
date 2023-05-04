@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_events.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:41 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:12:46 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:45:02 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	change_light(void)
 
 void	move_light(double *movement)
 {
+	double	new_position[3];
+
 	if (!g_scene.selected_light)
 	{
 		if (movement[X] || movement[Y] || movement[Z])
@@ -44,7 +46,16 @@ void	move_light(double *movement)
 			RED_TEXT, RESET_TEXT);
 		return ;
 	}
-	g_scene.selected_light->position[X] += movement[X];
-	g_scene.selected_light->position[Y] += movement[Y];
-	g_scene.selected_light->position[Z] += movement[Z];
+	new_position[X] = g_scene.selected_light->position[X] + movement[X];
+	new_position[Y] = g_scene.selected_light->position[Y] + movement[Y];
+	new_position[Z] = g_scene.selected_light->position[Z] + movement[Z];
+	if (is_inside_object(new_position))
+	{
+		printf("%sError: Light points can't be inside objects%s\n", \
+		RED_TEXT, RESET_TEXT);
+		return ;
+	}
+	g_scene.selected_light->position[X] = new_position[X];
+	g_scene.selected_light->position[Y] = new_position[Y];
+	g_scene.selected_light->position[Z] = new_position[Z];
 }

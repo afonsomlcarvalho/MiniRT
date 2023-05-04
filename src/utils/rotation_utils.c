@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotation_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:40 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 14:37:30 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:10:10 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	apply_translation_and_rotation(t_shape *selected, \
 	{
 		translate(g_scene.camera.origin, vector);
 		rotate(g_scene.camera.direction, angle);
+		if (g_scene.is_inside)
+			printf("%sWaring: Camera is inside object%s\n", YELLOW_TEXT, RESET_TEXT);
 	}
 	else if (selected->type == SPHERE)
 		translate(((t_sphere *)(selected->shape))->center, vector);

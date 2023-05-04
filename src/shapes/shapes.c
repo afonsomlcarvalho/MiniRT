@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shapes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:21 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 14:39:17 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:56:41 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,12 @@ int	inside_cone(t_cone *self, double *point)
 	distance(self->vertix, axis_point) < self->height && k > 0);
 }
 
-void	is_inside_object(double *point)
+int	is_inside_object(double *point)
 {
 	t_shape	*tmp;
+	int		flag;
 
+	flag = 0;
 	tmp = g_scene.shapes;
 	while (tmp)
 	{
@@ -89,6 +91,8 @@ void	is_inside_object(double *point)
 			tmp->camera_in = 1;
 		else
 			tmp->camera_in = 0;
+		flag += tmp->camera_in;
 		tmp = tmp->next;
 	}
+	return (flag);
 }

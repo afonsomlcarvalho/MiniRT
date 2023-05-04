@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:55 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:53:17 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:56:46 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	set_vectors(double *w_vector, double *h_vector)
 {
-	double			up[3];
+	double	up[3];
 
 	up[1] = 1;
 	up[0] = 0;
@@ -45,5 +45,12 @@ void	verify_parse(int *error)
 			cur = cur->next;
 		if (!cur)
 			*error += parsing_error("No ambient light.\n");
+	}
+	cur = g_scene.lights;
+	while (cur)
+	{
+		if (is_inside_object(cur->position))
+			*error += parsing_error("Light point inside object.\n");
+		cur = cur->next;
 	}
 }

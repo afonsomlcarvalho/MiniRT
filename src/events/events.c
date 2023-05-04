@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:39 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 14:38:21 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:52:49 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	key_press(int keycode)
 	double	angle[3];
 	double	light[3];
 
-	is_inside_object(g_scene.camera.origin);
+	g_scene.is_inside = is_inside_object(g_scene.camera.origin);
 	if (keycode == 65307)
 		end();
 	if (keycode == 114)

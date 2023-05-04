@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:58 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 14:58:55 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 16:08:36 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	setup_scene(void)
 	g_scene.selected = NULL;
 	g_scene.texture = RUGGED;
 	g_scene.reflection = REFLECTIONS;
-	is_inside_object(g_scene.camera.origin);
+	g_scene.is_inside = is_inside_object(g_scene.camera.origin);
+	if (g_scene.is_inside)
+		printf("%sWaring: Camera is inside object%s\n", YELLOW_TEXT, RESET_TEXT);
 	g_scene.selected_light = NULL;
 	cur = g_scene.lights;
 	while (cur && !g_scene.selected_light)

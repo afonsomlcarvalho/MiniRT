@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_events.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:44 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:13:16 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:33:14 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,33 @@ void	change_texture(void)
 	split_canva();
 }
 
+static int	change_depth_aux(int keycode)
+{
+	if (keycode == 65451)
+	{
+		if (g_scene.reflection < 6)
+			g_scene.reflection++;
+		else
+		{
+			printf("%sError: Reflection depth limit reached%s\n", \
+		RED_TEXT, RESET_TEXT);
+			return (1);
+		}
+	}
+	else if (keycode == 65453)
+	{
+		if (g_scene.reflection > 0)
+			g_scene.reflection--;
+		else
+		{
+			printf("%sError: Reflection depth limit reached%s\n", \
+		RED_TEXT, RESET_TEXT);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 void	change_depth(int keycode)
 {
 	if (g_scene.texture)
@@ -55,10 +82,8 @@ void	change_depth(int keycode)
 		RED_TEXT, RESET_TEXT);
 		return ;
 	}
-	if (keycode == 65451 && g_scene.reflection < 6)
-		g_scene.reflection++;
-	else if (keycode == 65453 && g_scene.reflection > 0)
-		g_scene.reflection--;
+	if (change_depth_aux(keycode))
+		return ;
 	printf("%sReflection Depth: %d%s\n", \
 	GREEN_TEXT, g_scene.reflection, RESET_TEXT);
 	fflush(stdout);

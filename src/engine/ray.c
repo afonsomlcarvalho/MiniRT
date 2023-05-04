@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:26 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:05:27 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:10:46 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static void	trace_ray_aux(int *local, int *ref, t_rayaux *rayaux, t_aux **lst)
 	if (rayaux->closest)
 		*local = rayaux->closest->color;
 	*ref = -1;
+	if (!rayaux->closest)
+		*local = BACKGROUND;
 }
 
 int	trace_ray(double *origin, double *p, int recur)
@@ -72,9 +74,8 @@ int	trace_ray(double *origin, double *p, int recur)
 		error_handler();
 	get_object_intersections(origin, p, lst);
 	trace_ray_aux(&local_color, &ref_color, rayaux, lst);
-	if (!rayaux->closest)
-		local_color = BACKGROUND;
-	else if (rayaux->closest->self->reflection != 0 && recur != 0 && !g_scene.texture)
+	if (rayaux->closest && rayaux->closest->self->reflection != 0 \
+	&& recur != 0 && !g_scene.texture)
 	{
 		setup_recursion(rayaux, origin, p);
 		ref_color = trace_ray(rayaux->new_origin, rayaux->new_p, recur - 1);

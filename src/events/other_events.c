@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:44 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:05:45 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:13:16 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ void	change_reflection(void)
 	}
 	if (g_scene.texture)
 	{
-		printf("%sError: Remove ruggedness to apply reflection%s\n", RED_TEXT, RESET_TEXT);
+		printf("%sError: Remove ruggedness to apply reflection%s\n", \
+		RED_TEXT, RESET_TEXT);
 		return ;
 	}
 	g_scene.selected->reflection += 0.1;
 	if (g_scene.selected->reflection > 0.5)
 		g_scene.selected->reflection = 0.0;
-	printf("%sReflection Factor: %.1f%s\n", GREEN_TEXT, g_scene.selected->reflection, RESET_TEXT);
+	printf("%sReflection Factor: %.1f%s\n", \
+	GREEN_TEXT, g_scene.selected->reflection, RESET_TEXT);
 	fflush(stdout);
 	split_canva();
 }
@@ -49,14 +51,16 @@ void	change_depth(int keycode)
 {
 	if (g_scene.texture)
 	{
-		printf("%sError: Remove ruggedness to apply reflection%s\n", RED_TEXT, RESET_TEXT);
+		printf("%sError: Remove ruggedness to apply reflection%s\n", \
+		RED_TEXT, RESET_TEXT);
 		return ;
 	}
 	if (keycode == 65451 && g_scene.reflection < 6)
 		g_scene.reflection++;
 	else if (keycode == 65453 && g_scene.reflection > 0)
 		g_scene.reflection--;
-	printf("%sReflection Depth: %d%s\n", GREEN_TEXT, g_scene.reflection, RESET_TEXT);
+	printf("%sReflection Depth: %d%s\n", \
+	GREEN_TEXT, g_scene.reflection, RESET_TEXT);
 	fflush(stdout);
 	split_canva();
 }

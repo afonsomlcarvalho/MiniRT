@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:46 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:05:47 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:13:38 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static void	change_cylinder(int keycode)
 	else if (keycode == 65361 || keycode == 65364)
 		factor = -0.1;
 	cylinder = g_scene.selected->shape;
-	if ((cylinder->radius < 1 && keycode == 65361) || (cylinder->height < 1 && keycode == 65364))
+	if ((cylinder->radius < 1 && keycode == 65361) || \
+	(cylinder->height < 1 && keycode == 65364))
 		return ;
 	if (keycode == 65363 || keycode == 65361)
 		cylinder->radius *= (1 + factor);
@@ -62,8 +63,9 @@ static void	change_cone(int keycode)
 		factor = 0.1;
 	else if (keycode == 65364 || keycode == 65361)
 		factor = -0.1;
-	if ((cone->radius < 1 && keycode == 65361) || (cone->height < 1 && keycode == 65364))
-			return ;
+	if ((cone->radius < 1 && keycode == 65361) || \
+	(cone->height < 1 && keycode == 65364))
+		return ;
 	if (keycode == 65361 || keycode == 65363)
 		cone->radius *= (1 + factor);
 	else

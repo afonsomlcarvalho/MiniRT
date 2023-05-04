@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:53 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:05:54 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:20:42 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ static int	check_name(char *filename)
 			+ (filename[i - 1] != 't'));
 }
 
-void	parse_line(char *line, int *error)
+void	line_treatment(char *line)
 {
-	char	**info;
 	int		i;
 
 	i = 0;
@@ -40,6 +39,13 @@ void	parse_line(char *line, int *error)
 		i++;
 	if (i)
 		line[i] = 0;
+}
+
+void	parse_line(char *line, int *error)
+{
+	char	**info;
+
+	line_treatment(line);
 	info = ft_split(line, ' ');
 	if (!info[0])
 		return ;

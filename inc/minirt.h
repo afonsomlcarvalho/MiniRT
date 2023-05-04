@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:12 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:05:13 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:18:18 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ void	split_canva(void);
 
 /****** instructions.c ******/
 void	print_instructions(void);
+void	print_resize(void);
+void	print_surface(void);
+void	print_rotations(void);
+void	print_movements(void);
+void	print_general_instructions(void);
 
 //////////////////////////////
 /********** SHAPES **********/

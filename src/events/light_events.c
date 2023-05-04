@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:41 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:05:42 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:12:46 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	move_light(double *movement)
 	if (!g_scene.selected_light)
 	{
 		if (movement[X] || movement[Y] || movement[Z])
-			printf("%sError: No light point available%s\n", RED_TEXT, RESET_TEXT);
+			printf("%sError: No light point available%s\n", \
+			RED_TEXT, RESET_TEXT);
 		return ;
 	}
 	g_scene.selected_light->position[X] += movement[X];

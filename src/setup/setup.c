@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:58 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:05:59 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:15:15 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	setup_scene(void)
 {
 	t_light	*cur;
+
 	g_scene.mlx = mlx_init();
 	g_scene.win = mlx_new_window(g_scene.mlx, WIDTH, HEIGHT, "test");
 	g_scene.img.img_ptr = mlx_new_image(g_scene.mlx, WIDTH, HEIGHT);

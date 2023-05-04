@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:32 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:06:33 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:49:25 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ static void	clear_shapes(void)
 				free(((t_cylinder *)(g_scene.shapes->shape))->top_cap);
 			if (((t_cylinder *)(g_scene.shapes->shape))->under_cap)
 				free(((t_cylinder *)(g_scene.shapes->shape))->under_cap);
+		}
+		else if (g_scene.shapes->type == CONE)
+		{
+			if (((t_cone *)(g_scene.shapes->shape))->base)
+				free(((t_cone *)(g_scene.shapes->shape))->base);
 		}
 		if (g_scene.shapes->shape)
 			free(g_scene.shapes->shape);

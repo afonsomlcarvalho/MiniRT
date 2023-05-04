@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:58 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:47:40 by gda-cruz         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:09:06 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,14 @@ static int	check_camera(void)
 
 int	setup_camera(char **info)
 {
-	static int	c;
-
-	if (c)
+	if (g_scene.cam_counter)
 		return (parsing_error("More than one camera.\n"));
 	if (array_size(info) != 4)
 		return (parsing_error("Invalid number of arguments for camera.\n"));
 	coords_interpreter(info[1], g_scene.camera.origin);
 	coords_interpreter(info[2], g_scene.camera.direction);
 	g_scene.camera.fov = ft_atoi(info[3]);
-	c++;
+	g_scene.cam_counter++;
 	setup_viewport();
 	return (check_camera());
 }

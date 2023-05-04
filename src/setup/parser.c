@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:53 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:20:42 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:46:35 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	parser(int argc, char **argv)
 	char		*line;
 	static int	error;
 
+	g_scene.cam_counter = 0;
 	if (argc != 2)
 		error += parsing_error("Invalid number of arguments.\n");
 	fd = open(argv[1], O_RDONLY);
@@ -86,6 +87,10 @@ void	parser(int argc, char **argv)
 		line = get_next_line(fd);
 	}
 	close(fd);
+	verify_parse(&error);
 	if (error)
+	{
 		free_all(0);
+		exit(EXIT_FAILURE);
+	}
 }

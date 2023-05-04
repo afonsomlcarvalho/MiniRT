@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:55 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:05:56 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:53:17 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,22 @@ void	set_vectors(double *w_vector, double *h_vector)
 		w_vector[Z] = 0;
 	}
 	cross_product(w_vector, g_scene.camera.direction, h_vector);
+}
+
+void	verify_parse(int *error)
+{
+	t_light	*cur;
+
+	if (!g_scene.cam_counter)
+		*error += parsing_error("No camera.\n");
+	if (!g_scene.lights)
+		*error += parsing_error("No ambient light.\n");
+	else
+	{
+		cur = g_scene.lights;
+		while (cur && cur->type)
+			cur = cur->next;
+		if (!cur)
+			*error += parsing_error("No ambient light.\n");
+	}
 }

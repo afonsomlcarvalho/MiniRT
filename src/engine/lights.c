@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lights.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:24 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 16:19:14 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:43:00 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,19 @@ static void	add_back_light(t_light *new_light)
 	tmp->next = new_light;
 }
 
+static int	has_comma(char *num)
+{
+	int	i;
+
+	i = -1;
+	while (num[++i])
+	{
+		if (num[i] == ',')
+			return (1);
+	}
+	return (0);
+}
+
 int	light_setup(char **info, int flag)
 {
 	t_light		*light;
@@ -44,8 +57,8 @@ int	light_setup(char **info, int flag)
 	add_back_light(light);
 	if (array_size(info) != 3 + flag)
 		return (parsing_error("Invalid number of arguments for lights.\n"));
-	if (coords_interpreter(info[1 + flag], &light->brightness) \
-		|| light->brightness < 0 || light->brightness > 1)
+	if (has_comma(info[1 + flag]) || coords_interpreter(info[1 + flag], \
+		&light->brightness) || light->brightness < 0 || light->brightness > 1)
 		error += parsing_error("Invalid light brightness.\n");
 	if (get_color(info[2 + flag], light->color))
 		error += parsing_error("Invalid light colour.\n");

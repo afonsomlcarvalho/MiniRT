@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:10:46 by gda-cruz          #+#    #+#             */
-/*   Updated: 2023/05/03 16:12:08 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:25:06 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	ft_atoi(const char *nptr)
 
 	sign = 1;
 	result = 0;
-	while ((*nptr == 32) || (*nptr >= 9 && *nptr <= 13))
-		nptr++;
 	if (*nptr == 45)
 	{
 		sign *= -1;

@@ -82,7 +82,6 @@ int	select_piece(int button, int x, int y)
 		select_piece_aux(point);
 		if (g_scene.selected)
 		{
-			printf("\n");
 			apply_selection_color();
 			split_canva();
 		}

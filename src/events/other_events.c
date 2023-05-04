@@ -35,6 +35,11 @@ void	change_texture(void)
 
 void	change_depth(int keycode)
 {
+	if (g_scene.texture)
+	{
+		printf("%sError: Remove ruggedness to apply reflection%s\n", RED_TEXT, RESET_TEXT);
+		return ;
+	}
 	if (keycode == 65451 && g_scene.reflection < 6)
 		g_scene.reflection++;
 	else if (keycode == 65453 && g_scene.reflection > 0)

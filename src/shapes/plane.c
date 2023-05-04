@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:18 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:06:19 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:17:10 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	check_side(double *light, t_plane *plane)
 	vec(plane->point, light, l_vector);
 	c_dot = dot(plane->normal, c_vector);
 	l_dot = dot(plane->normal, l_vector);
-	if ((c_dot > 0.000000001 && l_dot < -0.000000001) || (c_dot < -0.000000001 && l_dot > 0.000000001))
+	if ((c_dot > 0.000000001 && l_dot < -0.000000001) \
+		|| (c_dot < -0.000000001 && l_dot > 0.000000001))
 		return (1);
 	return (0);
 }
@@ -67,7 +68,8 @@ void	fill_plane(char **info, int *error, t_shape *new_shape, t_plane *plane)
 	new_shape->check_hit = check_hit_plane;
 	new_shape->get_normal = get_normal_plane;
 	new_shape->spec = -1;
-	if (coords_interpreter(info[4], &new_shape->reflection) || new_shape->reflection < 0 || new_shape->reflection >= 0.5)
+	if (coords_interpreter(info[4], &new_shape->reflection) \
+		|| new_shape->reflection < 0 || new_shape->reflection >= 0.5)
 		*error += parsing_error("Invalid plane reflection.\n");
 	new_shape->next = NULL;
 	if (coords_interpreter(info[1], plane->point))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:05 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:06:06 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:13:30 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ void	fill_cylinder(char **info, int *error, t_shape *shape, t_cylinder *cyli)
 	shape->spec = DEF_SPEC;
 	shape->next = NULL;
 	shape->get_normal = get_normal_cylinder;
-	if (coords_interpreter(info[6], &shape->reflection) || shape->reflection < 0 || shape->reflection >= 0.5)
+	if (coords_interpreter(info[6], &shape->reflection) \
+		|| shape->reflection < 0 || shape->reflection >= 0.5)
 		*error += parsing_error("Invalid cylinder reflection.\n");
 	if (coords_interpreter(info[1], cyli->center))
 		*error += parsing_error("Invalid cylinder center.\n");

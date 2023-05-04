@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:15 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:05:16 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:22:23 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_cylinder
  *		type		=> type of the shape according to e_type
  *		shape		=> pointer to one of the 4 previous structs, depending on TYPE
  *		check_hit	=> function that checks whether a ray hits the shape
- *		get_normal	=> function that calculates the normal vector at a point in the surface
+ *		get_normal	=> calculates the normal vector at a point in the surface
  *		color		=> RGB color of the shape
  *		spec		=> factor for the specular reflection of the shape
  *		reflection	=> reflaction factor of the shape, from 0.0 to 1.0
@@ -131,7 +131,7 @@ typedef struct s_cam
  * Viewport Struct
  *		height		=> height of the viewport
  *		width		=> width of the viewport
- *		distance	=> distance from the camera to the viewport as a function of the FOV
+ *		distance	=> distance from the camera to the vpt as a function of the FOV
  */
 typedef struct s_vpt
 {

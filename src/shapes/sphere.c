@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:23 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:06:24 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/04 11:17:27 by gda-cruz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	fill_sphere(char **info, int *error, t_shape *shape, t_sphere *sphere)
 	shape->check_hit = check_hit_sphere;
 	shape->get_normal = get_normal_sphere;
 	shape->spec = DEF_SPEC;
-	if (coords_interpreter(info[4], &shape->reflection) || shape->reflection < 0 || shape->reflection > 0.5)
+	if (coords_interpreter(info[4], &shape->reflection) \
+		|| shape->reflection < 0 || shape->reflection > 0.5)
 		*error += parsing_error("Invalid sphere reflection.\n");
 	if (coords_interpreter(info[1], sphere->center))
 		*error += parsing_error("Invalid sphere center coords.\n");

@@ -30,6 +30,8 @@ void	add_cone_base(t_cone *cone)
 	double	t;
 
 	plane = (t_plane *)ft_calloc(1, sizeof(t_plane));
+	if (!plane)
+		error_handler();
 	plane->normal[X] = cone->axis[X];
 	plane->normal[Y] = cone->axis[Y];
 	plane->normal[Z] = cone->axis[Z];

@@ -26,6 +26,8 @@ int	light_setup(char **info, int flag)
 	if (!flag && c)
 		return (parsing_error("More than one ambient light.\n"));
 	light = ft_calloc(1, sizeof(t_light));
+	if (!light)
+		error_handler();
 	error = 0;
 	add_back_light(light);
 	if (array_size(info) != 3 + flag)

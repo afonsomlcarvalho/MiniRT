@@ -46,6 +46,8 @@ void	split_canva(void)
 	while (i < THREAD)
 	{
 		x = malloc(sizeof(int));
+		if (!x)
+			error_handler();
 		*x = (WIDTH / THREAD) * i - (WIDTH / 2);
 		pthread_create(&parcel[i++], NULL, draw_parcel, (void *) x);
 	}

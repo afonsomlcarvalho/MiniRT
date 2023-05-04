@@ -21,7 +21,11 @@ void	add_caps(t_cylinder *self)
 	t_plane	*down_cap;
 
 	top_cap = (t_plane *)ft_calloc(1, sizeof(t_plane));
+	if (!top_cap)
+		error_handler();
 	down_cap = (t_plane *)ft_calloc(1, sizeof(t_plane));
+	if (!down_cap)
+		error_handler();
 	i = -1;
 	while (++i < 3)
 	{

@@ -9,10 +9,13 @@ static void	clear_shapes(void)
 		temp = g_scene.shapes->next;
 		if (g_scene.shapes->type == CYLINDER)
 		{
-			free(((t_cylinder *)(g_scene.shapes->shape))->top_cap);
-			free(((t_cylinder *)(g_scene.shapes->shape))->under_cap);
+			if (((t_cylinder *)(g_scene.shapes->shape))->top_cap)
+				free(((t_cylinder *)(g_scene.shapes->shape))->top_cap);
+			if (((t_cylinder *)(g_scene.shapes->shape))->under_cap)
+				free(((t_cylinder *)(g_scene.shapes->shape))->under_cap);
 		}
-		free(g_scene.shapes->shape);
+		if (g_scene.shapes->shape)
+			free(g_scene.shapes->shape);
 		free(g_scene.shapes);
 		g_scene.shapes = temp;
 	}
@@ -36,6 +39,8 @@ void	free_array(char **array)
 	int	i;
 
 	i = 0;
+	if (!array)
+		return ;
 	while (array[i])
 		free(array[i++]);
 	free(array);
@@ -48,17 +53,22 @@ void	free_all(int flag)
 	clear_lights();
 	if (flag)
 	{
-		mlx_destroy_image(g_scene.mlx, g_scene.img.img_ptr);
-		mlx_destroy_window(g_scene.mlx, g_scene.win);
-		mlx_destroy_display(g_scene.mlx);
-		free(g_scene.mlx);
+		if (g_scene.img.img_ptr)
+			mlx_destroy_image(g_scene.mlx, g_scene.img.img_ptr);
+		if (g_scene.win)
+			mlx_destroy_window(g_scene.mlx, g_scene.win);
+		if (g_scene.mlx)
+		{
+			mlx_destroy_display(g_scene.mlx);
+			free(g_scene.mlx);
+		}
 	}
-	exit(0);
 }
 
 int	end(void)
 {
 	printf("%s\n[Quitting...]\n\n%s", CYAN_TEXT, RESET_TEXT);
 	free_all(1);
+	exit(0);
 	return (0);
 }

@@ -16,6 +16,8 @@
 # define BACKGROUND		0
 # define RUGGED			0
 
+// # define malloc(x) NULL
+
 # define RED_TEXT 		"\033[0;31m"
 # define GREEN_TEXT 	"\033[0;32m"
 # define YELLOW_TEXT 	"\033[0;33m"

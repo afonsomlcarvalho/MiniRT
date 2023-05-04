@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gda-cruz <gda-cruz@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 18:53:37 by gda_cruz          #+#    #+#              #
-#    Updated: 2023/05/02 16:45:08 by gda-cruz         ###   ########.fr        #
+#    Updated: 2023/05/04 10:04:40 by amorais-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

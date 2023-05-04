@@ -13,11 +13,11 @@ static void	print_movements(void)
 {
 	printf("%sMOVEMENT:%s\n", CYAN_BOLD, CYAN_TEXT);
 	printf("  Moving X axis:\n");
-	printf("    • Up -> W\n");
-	printf("    • Down -> D\n");
-	printf("  Moving Y axis:\n");
 	printf("    • Left -> A\n");
 	printf("    • Right -> D\n");
+	printf("  Moving Y axis:\n");
+	printf("    • Up -> W\n");
+	printf("    • Down -> S\n");
 	printf("  Moving Z axis:\n");
 	printf("    • Forward -> E\n");
 	printf("    • Backward -> Q\n\n");

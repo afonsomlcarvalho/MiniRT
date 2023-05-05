@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:51 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 11:17:38 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:26:30 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_general_instructions(void)
 
 void	print_movements(void)
 {
-	printf("%sMOVEMENT:%s\n", CYAN_BOLD, CYAN_TEXT);
+	printf("%sCAMERA AND SHAPES MOVEMENT:%s\n", CYAN_BOLD, CYAN_TEXT);
 	printf("  Moving X axis:\n");
 	printf("    • Left -> A\n");
 	printf("    • Right -> D\n");
@@ -35,6 +35,17 @@ void	print_movements(void)
 	printf("  Moving Z axis:\n");
 	printf("    • Forward -> E\n");
 	printf("    • Backward -> Q\n\n");
+	printf("%sLIGHT MOVEMENT:%s\n", CYAN_BOLD, CYAN_TEXT);
+	printf("  Moving X axis:\n");
+	printf("    • Left -> V\n");
+	printf("    • Right -> N\n");
+	printf("  Moving Y axis:\n");
+	printf("    • Up -> G\n");
+	printf("    • Down -> B\n");
+	printf("  Moving Z axis:\n");
+	printf("    • Forward -> F\n");
+	printf("    • Backward -> H\n");
+	printf("  Press space to select next light\n\n");
 }
 
 void	print_rotations(void)

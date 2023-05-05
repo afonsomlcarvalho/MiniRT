@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:39 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 15:40:51 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/05 10:53:14 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ int	select_piece(int button, int x, int y)
 {
 	double	point[3];
 
-	if (button != 1 && button != 3)
-		return (0);
 	canvas_to_viewport(x - WIDTH / 2, y - HEIGHT / 2, point);
 	if (button == 3 && g_scene.selected)
 	{

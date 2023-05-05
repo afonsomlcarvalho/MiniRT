@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:12 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 16:12:04 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/05 10:46:34 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	setup_scene(void);
 void	setup_viewport(void);
 void	canvas_to_viewport(int x, int y, double *p);
 void	verify_parse(int *error);
+int		is_zero(double n);
 
 /********** draw.c **********/
 void	draw_canvas(void);

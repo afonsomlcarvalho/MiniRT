@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:58 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 15:41:00 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/05 10:57:42 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ void	canvas_to_viewport(int x, int y, double *p)
 	set_vectors(w_vector, h_vector);
 	p[X] = g_scene.camera.origin[X] + g_scene.camera.direction[X] + \
 	(((double)x / WIDTH) * (g_scene.viewport.width / \
-	vector_size(w_vector))) * w_vector[X] + (((double)-y / HEIGHT) \
+	vector_size(w_vector))) * w_vector[X] + (((double)y / HEIGHT) \
 	* (g_scene.viewport.height / vector_size(h_vector))) * h_vector[X];
 	p[Y] = g_scene.camera.origin[Y] + g_scene.camera.direction[Y] + \
 	(((double)x / WIDTH) * (g_scene.viewport.width / \
-	vector_size(w_vector))) * w_vector[Y] + (((double)-y / HEIGHT) \
+	vector_size(w_vector))) * w_vector[Y] + (((double)y / HEIGHT) \
 	* (g_scene.viewport.height / vector_size(h_vector))) * h_vector[Y];
 	p[Z] = g_scene.camera.origin[Z] + g_scene.camera.direction[Z] + \
 	(((double)x / WIDTH) * (g_scene.viewport.width / \
-	vector_size(w_vector))) * w_vector[Z] + (((double)-y / HEIGHT) \
+	vector_size(w_vector))) * w_vector[Z] + (((double)y / HEIGHT) \
 	* (g_scene.viewport.height / vector_size(h_vector))) * h_vector[Z];
 }

@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:06:18 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/04 16:28:10 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:50:23 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ double	check_hit_plane(void *self, double p[3], double origin[3], int flag)
 	if (dot(plane->normal, d) == 0)
 		return (0.0);
 	t = dot(plane->normal, oq) / dot(plane->normal, d);
-	if (!flag && t < 1)
+	if (!flag && t < 0.00000001)
 		return (0.0);
 	if (flag == 1 && check_side(origin, plane))
 		return (0.2);

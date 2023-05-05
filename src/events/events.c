@@ -6,7 +6,7 @@
 /*   By: amorais- <amorais-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 11:05:39 by amorais-          #+#    #+#             */
-/*   Updated: 2023/05/05 11:21:10 by amorais-         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:58:28 by amorais-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 void	key_press_aux(double *vector, double *angle, double *light, int keycode)
 {
-	vector[X] = ((keycode == 100) - (keycode == 97)) * 0.5;
-	vector[Y] = ((keycode == 119) - (keycode == 115)) * 0.5;
-	vector[Z] = ((keycode == 101) - (keycode == 113)) * 0.5;
+	vector[X] = ((keycode == 100) - (keycode == 97)) * 0.25;
+	vector[Y] = ((keycode == 119) - (keycode == 115)) * 0.25;
+	vector[Z] = ((keycode == 101) - (keycode == 113)) * 0.25;
 	angle[X] = to_rad(((keycode == 108) - (keycode == 106)) * 15);
 	angle[Y] = to_rad(((keycode == 105) - (keycode == 107)) * 15);
 	angle[Z] = to_rad(((keycode == 111) - (keycode == 117)) * 15);
-	light[X] = ((keycode == 110) - (keycode == 118)) * 0.5;
-	light[Y] = ((keycode == 103) - (keycode == 98)) * 0.5;
-	light[Z] = ((keycode == 104) - (keycode == 102)) * 0.5;
+	light[X] = ((keycode == 110) - (keycode == 118)) * 0.25;
+	light[Y] = ((keycode == 103) - (keycode == 98)) * 0.25;
+	light[Z] = ((keycode == 104) - (keycode == 102)) * 0.25;
 }
 
 int	key_press(int keycode)
